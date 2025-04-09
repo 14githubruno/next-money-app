@@ -1,16 +1,21 @@
 "use client";
 
 import { login } from "@/lib/actions/auth";
+import { useActionState } from "react";
 
 export default function SignIn() {
+  const [state, formAction, pending] = useActionState(login, undefined);
+
   return (
-    <form action={() => login()}>
+    <form className="mx-auto my-0" action={formAction}>
       <button
-        className="cursor-pointer rounded-2xl border bg-pink-500 p-1"
         type="submit"
+        className="cursor-pointer border bg-pink-500 p-1"
+        disabled={pending}
       >
-        Sign in
+        {pending ? "Loading..." : "Sign in with Google"}
       </button>
+      {state && <p aria-live="polite">{state.message}</p>}
     </form>
   );
 }
