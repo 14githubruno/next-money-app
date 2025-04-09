@@ -5,7 +5,7 @@ import { AuthError } from "next-auth";
 
 export async function login() {
   try {
-    await signIn("google", { redirectTo: "/profile" });
+    await signIn("google", { redirectTo: "/dashboard" });
   } catch (error) {
     if (error instanceof AuthError) {
       console.error("ERROR TYPE", error.type);

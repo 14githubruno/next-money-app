@@ -2,7 +2,7 @@ import authConfig from "../auth.config";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
-const privateRoutes = ["/profile"];
+const privateRoutes = ["/dashboard"];
 const authRoutes = ["/sign-in"];
 
 // Use only one of the two middleware options below
@@ -25,7 +25,7 @@ export default auth(async (request) => {
 
   // avoid user to sign in, if they are already signed in
   if (isLoggedIn && isAuthRoute)
-    return NextResponse.redirect(new URL("/profile", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
 
   // allow user to sign in, if they are not
   if (!isLoggedIn && isAuthRoute) return NextResponse.next();
