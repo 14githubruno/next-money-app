@@ -8,8 +8,8 @@ export async function login() {
     await signIn("google", { redirectTo: "/dashboard" });
   } catch (error) {
     if (error instanceof AuthError) {
-      console.error("ERROR TYPE", error.type);
-      console.error("ERROR", error);
+      console.error("ERROR TYPE LOGIN", error.type);
+      console.error("ERROR LOGIN", error);
 
       return {
         message: "Sign in with Google has failed",
@@ -21,5 +21,18 @@ export async function login() {
 }
 
 export async function logout() {
-  await signOut({ redirectTo: "/" });
+  try {
+    await signOut({ redirectTo: "/" });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      console.error("ERROR TYPE LOGOUT", error.type);
+      console.error("ERROR LOGOUT", error);
+
+      return {
+        message: "Sign out has failed",
+      };
+    }
+
+    throw error;
+  }
 }
