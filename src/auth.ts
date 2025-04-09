@@ -9,4 +9,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   providers: [Google],
+  callbacks: {
+    async session({ token, session }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.sub, // pass to session.user MongoDB id
+        },
+      };
+    },
+  },
 });
