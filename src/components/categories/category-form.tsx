@@ -5,6 +5,7 @@ import { createCategory, updateCategory } from "@/lib/actions/category";
 import { Fragment, useActionState, useCallback } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
 import { type CategoryFormState } from "@/lib/types";
+import { Input } from "../inputs/input/input";
 
 type CategoryFormProps = {
   userId: string;
@@ -67,13 +68,12 @@ export function CategoryForm({
             <label htmlFor="name" className="block text-sm font-medium">
               Name
             </label>
-            <input
+            <Input
               type="text"
               id="name"
               name="name"
               placeholder="Category name"
               defaultValue={state?.fieldValues?.name ?? ""}
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-offset-2 focus:outline-none`}
             />
             {getFieldError("name")}
           </div>
