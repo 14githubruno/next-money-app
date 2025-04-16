@@ -1,25 +1,16 @@
-import { auth } from "@/auth";
 import Link from "next/link";
-import SignIn from "@/components/sign-in";
-import SignOut from "@/components/sign-out";
+import { grabUserId } from "@/lib/utils";
 
 export default async function Home() {
-  const session = await auth();
-  const user = session?.user;
-
-  if (user) {
-    return (
-      <div className="flex flex-col gap-2">
-        <Link href="/profile">I want to see my session info &rarr;</Link>
-        <SignOut />
-      </div>
-    );
-  } else {
-    return (
-      <div className="flex flex-col gap-2">
-        <p>You are not signed in</p>
-        <SignIn />
-      </div>
-    );
-  }
+  const userId = await grabUserId();
+  return (
+    <section className="flex h-screen flex-col items-center justify-center gap-4">
+      <h1 className="text-2xl">Lorem Ipsum</h1>
+      {userId ? (
+        <Link href={"/dashboard"}>Dashboard &rarr;</Link>
+      ) : (
+        <Link href={"/sign-in"}>Sign in</Link>
+      )}
+    </section>
+  );
 }

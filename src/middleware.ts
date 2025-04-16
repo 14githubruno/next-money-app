@@ -1,21 +1,40 @@
-import { auth } from "@/auth";
-import { NextRequest, NextResponse } from "next/server";
+import authConfig from "../auth.config";
+import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
 
-const privateRoutes = ["/profile"];
+const privateRoutes = ["/dashboard"];
+const authRoutes = ["/sign-in"];
 
-export default async function middleware(request: NextRequest) {
-  const session = await auth();
+// Use only one of the two middleware options below
+// 1. Use middleware directly
+// export const { auth: middleware } = NextAuth(authConfig)
+
+// 2. Wrapped middleware option
+const { auth } = NextAuth(authConfig);
+
+export default auth(async (request) => {
+  const isLoggedIn = !!request.auth;
   const pathname = request.nextUrl.pathname;
 
-  const isProtected = privateRoutes.some((route) => pathname.startsWith(route));
+  const isPrivateRoute = privateRoutes.includes(pathname);
+  const isAuthRoute = authRoutes.includes(pathname);
+  const isApiRoute = pathname.includes("/api");
 
-  if (isProtected && !session) {
-    return NextResponse.redirect(new URL("/api/auth/signin", request.url));
-  }
+  // allow auth.js logic
+  if (isApiRoute) return NextResponse.next();
 
-  return NextResponse.next();
-}
+  // avoid user to sign in, if they are already signed in
+  if (isLoggedIn && isAuthRoute)
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+
+  // allow user to sign in, if they are not
+  if (!isLoggedIn && isAuthRoute) return NextResponse.next();
+
+  // protect private routes
+  if (!isLoggedIn && isPrivateRoute)
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+});
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

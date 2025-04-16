@@ -1,11 +1,46 @@
 "use server";
 
 import { signIn, signOut } from "@/auth";
+import { AuthError } from "next-auth";
 
+/**
+ * SIGN IN
+ * ========================================================
+ */
 export async function login() {
-  await signIn("google", { redirectTo: "/profile" });
+  try {
+    await signIn("google", { redirectTo: "/dashboard" });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      console.error("ERROR TYPE LOGIN", error.type);
+      console.error("ERROR LOGIN", error);
+
+      return {
+        message: "Sign in with Google has failed",
+      };
+    }
+
+    throw error;
+  }
 }
 
+/**
+ * SIGN OUT
+ * ========================================================
+ */
 export async function logout() {
-  await signOut({ redirectTo: "/" });
+  try {
+    await signOut({ redirectTo: "/" });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      console.error("ERROR TYPE LOGOUT", error.type);
+      console.error("ERROR LOGOUT", error);
+
+      return {
+        message: "Sign out has failed",
+      };
+    }
+
+    throw error;
+  }
 }

@@ -24,9 +24,12 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+  
+  expenses      Expense[]
+  categories    Category[]
  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
  
 model Account {
@@ -85,4 +88,45 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@unique([userId, credentialID])
+}
+
+
+enum Payment {
+  CARD 
+  CASH
+  CRYPTO
+}
+
+
+model Category {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  userId      String   @db.ObjectId
+  isDefault   Boolean  @default(false)
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expenses    Expense[] 
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([name, userId])
+}
+
+model Expense {
+  id              String              @id @default(auto()) @map("_id") @db.ObjectId
+  amount          Float
+  categoryId      String              @db.ObjectId
+  note            String?           
+  payment         Payment                 
+  isConfirmed     Boolean             @default(true)
+  expenseDate     DateTime            
+
+  userId          String              @db.ObjectId
+  
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category        Category            @relation(fields: [categoryId], references: [id])
+  
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
 }
