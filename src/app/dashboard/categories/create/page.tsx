@@ -1,10 +1,8 @@
 import { CategoryForm } from "@/components/categories/category-form";
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 
 export default async function NewCategoryPage() {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   return (
     <div className="p-6">{userId && <CategoryForm userId={userId} />}</div>

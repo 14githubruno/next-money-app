@@ -1,5 +1,5 @@
 import { getSingleCategory } from "@/lib/queries/category";
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { notFound } from "next/navigation";
 
 export default async function ViewCategoryPage({
@@ -8,9 +8,7 @@ export default async function ViewCategoryPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   const category = await getSingleCategory(id, userId);
 

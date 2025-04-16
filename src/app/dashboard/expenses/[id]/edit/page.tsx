@@ -1,5 +1,5 @@
 import { ExpenseForm } from "@/components/expenses/expense-form";
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { getSingleExpense } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
@@ -10,9 +10,7 @@ export default async function EditExpensePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   const [expense, categories] = await Promise.all([
     getSingleExpense(id, userId),

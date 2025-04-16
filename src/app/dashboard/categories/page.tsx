@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
 import Link from "next/link";
@@ -6,9 +6,7 @@ import { Plus } from "lucide-react";
 import { CategoriesList } from "@/components/categories/categories-list";
 
 export default async function CategoriesPage() {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   if (!userId) {
     redirect("sign-in");

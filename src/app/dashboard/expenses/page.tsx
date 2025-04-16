@@ -2,13 +2,11 @@ import { ExpensesList } from "@/components/expenses/expenses-list";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { getExpenses } from "@/lib/queries/expense";
 
 export default async function ExpensesPage() {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   if (!userId) {
     redirect("/sign-in");

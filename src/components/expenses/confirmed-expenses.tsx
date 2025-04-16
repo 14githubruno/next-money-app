@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import ConfirmedExpensesTable from "./confirmed-expenses-table";
@@ -8,9 +8,7 @@ const confirmedExpenses = {
 };
 
 export default async function ConfirmedExpenses() {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   if (!userId) {
     redirect("/sign-in");

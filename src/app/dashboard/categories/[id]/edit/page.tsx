@@ -1,5 +1,5 @@
 import { CategoryForm } from "@/components/categories/category-form";
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { getSingleCategory } from "@/lib/queries/category";
 
@@ -9,9 +9,7 @@ export default async function EditCategoryPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   const category = await getSingleCategory(id, userId);
 

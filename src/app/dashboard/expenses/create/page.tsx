@@ -1,12 +1,10 @@
 import { ExpenseForm } from "@/components/expenses/expense-form";
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { getCategories } from "@/lib/queries/category";
 import { notFound } from "next/navigation";
 
 export default async function NewExpensePage() {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   const categories = await getCategories(userId);
 

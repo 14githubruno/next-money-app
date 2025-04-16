@@ -4,7 +4,7 @@ import prisma from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
+import { grabUserId } from "../utils";
 import { redirect } from "next/navigation";
 
 /**
@@ -187,9 +187,7 @@ export async function updateCategory(
  * ========================================================
  */
 export async function deleteCategory(categoryId: string) {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   let isDeleted: boolean = false;
 

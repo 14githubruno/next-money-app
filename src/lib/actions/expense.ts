@@ -5,7 +5,7 @@ import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+import { grabUserId } from "../utils";
 
 /**
  * This file contains all the expenses-related queries
@@ -175,9 +175,7 @@ export async function updateExpense(
  * ========================================================
  */
 export async function deleteExpense(expenseId: string) {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   if (!userId) {
     redirect("/sign-in");
@@ -223,9 +221,7 @@ export async function deleteExpense(expenseId: string) {
  * ========================================================
  */
 export async function confirmExpense(expenseId: string) {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   if (!userId) {
     redirect("/sign-in");

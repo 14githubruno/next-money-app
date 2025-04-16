@@ -1,11 +1,9 @@
-import { auth } from "@/auth";
+import { grabUserId } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { getTotalAmountExpenses } from "@/lib/queries/expense";
 
 export default async function ExpensesAmount() {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+  const userId = await grabUserId();
 
   if (!userId) {
     redirect("/sign-in");
