@@ -11,6 +11,12 @@ export async function grabUserId() {
   return userId;
 }
 
+// turn Date to string
+
+export function dateToString(date: Date | undefined) {
+  return date?.toDateString();
+}
+
 // Tremor Raw cx [v0.0.0]
 
 export function cx(...args: ClassValue[]) {

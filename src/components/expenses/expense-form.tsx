@@ -21,6 +21,8 @@ import { Checkbox } from "../inputs/checkbox/checkbox";
 
 import { RadioGroup, RadioGroupItem } from "../inputs/radio-group/radio-group";
 
+import DatePickerYearNavigation from "../inputs/date-picker/date-picker-year-navigation";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -153,22 +155,9 @@ export function ExpenseForm({
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="expenseDate" className="block text-sm font-medium">
-              Date
-            </label>
-            <input
-              type="date"
-              id="expenseDate"
-              name="expenseDate"
-              defaultValue={
-                state.fieldValues?.expenseDate
-                  ? new Date(state.fieldValues.expenseDate)
-                      .toISOString()
-                      .split("T")[0]
-                  : new Date().toISOString().split("T")[0]
-              }
-              required
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
+            <DatePickerYearNavigation
+              nameAndId="expenseDate" // input name and id + htmlFor of label
+              defaultValue={state.fieldValues?.expenseDate ?? new Date()}
             />
             {getFieldError("expenseDate")}
           </div>
