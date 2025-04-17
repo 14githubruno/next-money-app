@@ -27,7 +27,7 @@ export async function getExpenses<T>(
         category: true,
       },
       orderBy: {
-        createdAt: "desc",
+        updatedAt: "desc",
       },
     });
     return userExpenses;
