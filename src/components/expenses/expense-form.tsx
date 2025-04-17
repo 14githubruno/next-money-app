@@ -19,6 +19,8 @@ import {
 
 import { Checkbox } from "../inputs/checkbox/checkbox";
 
+import { RadioGroup, RadioGroupItem } from "../inputs/radio-group/radio-group";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -185,38 +187,23 @@ export function ExpenseForm({
 
           <div className="space-y-2 pl-6">
             <label className="block text-sm font-medium">Payment</label>
-            <div className="space-x-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="CASH"
-                  defaultChecked={state.fieldValues?.payment === "CASH"}
-                  className="h-4 w-4 border-gray-300 focus:ring-black focus:ring-offset-2"
-                />
-                <span className="ml-2">Cash</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="CARD"
-                  defaultChecked={state.fieldValues?.payment === "CARD"}
-                  className="h-4 w-4 border-gray-300 text-black focus:ring-black focus:ring-offset-2"
-                />
-                <span className="ml-2">Card</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="CRYPTO"
-                  defaultChecked={state.fieldValues?.payment === "CRYPTO"}
-                  className="h-4 w-4 border-gray-300 focus:ring-black focus:ring-offset-2"
-                />
-                <span className="ml-2">Crypto</span>
-              </label>
-            </div>
+            <RadioGroup
+              name="payment"
+              defaultValue={state.fieldValues?.payment}
+            >
+              <div>
+                <label htmlFor="cash">Cash</label>
+                <RadioGroupItem value="CASH" id="cash" />
+              </div>
+              <div>
+                <label htmlFor="card">Card</label>
+                <RadioGroupItem value="CARD" id="card" />
+              </div>
+              <div>
+                <label htmlFor="crypto">Crypto</label>
+                <RadioGroupItem value="CRYPTO" id="crypto" />
+              </div>
+            </RadioGroup>
             {getFieldError("payment")}
           </div>
 
