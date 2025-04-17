@@ -9,6 +9,14 @@ import {
 } from "@/lib/validations/schemas";
 import { type ExpenseFormState } from "@/lib/types";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../inputs/select/select";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -102,20 +110,26 @@ export function ExpenseForm({
             <label htmlFor="categoryId" className="block text-sm font-medium">
               Category
             </label>
-            <select
-              id="categoryId"
+            <Select
               name="categoryId"
-              required
-              defaultValue={state.fieldValues?.categoryId}
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
+              defaultValue={
+                state.fieldValues?.categoryId !== ""
+                  ? state.fieldValues?.categoryId
+                  : undefined
+              }
             >
-              {categories &&
-                categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-            </select>
+              <SelectTrigger id="categoryId">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories &&
+                  categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
             {getFieldError("categoryId")}
           </div>
 
