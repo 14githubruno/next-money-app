@@ -17,6 +17,8 @@ import {
   SelectValue,
 } from "../inputs/select/select";
 
+import { Checkbox } from "../inputs/checkbox/checkbox";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -170,16 +172,14 @@ export function ExpenseForm({
           </div>
 
           <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="isConfirmed"
-              name="isConfirmed"
-              defaultChecked={Boolean(state.fieldValues?.isConfirmed)}
-              className="h-4 w-4 rounded border-gray-300 focus:ring-black"
-            />
             <label htmlFor="isConfirmed" className="ml-2 block text-sm">
               Is payment confirmed?
             </label>
+            <Checkbox
+              id="isConfirmed"
+              name="isConfirmed"
+              defaultChecked={Boolean(state.fieldValues?.isConfirmed)}
+            />
             {getFieldError("isConfirmed")}
           </div>
 
