@@ -23,6 +23,8 @@ import { RadioGroup, RadioGroupItem } from "../inputs/radio-group/radio-group";
 
 import DatePickerYearNavigation from "../inputs/date-picker/date-picker-year-navigation";
 
+import { Textarea } from "../inputs/textarea/textarea";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -38,7 +40,7 @@ const initState: ExpenseFormState = {
     expenseDate: new Date(),
     isConfirmed: true,
     payment: "CASH",
-    note: "-",
+    note: "",
     categoryId: "",
   },
 };
@@ -143,13 +145,12 @@ export function ExpenseForm({
             <label htmlFor="note" className="block text-sm font-medium">
               Note (Optional)
             </label>
-            <textarea
+            <Textarea
               id="note"
               name="note"
               rows={3}
               placeholder="Add details about this expense"
               defaultValue={state.fieldValues?.note ?? ""}
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
             />
             {getFieldError("note")}
           </div>
