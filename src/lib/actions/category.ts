@@ -225,8 +225,8 @@ export async function deleteCategory(categoryId: string) {
 
     if (deletedCategory) {
       isDeleted = true;
-      console.log(deletedCategory);
     }
+
     return {
       success: true,
       message: `Category with name ${deletedCategory.name} updated`,

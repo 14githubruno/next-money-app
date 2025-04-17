@@ -73,7 +73,6 @@ export async function createExpense(
 
     if (newExpense) {
       isSuccess = true;
-      console.log(newExpense);
     }
 
     return {
