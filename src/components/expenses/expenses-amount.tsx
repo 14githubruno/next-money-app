@@ -15,7 +15,9 @@ export default async function ExpensesAmount() {
     <div className="rounded-sm border border-purple-400 pl-4">
       <p>
         The total amount of expenses is:{" "}
-        <span className="font-medium">${expensesAmount?._sum.amount}</span>
+        <span className="font-medium">
+          ${expensesAmount?._sum.amount?.toFixed(2)}
+        </span>
       </p>
     </div>
   ) : null;
