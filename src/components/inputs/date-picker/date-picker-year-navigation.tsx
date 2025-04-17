@@ -23,7 +23,7 @@ export default function DatePickerYearNavigation({
         enableYearNavigation
         value={date}
         onChange={setDate}
-        className="w-60"
+        className="w-full"
       />
       {/* the input below will be passed in the formData when form action gets fired */}
       <input
