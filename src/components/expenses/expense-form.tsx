@@ -25,6 +25,8 @@ import DatePickerYearNavigation from "../inputs/date-picker/date-picker-year-nav
 
 import { Textarea } from "../inputs/textarea/textarea";
 
+import { Input } from "../inputs/input/input";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -95,22 +97,14 @@ export function ExpenseForm({
             <label htmlFor="amount" className="block text-sm font-medium">
               Amount
             </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                $
-              </span>
-              <input
-                type="number"
-                id="amount"
-                name="amount"
-                step="0.01"
-                min="0"
-                placeholder="0.00"
-                defaultValue={state.fieldValues?.amount}
-                required
-                className={`w-full rounded-md border border-gray-300 px-3 py-2 pl-8 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
-              />
-            </div>
+            <Input
+              type="number"
+              id="amount"
+              name="amount"
+              step="0.01"
+              placeholder="0.00"
+              defaultValue={state.fieldValues?.amount}
+            />
             {getFieldError("amount")}
           </div>
 
