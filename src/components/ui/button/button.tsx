@@ -2,9 +2,8 @@
 
 import React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { RiLoader2Fill } from "@remixicon/react";
+import { LoaderCircle } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cx, focusRing } from "@/lib/utils";
 
 const buttonVariants = tv({
@@ -125,7 +124,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading ? (
           <span className="pointer-events-none flex shrink-0 items-center justify-center gap-1.5">
-            <RiLoader2Fill
+            <LoaderCircle
               className="size-4 shrink-0 animate-spin"
               aria-hidden="true"
             />

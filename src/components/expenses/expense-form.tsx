@@ -27,6 +27,8 @@ import { Textarea } from "../inputs/textarea/textarea";
 
 import { Input } from "../inputs/input/input";
 
+import { Button } from "../ui/button/button";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -192,24 +194,26 @@ export function ExpenseForm({
           </div>
 
           <div className="flex justify-end space-x-4">
-            <button
+            <Button
+              variant="secondary"
               type="button"
               onClick={() => router.back()}
-              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
+              disabled={pending}
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="primary"
               type="submit"
               disabled={pending}
-              className="rounded-md border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              isLoading={pending}
             >
               {pending
                 ? "Saving..."
                 : isEditing
                   ? "Update Expense"
                   : "Create Expense"}
-            </button>
+            </Button>
           </div>
         </div>
       </form>
