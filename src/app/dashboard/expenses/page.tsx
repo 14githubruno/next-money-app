@@ -1,9 +1,9 @@
-import { ExpensesList } from "@/components/expenses/expenses-list";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { grabUserId } from "@/lib/utils";
 import { getExpenses } from "@/lib/queries/expense";
+import { ExpensesTable } from "@/components/expenses/expenses-table";
 
 export default async function ExpensesPage() {
   const userId = await grabUserId();
@@ -40,7 +40,7 @@ export default async function ExpensesPage() {
         </div>
       </div>
 
-      <ExpensesList expenses={expenses} />
+      <ExpensesTable expenses={expenses} />
     </div>
   );
 }
