@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "../inputs/select/select";
 
-import { Checkbox } from "../inputs/checkbox/checkbox";
+import { Switch } from "../inputs/switch/switch";
 
 import { RadioGroup, RadioGroupItem } from "../inputs/radio-group/radio-group";
 
@@ -160,13 +160,11 @@ export function ExpenseForm({
           </div>
 
           <div className="flex items-center">
-            <label htmlFor="isConfirmed" className="ml-2 block text-sm">
-              Is payment confirmed?
-            </label>
-            <Checkbox
+            <label htmlFor="isConfirmed">is confirmed</label>
+            <Switch
               id="isConfirmed"
               name="isConfirmed"
-              defaultChecked={Boolean(state.fieldValues?.isConfirmed)}
+              defaultChecked={state.fieldValues?.isConfirmed}
             />
             {getFieldError("isConfirmed")}
           </div>
