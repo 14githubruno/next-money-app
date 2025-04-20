@@ -36,7 +36,6 @@ export async function createExpense(
   const validation = expenseSchema.safeParse(formData);
 
   if (!validation.success) {
-    console.log("wrong validation", validation);
     return {
       success: false,
       message: "Invalid data",
