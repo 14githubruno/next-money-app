@@ -29,6 +29,8 @@ import { Input } from "../inputs/input/input";
 
 import { Button } from "../ui/button/button";
 
+import { Label } from "../inputs/label/label";
+
 type ExpenseFormProps = {
   userId: string;
   categories: CategoryTypes[];
@@ -96,9 +98,7 @@ export function ExpenseForm({
           </h2>
 
           <div className="space-y-2">
-            <label htmlFor="amount" className="block text-sm font-medium">
-              Amount
-            </label>
+            <Label htmlFor="amount">Amount</Label>
             <Input
               type="number"
               id="amount"
@@ -111,9 +111,7 @@ export function ExpenseForm({
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="categoryId" className="block text-sm font-medium">
-              Category
-            </label>
+            <Label htmlFor="categoryId">Category</Label>
             <Select
               name="categoryId"
               defaultValue={
@@ -138,9 +136,7 @@ export function ExpenseForm({
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="note" className="block text-sm font-medium">
-              Note (Optional)
-            </label>
+            <Label htmlFor="note">Note</Label>
             <Textarea
               id="note"
               name="note"
@@ -159,8 +155,8 @@ export function ExpenseForm({
             {getFieldError("expenseDate")}
           </div>
 
-          <div className="flex items-center">
-            <label htmlFor="isConfirmed">is confirmed</label>
+          <div className="space-y-2">
+            <Label htmlFor="isConfirmed">is confirmed</Label>
             <Switch
               id="isConfirmed"
               name="isConfirmed"
@@ -169,22 +165,21 @@ export function ExpenseForm({
             {getFieldError("isConfirmed")}
           </div>
 
-          <div className="space-y-2 pl-6">
-            <label className="block text-sm font-medium">Payment</label>
+          <div className="space-y-2">
             <RadioGroup
               name="payment"
               defaultValue={state.fieldValues?.payment}
             >
               <div>
-                <label htmlFor="cash">Cash</label>
+                <Label htmlFor="cash">Cash</Label>
                 <RadioGroupItem value="CASH" id="cash" />
               </div>
               <div>
-                <label htmlFor="card">Card</label>
+                <Label htmlFor="card">Card</Label>
                 <RadioGroupItem value="CARD" id="card" />
               </div>
               <div>
-                <label htmlFor="crypto">Crypto</label>
+                <Label htmlFor="crypto">Crypto</Label>
                 <RadioGroupItem value="CRYPTO" id="crypto" />
               </div>
             </RadioGroup>

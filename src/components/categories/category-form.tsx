@@ -6,6 +6,7 @@ import { Fragment, useActionState, useCallback } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
 import { type CategoryFormState } from "@/lib/types";
 import { Input } from "../inputs/input/input";
+import { Label } from "../inputs/label/label";
 
 type CategoryFormProps = {
   userId: string;
@@ -65,9 +66,7 @@ export function CategoryForm({
           </h2>
 
           <div className="space-y-2">
-            <label htmlFor="name" className="block text-sm font-medium">
-              Name
-            </label>
+            <Label htmlFor="name">Name</Label>
             <Input
               type="text"
               id="name"

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DatePicker } from ".";
 import { dateToString } from "@/lib/utils";
+import { Label } from "../label/label";
 
 type DatePickerYearNavigationProps = {
   nameAndId: string;
@@ -17,7 +18,7 @@ export default function DatePickerYearNavigation({
 
   return (
     <div className="flex flex-col items-center gap-y-4">
-      <label htmlFor={nameAndId}>Expense Date</label>
+      <Label htmlFor={nameAndId}>Expense Date</Label>
       <DatePicker
         id={nameAndId}
         enableYearNavigation
