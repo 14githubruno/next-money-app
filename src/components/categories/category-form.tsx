@@ -59,12 +59,11 @@ export function CategoryForm({
 
   return (
     <Fragment>
+      <h2 className="text-2xl font-bold">
+        {isEditing ? "Edit Category" : "Add New Category"}
+      </h2>
       <form action={formAction} className="mx-auto w-full max-w-lg">
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold">
-            {isEditing ? "Edit Category" : "Add New Category"}
-          </h2>
-
+        <div className="space-y-8">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input

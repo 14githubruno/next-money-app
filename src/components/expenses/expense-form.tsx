@@ -91,12 +91,11 @@ export function ExpenseForm({
 
   return (
     <>
+      <h2 className="text-2xl font-bold">
+        {isEditing ? "Edit Expense" : "Add New Expense"}
+      </h2>
       <form action={formAction} className="mx-auto w-full max-w-lg">
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold">
-            {isEditing ? "Edit Expense" : "Add New Expense"}
-          </h2>
-
+        <div className="space-y-8">
           <div className="space-y-2">
             <Label htmlFor="amount">Amount</Label>
             <Input
@@ -155,8 +154,8 @@ export function ExpenseForm({
             {getFieldError("expenseDate")}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="isConfirmed">is confirmed</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="isConfirmed">Payment is confirmed</Label>
             <Switch
               id="isConfirmed"
               name="isConfirmed"
