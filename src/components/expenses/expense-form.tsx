@@ -165,24 +165,29 @@ export function ExpenseForm({
             {getFieldError("isConfirmed")}
           </div>
 
-          <div className="space-y-2">
-            <RadioGroup
-              name="payment"
-              defaultValue={state.fieldValues?.payment}
-            >
-              <div>
-                <Label htmlFor="cash">Cash</Label>
-                <RadioGroupItem value="CASH" id="cash" />
-              </div>
-              <div>
-                <Label htmlFor="card">Card</Label>
-                <RadioGroupItem value="CARD" id="card" />
-              </div>
-              <div>
-                <Label htmlFor="crypto">Crypto</Label>
-                <RadioGroupItem value="CRYPTO" id="crypto" />
-              </div>
-            </RadioGroup>
+          <div>
+            <fieldset className="space-y-2">
+              <legend className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                Type of payment
+              </legend>
+              <RadioGroup
+                name="payment"
+                defaultValue={state.fieldValues?.payment}
+              >
+                <div>
+                  <Label htmlFor="cash">Cash</Label>
+                  <RadioGroupItem value="CASH" id="cash" />
+                </div>
+                <div>
+                  <Label htmlFor="card">Card</Label>
+                  <RadioGroupItem value="CARD" id="card" />
+                </div>
+                <div>
+                  <Label htmlFor="crypto">Crypto</Label>
+                  <RadioGroupItem value="CRYPTO" id="crypto" />
+                </div>
+              </RadioGroup>
+            </fieldset>
             {getFieldError("payment")}
           </div>
 
