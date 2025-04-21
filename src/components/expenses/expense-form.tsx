@@ -8,6 +8,7 @@ import {
   type ExpenseTypes,
 } from "@/lib/validations/schemas";
 import { type ExpenseFormState } from "@/lib/types";
+import { Fragment } from "react";
 
 import {
   Select,
@@ -90,7 +91,7 @@ export function ExpenseForm({
   );
 
   return (
-    <>
+    <Fragment>
       <h2 className="text-2xl font-bold">
         {isEditing ? "Edit Expense" : "Add New Expense"}
       </h2>
@@ -217,6 +218,6 @@ export function ExpenseForm({
       {state?.message && !state.success && (
         <p className="mx-auto w-full max-w-lg">{state.message}</p>
       )}
-    </>
+    </Fragment>
   );
 }
