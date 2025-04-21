@@ -4,6 +4,7 @@ import { useState } from "react";
 import { DatePicker } from ".";
 import { dateToString } from "@/lib/utils";
 import { Label } from "../label/label";
+import { Fragment } from "react";
 
 type DatePickerYearNavigationProps = {
   nameAndId: string;
@@ -17,7 +18,7 @@ export default function DatePickerYearNavigation({
   const [date, setDate] = useState<Date | undefined>(defaultValue);
 
   return (
-    <div className="flex flex-col items-center gap-y-4">
+    <Fragment>
       <Label htmlFor={nameAndId}>Expense Date</Label>
       <DatePicker
         id={nameAndId}
@@ -32,6 +33,6 @@ export default function DatePickerYearNavigation({
         name={nameAndId}
         defaultValue={dateToString(date) ?? dateToString(defaultValue)}
       />
-    </div>
+    </Fragment>
   );
 }
