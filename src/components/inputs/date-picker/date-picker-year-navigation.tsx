@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { DatePicker } from ".";
 import { dateToString } from "@/lib/utils";
-import { Label } from "../label/label";
 import { Fragment } from "react";
 
 type DatePickerYearNavigationProps = {
@@ -19,7 +18,9 @@ export default function DatePickerYearNavigation({
 
   return (
     <Fragment>
-      <Label htmlFor={nameAndId}>Expense Date</Label>
+      <p className="text-sm leading-none text-gray-900 dark:text-gray-50">
+        Expense date
+      </p>
       <DatePicker
         id={nameAndId}
         enableYearNavigation
