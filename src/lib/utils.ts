@@ -11,12 +11,6 @@ export async function grabUserId() {
   return userId;
 }
 
-// turn Date to string
-
-export function dateToString(date: Date | undefined) {
-  return date?.toDateString();
-}
-
 // prepare text in square brackets for dialog deletion
 
 export function textInBrackets(text: string) {

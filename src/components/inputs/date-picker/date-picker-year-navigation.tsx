@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { DatePicker } from ".";
-import { dateToString } from "@/lib/utils";
 import { Fragment } from "react";
 
 type DatePickerYearNavigationProps = {
@@ -14,7 +13,9 @@ export default function DatePickerYearNavigation({
   nameAndId,
   defaultValue,
 }: DatePickerYearNavigationProps) {
-  const [date, setDate] = useState<Date | undefined>(defaultValue);
+  const [date, setDate] = useState<Date | undefined>(
+    typeof defaultValue === "string" ? new Date(defaultValue) : defaultValue
+  );
 
   return (
     <Fragment>
@@ -32,7 +33,13 @@ export default function DatePickerYearNavigation({
       <input
         type="hidden"
         name={nameAndId}
-        defaultValue={dateToString(date) ?? dateToString(defaultValue)}
+        value={
+          date
+            ? date.toDateString()
+            : defaultValue
+              ? defaultValue.toDateString()
+              : new Date().toDateString()
+        }
       />
     </Fragment>
   );
