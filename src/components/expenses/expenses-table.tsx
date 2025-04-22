@@ -17,7 +17,7 @@ import { type ExpenseTypes } from "@/lib/validations/schemas";
 import Link from "next/link";
 import { useTransition } from "react";
 import { deleteExpense } from "@/lib/actions/expense";
-import { Search, Pencil, Trash } from "lucide-react";
+import { Settings2, Trash } from "lucide-react";
 
 const expensesTableHeadings = [
   "Date",
@@ -78,10 +78,7 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
                 <TableCell>
                   <div className="flex space-x-4">
                     <Link href={`/dashboard/expenses/${expense.id}`}>
-                      <Search className="h-4 w-4" />
-                    </Link>
-                    <Link href={`/dashboard/expenses/${expense.id}`}>
-                      <Pencil className="h-4 w-4" />
+                      <Settings2 className="h-4 w-4" />
                     </Link>
                     <button
                       onClick={() => deleteCurrentExpense(expense.id)}
