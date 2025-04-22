@@ -77,13 +77,11 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
                 <TableCell>{expense.payment.toLowerCase()}</TableCell>
                 <TableCell>
                   <div className="flex space-x-4">
-                    <Link href={`/dashboard/expenses/${expense.id}/view`}>
+                    <Link href={`/dashboard/expenses/${expense.id}`}>
                       <Search className="h-4 w-4" />
-                      <span className="sr-only">Edit</span>
                     </Link>
-                    <Link href={`/dashboard/expenses/${expense.id}/edit`}>
+                    <Link href={`/dashboard/expenses/${expense.id}`}>
                       <Pencil className="h-4 w-4" />
-                      <span className="sr-only">Edit</span>
                     </Link>
                     <button
                       onClick={() => deleteCurrentExpense(expense.id)}
@@ -91,7 +89,6 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
                       disabled={isPending}
                     >
                       <Trash className="h-4 w-4" />
-                      <span className="sr-only">Delete</span>
                     </button>
                   </div>
                 </TableCell>

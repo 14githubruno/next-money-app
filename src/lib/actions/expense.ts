@@ -25,8 +25,6 @@ export async function createExpense(
   prevState: ExpenseFormState,
   data: FormData
 ): Promise<ExpenseFormState> {
-  let isSuccess: boolean = false;
-
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -71,7 +69,8 @@ export async function createExpense(
     });
 
     if (newExpense) {
-      isSuccess = true;
+      revalidatePath("/dashboard/expenses");
+      revalidatePath("/dashboard/categories");
     }
 
     return {
@@ -88,12 +87,6 @@ export async function createExpense(
     }
 
     throw new Error("Error creating expense");
-  } finally {
-    if (isSuccess) {
-      revalidatePath("/dashboard/expenses");
-      revalidatePath("/dashboard/categories");
-      redirect("/dashboard/expenses");
-    }
   }
 }
 
@@ -152,7 +145,11 @@ export async function updateExpense(
       isSuccess = true;
     }
 
-    return { success: true, message: "Expense updated" };
+    return {
+      success: true,
+      message: "Expense updated",
+      fieldValues: updatedExpense,
+    };
   } catch (error) {
     if (error instanceof Error) {
       return { success: false, message: error.message, fieldValues };
@@ -161,9 +158,7 @@ export async function updateExpense(
     throw new Error("Error updating expense");
   } finally {
     if (isSuccess) {
-      revalidatePath("/dashboard/categories");
-      revalidatePath("/dashboard/expenses");
-      redirect("/dashboard/expenses");
+      revalidatePath(`/dashboard/expenses/${expenseId}`);
     }
   }
 }
@@ -178,8 +173,6 @@ export async function deleteExpense(expenseId: string) {
   if (!userId) {
     redirect("/sign-in");
   }
-
-  let isDeleted: boolean = false;
 
   try {
     const expense = await prisma.expense.findUnique({
@@ -197,7 +190,7 @@ export async function deleteExpense(expenseId: string) {
     });
 
     if (deletedExpense) {
-      isDeleted = true;
+      revalidatePath("/dashboard/expenses");
     }
 
     return { success: true, message: "Expense deleted" };
@@ -207,10 +200,6 @@ export async function deleteExpense(expenseId: string) {
     }
 
     throw new Error("Error in deleting the expense");
-  } finally {
-    if (isDeleted) {
-      revalidatePath("/dashboard/expenses");
-    }
   }
 }
 
@@ -224,8 +213,6 @@ export async function confirmExpense(expenseId: string) {
   if (!userId) {
     redirect("/sign-in");
   }
-
-  let isConfirmed: boolean = false;
 
   try {
     const expense = await prisma.expense.findUnique({
@@ -245,16 +232,12 @@ export async function confirmExpense(expenseId: string) {
     });
 
     if (confirmedExpense) {
-      isConfirmed = true;
+      revalidatePath("/dashboard");
     }
 
     return { success: true, message: "Expense confirmed" };
   } catch (error) {
     console.log("ERROR CONFIRMING EXPENSES: ", error);
     throw new Error("Error confirming expense");
-  } finally {
-    if (isConfirmed) {
-      revalidatePath("/dashboard");
-    }
   }
 }

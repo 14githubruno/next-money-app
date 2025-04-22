@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { MoveRight } from "lucide-react";
 import { Suspense } from "react";
 import PendingExpenses from "@/components/expenses/pending-expenses";
 import ConfirmedExpenses from "@/components/expenses/confirmed-expenses";
@@ -22,20 +20,6 @@ export default async function Dashboard() {
           <Suspense fallback={<p>Loading...</p>}>
             <ExpensesAmount />
           </Suspense>
-          <Link
-            className="flex w-1/2 justify-between rounded-md bg-[#8659c6] px-4 py-2 text-center text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
-            href={"/dashboard/categories/create"}
-          >
-            <span className="inline-flex">Create a category</span>{" "}
-            <MoveRight size={20} />
-          </Link>
-          <Link
-            className="flex w-1/2 items-center justify-between rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
-            href={"/dashboard/expenses/create"}
-          >
-            <span className="inline-flex">Create an expense</span>{" "}
-            <MoveRight size={20} />
-          </Link>
         </div>
       </div>
     </div>

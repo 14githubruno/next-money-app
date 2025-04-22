@@ -1,36 +1,40 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useActionState, useCallback } from "react";
+import { useActionState, useCallback, useEffect, useRef } from "react";
 import { createExpense, updateExpense } from "@/lib/actions/expense";
 import {
   type CategoryTypes,
   type ExpenseTypes,
 } from "@/lib/validations/schemas";
 import { type ExpenseFormState } from "@/lib/types";
-import { Fragment } from "react";
-
+import { Plus } from "lucide-react";
+import { Button } from "../ui/button/button";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../inputs/select/select";
-
-import { Switch } from "../inputs/switch/switch";
-
-import { RadioGroup, RadioGroupItem } from "../inputs/radio-group/radio-group";
-
-import DatePickerYearNavigation from "../inputs/date-picker/date-picker-year-navigation";
-
-import { Textarea } from "../inputs/textarea/textarea";
-
-import { Input } from "../inputs/input/input";
-
-import { Button } from "../ui/button/button";
-
-import { Label } from "../inputs/label/label";
+} from "@/components/inputs/select/select";
+import { Switch } from "@/components/inputs/switch/switch";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/inputs/radio-group/radio-group";
+import DatePickerYearNavigation from "@/components/inputs/date-picker/date-picker-year-navigation";
+import { Textarea } from "@/components/inputs/textarea/textarea";
+import { Input } from "@/components/inputs/input/input";
+import { Label } from "@/components/inputs/label/label";
 
 type ExpenseFormProps = {
   userId: string;
@@ -52,13 +56,14 @@ const initState: ExpenseFormState = {
   },
 };
 
-export function ExpenseForm({
+export default function ExpenseForm({
   userId,
   categories,
   expense,
   isEditing = false,
 }: ExpenseFormProps) {
-  const router = useRouter();
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   // Bind userId and set action state
   const createExpenseByPassingUserId = createExpense.bind(null, userId);
@@ -90,121 +95,164 @@ export function ExpenseForm({
     [state]
   );
 
+  // if action is successful, close drawer
+  useEffect(() => {
+    if (state.success && closeButtonRef.current !== null) {
+      closeButtonRef.current.click();
+    }
+  }, [state, closeButtonRef]);
+
+  // fire form
+  const fireForm = () => {
+    if (formRef.current !== null) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   return (
-    <Fragment>
-      <h2 className="text-2xl font-bold">
-        {isEditing ? "Edit Expense" : "Add New Expense"}
-      </h2>
-      <form action={formAction} className="mx-auto w-full max-w-lg">
-        <div className="space-y-8">
-          <div className="space-y-2">
-            <Label htmlFor="amount">Amount</Label>
-            <Input
-              type="number"
-              id="amount"
-              name="amount"
-              step="0.01"
-              placeholder="0.00"
-              defaultValue={state.fieldValues?.amount}
-            />
-            {getFieldError("amount")}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="categoryId">Category</Label>
-            <Select
-              name="categoryId"
-              defaultValue={
-                state.fieldValues?.categoryId !== ""
-                  ? state.fieldValues?.categoryId
-                  : undefined
-              }
-            >
-              <SelectTrigger id="categoryId">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories &&
-                  categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            {getFieldError("categoryId")}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="note">Note</Label>
-            <Textarea
-              id="note"
-              name="note"
-              rows={3}
-              placeholder="Add details about this expense"
-              defaultValue={state.fieldValues?.note ?? ""}
-            />
-            {getFieldError("note")}
-          </div>
-
-          <div className="space-y-2">
-            <DatePickerYearNavigation
-              nameAndId="expenseDate" // input name and id + htmlFor of label
-              defaultValue={state.fieldValues?.expenseDate ?? new Date()}
-            />
-            {getFieldError("expenseDate")}
-          </div>
-
-          <div className="flex items-center justify-between">
-            <Label htmlFor="isConfirmed">Payment is confirmed</Label>
-            <Switch
-              id="isConfirmed"
-              name="isConfirmed"
-              defaultChecked={state.fieldValues?.isConfirmed}
-            />
-            {getFieldError("isConfirmed")}
-          </div>
-
-          <div>
-            <fieldset className="space-y-2">
-              <legend className="text-sm font-medium text-gray-900 dark:text-gray-50">
-                Type of payment
-              </legend>
-              <RadioGroup
-                name="payment"
-                defaultValue={state.fieldValues?.payment}
-              >
-                <div>
-                  <Label htmlFor="cash">Cash</Label>
-                  <RadioGroupItem value="CASH" id="cash" />
-                </div>
-                <div>
-                  <Label htmlFor="card">Card</Label>
-                  <RadioGroupItem value="CARD" id="card" />
-                </div>
-                <div>
-                  <Label htmlFor="crypto">Crypto</Label>
-                  <RadioGroupItem value="CRYPTO" id="crypto" />
-                </div>
-              </RadioGroup>
-            </fieldset>
-            {getFieldError("payment")}
-          </div>
-
-          <div className="flex justify-end space-x-4">
-            <Button
-              variant="secondary"
-              type="button"
-              onClick={() => router.back()}
-              disabled={pending}
-            >
-              Cancel
+    <div className="flex justify-center">
+      <Drawer>
+        <DrawerTrigger asChild>
+          {isEditing ? (
+            <Button className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
+              <Plus className="mr-2 h-4 w-4" />
+              Edit expense
             </Button>
+          ) : (
+            <Button className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
+              <Plus className="mr-2 h-4 w-4" />
+              Add expense
+            </Button>
+          )}
+        </DrawerTrigger>
+        <DrawerContent className="sm:max-w-lg">
+          <DrawerHeader>
+            <DrawerTitle>
+              {isEditing ? "Edit expense" : "Add new expense"}
+            </DrawerTitle>
+          </DrawerHeader>
+          <DrawerBody className="py-6">
+            <form
+              ref={formRef}
+              action={formAction}
+              className="mx-auto w-full max-w-lg"
+            >
+              <div className="space-y-8">
+                <div className="space-y-2">
+                  <Label htmlFor="amount">Amount</Label>
+                  <Input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    step="0.01"
+                    placeholder="0.00"
+                    defaultValue={state.fieldValues?.amount}
+                  />
+                  {getFieldError("amount")}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="categoryId">Category</Label>
+                  <Select
+                    name="categoryId"
+                    defaultValue={
+                      state.fieldValues?.categoryId !== ""
+                        ? state.fieldValues?.categoryId
+                        : undefined
+                    }
+                  >
+                    <SelectTrigger id="categoryId">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories &&
+                        categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  {getFieldError("categoryId")}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="note">Note</Label>
+                  <Textarea
+                    id="note"
+                    name="note"
+                    rows={3}
+                    placeholder="Add details about this expense"
+                    defaultValue={state.fieldValues?.note ?? ""}
+                  />
+                  {getFieldError("note")}
+                </div>
+
+                <div className="space-y-2">
+                  <DatePickerYearNavigation
+                    nameAndId="expenseDate" // input name and id + htmlFor of label
+                    defaultValue={state.fieldValues?.expenseDate ?? new Date()}
+                  />
+                  {getFieldError("expenseDate")}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="isConfirmed">Payment is confirmed</Label>
+                  <Switch
+                    id="isConfirmed"
+                    name="isConfirmed"
+                    defaultChecked={state.fieldValues?.isConfirmed}
+                  />
+                  {getFieldError("isConfirmed")}
+                </div>
+
+                <div>
+                  <fieldset className="space-y-2">
+                    <legend className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                      Type of payment
+                    </legend>
+                    <RadioGroup
+                      name="payment"
+                      defaultValue={state.fieldValues?.payment}
+                    >
+                      <div>
+                        <Label htmlFor="cash">Cash</Label>
+                        <RadioGroupItem value="CASH" id="cash" />
+                      </div>
+                      <div>
+                        <Label htmlFor="card">Card</Label>
+                        <RadioGroupItem value="CARD" id="card" />
+                      </div>
+                      <div>
+                        <Label htmlFor="crypto">Crypto</Label>
+                        <RadioGroupItem value="CRYPTO" id="crypto" />
+                      </div>
+                    </RadioGroup>
+                  </fieldset>
+                  {getFieldError("payment")}
+                </div>
+              </div>
+            </form>
+            {state?.message && !state.success && (
+              <p className="mx-auto w-full max-w-lg">{state.message}</p>
+            )}
+          </DrawerBody>
+          <DrawerFooter className="mt-6">
+            <DrawerClose asChild>
+              <Button
+                ref={closeButtonRef}
+                className="mt-2 w-full sm:mt-0 sm:w-fit"
+                variant="secondary"
+              >
+                Go back
+              </Button>
+            </DrawerClose>
             <Button
               variant="primary"
               type="submit"
               disabled={pending}
               isLoading={pending}
+              onClick={fireForm}
             >
               {pending
                 ? "Saving..."
@@ -212,12 +260,9 @@ export function ExpenseForm({
                   ? "Update Expense"
                   : "Create Expense"}
             </Button>
-          </div>
-        </div>
-      </form>
-      {state?.message && !state.success && (
-        <p className="mx-auto w-full max-w-lg">{state.message}</p>
-      )}
-    </Fragment>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }

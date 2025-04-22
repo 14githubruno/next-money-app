@@ -5,7 +5,6 @@ import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { revalidatePath } from "next/cache";
 import { grabUserId } from "../utils";
-import { redirect } from "next/navigation";
 
 /**
  * This file contains all the categories-related queries
@@ -25,8 +24,6 @@ export async function createCategory(
   prevState: CategoryFormState,
   data: FormData
 ): Promise<CategoryFormState> {
-  let isSuccess: boolean = false;
-
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -68,7 +65,7 @@ export async function createCategory(
     });
 
     if (newCategory) {
-      isSuccess = true;
+      revalidatePath("/dashboard/categories");
     }
 
     return {
@@ -85,11 +82,6 @@ export async function createCategory(
     }
 
     throw new Error("Error creating category");
-  } finally {
-    if (isSuccess) {
-      revalidatePath("/dashboard/categories");
-      redirect("/dashboard/categories");
-    }
   }
 }
 
@@ -163,6 +155,7 @@ export async function updateCategory(
     return {
       success: true,
       message: `Category with name ${updatedCategory.name} updated`,
+      fieldValues: updatedCategory,
     };
   } catch (error) {
     if (error instanceof Error) {
@@ -176,8 +169,7 @@ export async function updateCategory(
     throw new Error("Error updating category");
   } finally {
     if (isSuccess) {
-      revalidatePath("/dashboard/categories");
-      redirect("/dashboard/categories");
+      revalidatePath(`/dashboard/categories/${categoryId}`);
     }
   }
 }

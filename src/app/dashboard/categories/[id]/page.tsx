@@ -1,9 +1,9 @@
-import { CategoryForm } from "@/components/categories/category-form";
 import { grabUserId } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { getSingleCategory } from "@/lib/queries/category";
+import CategoryForm from "@/components/categories/category-form";
 
-export default async function EditCategoryPage({
+export default async function SingleCategoryPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -19,6 +19,10 @@ export default async function EditCategoryPage({
 
   return (
     <div className="p-6">
+      <div>
+        <p>{JSON.stringify(category)}</p>
+      </div>
+
       {category && userId && (
         <CategoryForm userId={userId} category={category} isEditing={true} />
       )}

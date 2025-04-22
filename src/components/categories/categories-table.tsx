@@ -12,7 +12,7 @@ import {
 
 import Link from "next/link";
 import { deleteCategory } from "@/lib/actions/category";
-import { Search, Pencil, Lock, Trash } from "lucide-react";
+import { Search, Lock, Trash, Pencil } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
 
@@ -72,13 +72,11 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-4">
-                      <Link href={`/dashboard/categories/${category.id}/view`}>
+                      <Link href={`/dashboard/categories/${category.id}`}>
                         <Search className="h-4 w-4" />
-                        <span className="sr-only">Edit</span>
                       </Link>
-                      <Link href={`/dashboard/categories/${category.id}/edit`}>
+                      <Link href={`/dashboard/categories/${category.id}`}>
                         <Pencil className="h-4 w-4" />
-                        <span className="sr-only">Edit</span>
                       </Link>
                       <button
                         className="cursor-pointer"
@@ -86,7 +84,6 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                         disabled={isPending}
                       >
                         <Trash className="h-4 w-4" />
-                        <span className="sr-only">Delete</span>
                       </button>
                     </div>
                   </TableCell>

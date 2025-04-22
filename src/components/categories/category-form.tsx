@@ -1,12 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Button } from "../ui/button/button";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
+import { Plus } from "lucide-react";
 import { createCategory, updateCategory } from "@/lib/actions/category";
-import { Fragment, useActionState, useCallback } from "react";
+import { useActionState, useCallback, useRef, useEffect } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
 import { type CategoryFormState } from "@/lib/types";
-import { Input } from "../inputs/input/input";
-import { Label } from "../inputs/label/label";
+import { Input } from "@/components/inputs/input/input";
+import { Label } from "@/components/inputs/label/label";
 
 type CategoryFormProps = {
   userId: string;
@@ -20,12 +31,13 @@ const initState: CategoryFormState = {
   fieldValues: { name: "" },
 };
 
-export function CategoryForm({
+export default function CategoryForm({
   userId,
   category,
   isEditing = false,
 }: CategoryFormProps) {
-  const router = useRouter();
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   // Bind userId and set action state
   const createCategoryPassingUserId = createCategory.bind(null, userId);
@@ -57,37 +69,79 @@ export function CategoryForm({
     [state]
   );
 
-  return (
-    <Fragment>
-      <h2 className="text-2xl font-bold">
-        {isEditing ? "Edit Category" : "Add New Category"}
-      </h2>
-      <form action={formAction} className="mx-auto w-full max-w-lg">
-        <div className="space-y-8">
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Category name"
-              defaultValue={state?.fieldValues?.name ?? ""}
-            />
-            {getFieldError("name")}
-          </div>
+  // if action is successful, close drawer
+  useEffect(() => {
+    if (state.success && closeButtonRef.current !== null) {
+      closeButtonRef.current.click();
+    }
+  }, [state, closeButtonRef]);
 
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
+  // fire form
+  const fireForm = () => {
+    if (formRef.current !== null) {
+      formRef.current.requestSubmit();
+    }
+  };
+
+  return (
+    <div className="flex justify-center">
+      <Drawer>
+        <DrawerTrigger asChild>
+          {isEditing ? (
+            <Button className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
+              <Plus className="mr-2 h-4 w-4" />
+              Update category
+            </Button>
+          ) : (
+            <Button className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Category
+            </Button>
+          )}
+        </DrawerTrigger>
+        <DrawerContent className="sm:max-w-lg">
+          <DrawerHeader>
+            <DrawerTitle>
+              {isEditing ? "Edit category" : "Add new category"}
+            </DrawerTitle>
+          </DrawerHeader>
+          <DrawerBody className="py-6">
+            <form
+              ref={formRef}
+              action={formAction}
+              className="mx-auto w-full max-w-lg"
             >
-              Cancel
-            </button>
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Category name"
+                  defaultValue={state?.fieldValues?.name ?? ""}
+                />
+                {getFieldError("name")}
+              </div>
+            </form>
+            {state?.message && !state.success && (
+              <p className="mx-auto w-full max-w-lg">{state.message}</p>
+            )}
+          </DrawerBody>
+          <DrawerFooter className="mt-6">
+            <DrawerClose asChild>
+              <Button
+                ref={closeButtonRef}
+                className="mt-2 w-full sm:mt-0 sm:w-fit"
+                variant="secondary"
+              >
+                Go back
+              </Button>
+            </DrawerClose>
             <button
+              onClick={fireForm}
               type="submit"
               disabled={pending}
-              className="rounded-md border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="cursor-pointer rounded-md border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >
               {pending
                 ? "Saving..."
@@ -95,12 +149,9 @@ export function CategoryForm({
                   ? "Update Category"
                   : "Create Category"}
             </button>
-          </div>
-        </div>
-      </form>
-      {state?.message && !state.success && (
-        <p className="mx-auto w-full max-w-lg">{state.message}</p>
-      )}
-    </Fragment>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }
