@@ -191,7 +191,7 @@ export default function ExpenseForm({
                 <div className="space-y-2">
                   <DatePickerYearNavigation
                     nameAndId="expenseDate" // input name and id + htmlFor of label
-                    defaultValue={state.fieldValues?.expenseDate ?? new Date()}
+                    defaultValue={state.fieldValues?.expenseDate}
                   />
                   {getFieldError("expenseDate")}
                 </div>

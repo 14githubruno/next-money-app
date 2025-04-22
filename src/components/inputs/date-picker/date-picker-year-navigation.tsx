@@ -7,7 +7,7 @@ import { Fragment } from "react";
 
 type DatePickerYearNavigationProps = {
   nameAndId: string;
-  defaultValue: Date;
+  defaultValue: Date | undefined;
 };
 
 export default function DatePickerYearNavigation({
