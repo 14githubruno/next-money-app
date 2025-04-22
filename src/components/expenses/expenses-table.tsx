@@ -11,13 +11,12 @@ import {
   TableRoot,
   TableRow,
 } from "../ui/table";
-
+import DeleteDialog from "../ui/dialog/delete-dialog";
 import { type ExpenseTypes } from "@/lib/validations/schemas";
-
 import Link from "next/link";
 import { useTransition } from "react";
 import { deleteExpense } from "@/lib/actions/expense";
-import { Settings2, Trash } from "lucide-react";
+import { Settings2 } from "lucide-react";
 
 const expensesTableHeadings = [
   "Date",
@@ -80,13 +79,12 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
                     <Link href={`/dashboard/expenses/${expense.id}`}>
                       <Settings2 className="h-4 w-4" />
                     </Link>
-                    <button
-                      onClick={() => deleteCurrentExpense(expense.id)}
-                      className="cursor-pointer"
-                      disabled={isPending}
-                    >
-                      <Trash className="h-4 w-4" />
-                    </button>
+                    <DeleteDialog
+                      deleteAction={() => deleteCurrentExpense(expense.id)}
+                      isPending={isPending}
+                      itemKind="expense"
+                      itemData={expense}
+                    />
                   </div>
                 </TableCell>
               </TableRow>

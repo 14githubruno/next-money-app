@@ -9,10 +9,10 @@ import {
   TableRoot,
   TableRow,
 } from "../ui/table";
-
+import DeleteDialog from "../ui/dialog/delete-dialog";
 import Link from "next/link";
 import { deleteCategory } from "@/lib/actions/category";
-import { Settings2, Lock, Trash } from "lucide-react";
+import { Settings2, Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
 
@@ -75,13 +75,13 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                       <Link href={`/dashboard/categories/${category.id}`}>
                         <Settings2 className="h-4 w-4" />
                       </Link>
-                      <button
-                        className="cursor-pointer"
-                        onClick={() => deleteCurrentCategory(category)}
-                        disabled={isPending}
-                      >
-                        <Trash className="h-4 w-4" />
-                      </button>
+                      <DeleteDialog
+                        deleteAction={() => deleteCurrentCategory(category)}
+                        isPending={isPending}
+                        isDefaultCategory={category.isDefault}
+                        itemKind="category"
+                        itemData={category}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>

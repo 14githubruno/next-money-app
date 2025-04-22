@@ -17,6 +17,12 @@ export function dateToString(date: Date | undefined) {
   return date?.toDateString();
 }
 
+// prepare text in square brackets for dialog deletion
+
+export function textInBrackets(text: string) {
+  return `[${text}]`;
+}
+
 // Tremor Raw cx [v0.0.0]
 
 export function cx(...args: ClassValue[]) {
