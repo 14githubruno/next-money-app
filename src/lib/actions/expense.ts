@@ -76,6 +76,7 @@ export async function createExpense(
     return {
       success: true,
       message: `Expense for category ${newExpense.category.name} created`,
+      fieldValues: prevState.fieldValues,
     };
   } catch (error) {
     if (error instanceof Error) {
