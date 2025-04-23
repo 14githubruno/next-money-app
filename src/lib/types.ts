@@ -1,15 +1,11 @@
 import { type CategorySchema, type ExpenseSchema } from "./validations/schemas";
 
-export type CategoryFormState = {
+export type FormState<T> = {
   success: boolean;
   message: string;
   errors?: Record<string, string[]>;
-  fieldValues?: CategorySchema;
+  fieldValues?: T;
 };
 
-export type ExpenseFormState = {
-  success: boolean;
-  message: string;
-  errors?: Record<string, string[]>;
-  fieldValues?: ExpenseSchema;
-};
+export type CategoryFormState = FormState<CategorySchema>;
+export type ExpenseFormState = FormState<ExpenseSchema>;
