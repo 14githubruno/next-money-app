@@ -3,6 +3,7 @@
 import prisma from "../../../prisma/prisma";
 import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
+import { expenseFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { grabUserId } from "../utils";
@@ -76,7 +77,7 @@ export async function createExpense(
     return {
       success: true,
       message: `Expense for category ${newExpense.category.name} created`,
-      fieldValues: prevState.fieldValues,
+      fieldValues: initState.fieldValues,
     };
   } catch (error) {
     if (error instanceof Error) {

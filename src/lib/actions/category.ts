@@ -3,6 +3,7 @@
 import prisma from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
+import { categoryFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
 import { grabUserId } from "../utils";
 
@@ -71,6 +72,7 @@ export async function createCategory(
     return {
       success: true,
       message: `Category with name ${newCategory.name} created`,
+      fieldValues: initState.fieldValues,
     };
   } catch (error) {
     if (error instanceof Error) {

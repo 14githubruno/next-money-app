@@ -6,7 +6,7 @@ import {
   type CategoryTypes,
   type ExpenseTypes,
 } from "@/lib/validations/schemas";
-import { type ExpenseFormState } from "@/lib/types";
+import { expenseFormInitialState as initState } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button/button";
 import {
@@ -42,19 +42,6 @@ type ExpenseFormProps = {
   categories: CategoryTypes[];
   expense?: ExpenseTypes;
   isEditing?: boolean;
-};
-
-const initState: ExpenseFormState = {
-  success: false,
-  message: "",
-  fieldValues: {
-    amount: 0.01,
-    expenseDate: new Date(),
-    isConfirmed: true,
-    payment: "CASH",
-    note: "",
-    categoryId: "",
-  },
 };
 
 export default function ExpenseForm({

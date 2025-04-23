@@ -15,7 +15,7 @@ import { Plus } from "lucide-react";
 import { createCategory, updateCategory } from "@/lib/actions/category";
 import { useActionState, useRef } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
-import { type CategoryFormState } from "@/lib/types";
+import { categoryFormInitialState as initState } from "@/lib/utils";
 import { Input } from "@/components/inputs/input/input";
 import { Label } from "@/components/inputs/label/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";
@@ -24,12 +24,6 @@ type CategoryFormProps = {
   userId: string;
   category?: CategoryTypes | null;
   isEditing?: boolean;
-};
-
-const initState: CategoryFormState = {
-  success: false,
-  message: "",
-  fieldValues: { name: "" },
 };
 
 export default function CategoryForm({

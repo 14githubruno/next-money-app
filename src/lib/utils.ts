@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { CategoryFormState, ExpenseFormState } from "./types";
 
 // grab user id through auth.js
 
@@ -16,6 +17,27 @@ export async function grabUserId() {
 export function textInBrackets(text: string) {
   return `[${text}]`;
 }
+
+// set initial/default state to populate category and expense forms
+
+export const categoryFormInitialState: CategoryFormState = {
+  success: false,
+  message: "",
+  fieldValues: { name: "" },
+};
+
+export const expenseFormInitialState: ExpenseFormState = {
+  success: false,
+  message: "",
+  fieldValues: {
+    amount: 0.01,
+    expenseDate: new Date(),
+    isConfirmed: false,
+    payment: "CASH",
+    note: "",
+    categoryId: "",
+  },
+};
 
 // Tremor Raw cx [v0.0.0]
 
