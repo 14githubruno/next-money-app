@@ -115,6 +115,7 @@ export default function DeleteDialog({
           <DialogFooter className="mt-6">
             <DialogClose asChild>
               <Button
+                disabled={isPending}
                 className="mt-2 w-full sm:mt-0 sm:w-fit"
                 variant="secondary"
               >
