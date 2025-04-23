@@ -13,13 +13,13 @@
     cubic-bezier(0.16, 1, 0.3, 1);
   --animate-accordion-open: accordionOpen 150ms cubic-bezier(0.87, 0, 0.13, 1);
   --animate-accordion-close: accordionClose 150ms cubic-bezier(0.87, 0, 0.13, 1);
-  --animate-dialog-overlay-show: dialogOverlayShow 150ms
+  --animate-dialog-overlay-show: dialogOverlayShow 100ms
     cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-dialog-content-show: dialogContentShow 150ms
+  --animate-dialog-content-show: dialogContentShow 100ms
     cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-drawer-slide-left-and-fade: drawerSlideLeftAndFade 150ms
+  --animate-drawer-slide-left-and-fade: drawerSlideLeftAndFade 100ms
     cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-drawer-slide-right-and-fade: drawerSlideRightAndFade 150ms ease-in;
+  --animate-drawer-slide-right-and-fade: drawerSlideRightAndFade 100ms ease-in;
 
   @keyframes hide {
     from {
