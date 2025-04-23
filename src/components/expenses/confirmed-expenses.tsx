@@ -1,7 +1,6 @@
 import { grabUserId } from "@/lib/utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
-import ConfirmedExpensesTable from "./confirmed-expenses-table";
 
 const confirmedExpenses = {
   isConfirmed: true,
@@ -38,7 +37,6 @@ export default async function ConfirmedExpenses() {
               ${amount?._sum.amount ? amount?._sum.amount?.toFixed(2) : 0}
             </span>
           </p>
-          <ConfirmedExpensesTable expenses={expenses.slice(0, 3)} />
         </div>
       )}
     </div>
