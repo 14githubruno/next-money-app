@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useTransition } from "react";
 import { deleteExpense } from "@/lib/actions/expense";
 import { Settings2 } from "lucide-react";
+import { useToast } from "@/hooks/toast/use-toast";
 
 const expensesTableHeadings = [
   "Date",
@@ -34,10 +35,25 @@ type ExpensesTableProps = {
 
 export function ExpensesTable({ expenses }: ExpensesTableProps) {
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
 
   const deleteCurrentExpense = (expenseId: string) => {
     startTransition(async () => {
-      await deleteExpense(expenseId);
+      const result = await deleteExpense(expenseId);
+
+      startTransition(() => {
+        if (result.success) {
+          toast({
+            description: result.message,
+            variant: "info",
+          });
+        } else {
+          toast({
+            description: result.message,
+            variant: "error",
+          });
+        }
+      });
     });
   };
 

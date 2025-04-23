@@ -15,6 +15,7 @@ import { deleteCategory } from "@/lib/actions/category";
 import { Settings2, Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
+import { useToast } from "@/hooks/toast/use-toast";
 
 const categoriesHeadings = ["Name", "Expenses", "Default", "Actions"];
 
@@ -24,6 +25,7 @@ type CategoriesTableProps = {
 
 export function CategoriesTable({ categories }: CategoriesTableProps) {
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
 
   const deleteCurrentCategory = (category: CategoryTypes) => {
     const { id, expenses, isDefault } = category;
@@ -37,7 +39,21 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
     }
 
     startTransition(async () => {
-      await deleteCategory(id);
+      const result = await deleteCategory(id);
+
+      startTransition(() => {
+        if (result.success) {
+          toast({
+            description: result.message,
+            variant: "info",
+          });
+        } else {
+          toast({
+            description: result.message,
+            variant: "error",
+          });
+        }
+      });
     });
   };
 

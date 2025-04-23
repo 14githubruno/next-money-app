@@ -6,6 +6,7 @@ import { ExpenseTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
 import { Table, TableBody, TableCell, TableRoot, TableRow } from "../ui/table";
 import { Button } from "../ui/button/button";
+import { useToast } from "@/hooks/toast/use-toast";
 
 type PendingExpensesTableProps = {
   expenses: ExpenseTypes[];
@@ -16,11 +17,26 @@ export default function PendingExpensesTable({
 }: PendingExpensesTableProps) {
   const [isPending, startTransition] = useTransition();
   const [expenseGettingConfirmed, setExpenseGettingConfirmed] = useState("");
+  const { toast } = useToast();
 
   const confirmPayment = (expenseId: string) => {
     setExpenseGettingConfirmed(expenseId);
     startTransition(async () => {
-      await confirmExpense(expenseId);
+      const result = await confirmExpense(expenseId);
+
+      startTransition(() => {
+        if (result.success) {
+          toast({
+            description: result.message,
+            variant: "info",
+          });
+        } else {
+          toast({
+            description: result.message,
+            variant: "error",
+          });
+        }
+      });
     });
   };
 

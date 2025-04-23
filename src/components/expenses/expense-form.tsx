@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useCallback, useEffect, useRef } from "react";
+import { useActionState, useRef } from "react";
 import { createExpense, updateExpense } from "@/lib/actions/expense";
 import {
   type CategoryTypes,
@@ -35,6 +35,7 @@ import DatePickerYearNavigation from "@/components/inputs/date-picker/date-picke
 import { Textarea } from "@/components/inputs/textarea/textarea";
 import { Input } from "@/components/inputs/input/input";
 import { Label } from "@/components/inputs/label/label";
+import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type ExpenseFormProps = {
   userId: string;
@@ -85,22 +86,9 @@ export default function ExpenseForm({
 
   const [state, formAction, pending] = useActionState(action, initialState);
 
-  // Helper function to display field errors
-  const getFieldError = useCallback(
-    (fieldName: string) => {
-      return state?.errors && state.errors[fieldName]?.[0] ? (
-        <p className="mt-1 text-red-600">{state?.errors[fieldName][0]}</p>
-      ) : null;
-    },
-    [state]
-  );
-
-  // if action is successful, close drawer
-  useEffect(() => {
-    if (state.success && closeButtonRef.current !== null) {
-      closeButtonRef.current.click();
-    }
-  }, [state, closeButtonRef]);
+  // if action is successful, close drawer and toast success,
+  // otherwise keep drawer open and toast errors
+  useFormToast(state, closeButtonRef);
 
   // fire form
   const fireForm = () => {
@@ -148,7 +136,6 @@ export default function ExpenseForm({
                     placeholder="0.00"
                     defaultValue={state.fieldValues?.amount}
                   />
-                  {getFieldError("amount")}
                 </div>
 
                 <div className="space-y-2">
@@ -173,7 +160,6 @@ export default function ExpenseForm({
                         ))}
                     </SelectContent>
                   </Select>
-                  {getFieldError("categoryId")}
                 </div>
 
                 <div className="space-y-2">
@@ -185,7 +171,6 @@ export default function ExpenseForm({
                     placeholder="Add details about this expense"
                     defaultValue={state.fieldValues?.note ?? ""}
                   />
-                  {getFieldError("note")}
                 </div>
 
                 <div className="space-y-2">
@@ -193,7 +178,6 @@ export default function ExpenseForm({
                     nameAndId="expenseDate" // input name and id + htmlFor of label
                     defaultValue={state.fieldValues?.expenseDate}
                   />
-                  {getFieldError("expenseDate")}
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -203,7 +187,6 @@ export default function ExpenseForm({
                     name="isConfirmed"
                     defaultChecked={state.fieldValues?.isConfirmed}
                   />
-                  {getFieldError("isConfirmed")}
                 </div>
 
                 <div>
@@ -229,13 +212,9 @@ export default function ExpenseForm({
                       </div>
                     </RadioGroup>
                   </fieldset>
-                  {getFieldError("payment")}
                 </div>
               </div>
             </form>
-            {state?.message && !state.success && (
-              <p className="mx-auto w-full max-w-lg">{state.message}</p>
-            )}
           </DrawerBody>
           <DrawerFooter className="mt-6">
             <DrawerClose asChild>

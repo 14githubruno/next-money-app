@@ -13,11 +13,12 @@ import {
 } from "../ui/drawer";
 import { Plus } from "lucide-react";
 import { createCategory, updateCategory } from "@/lib/actions/category";
-import { useActionState, useCallback, useRef, useEffect } from "react";
+import { useActionState, useRef } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
 import { type CategoryFormState } from "@/lib/types";
 import { Input } from "@/components/inputs/input/input";
 import { Label } from "@/components/inputs/label/label";
+import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type CategoryFormProps = {
   userId: string;
@@ -59,22 +60,9 @@ export default function CategoryForm({
 
   const [state, formAction, pending] = useActionState(action, initialState);
 
-  // Helper function to display field errors
-  const getFieldError = useCallback(
-    (fieldName: string) => {
-      return state?.errors && state.errors[fieldName]?.[0] ? (
-        <p className="mt-1 text-red-600">{state?.errors[fieldName][0]}</p>
-      ) : null;
-    },
-    [state]
-  );
-
-  // if action is successful, close drawer
-  useEffect(() => {
-    if (state.success && closeButtonRef.current !== null) {
-      closeButtonRef.current.click();
-    }
-  }, [state, closeButtonRef]);
+  // if action is successful, close drawer and toast success,
+  // otherwise keep drawer open and toast errors
+  useFormToast(state, closeButtonRef);
 
   // fire form
   const fireForm = () => {
@@ -120,12 +108,8 @@ export default function CategoryForm({
                   placeholder="Category name"
                   defaultValue={state?.fieldValues?.name ?? ""}
                 />
-                {getFieldError("name")}
               </div>
             </form>
-            {state?.message && !state.success && (
-              <p className="mx-auto w-full max-w-lg">{state.message}</p>
-            )}
           </DrawerBody>
           <DrawerFooter className="mt-6">
             <DrawerClose asChild>
