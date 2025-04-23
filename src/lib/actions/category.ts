@@ -221,7 +221,7 @@ export async function deleteCategory(categoryId: string) {
 
     return {
       success: true,
-      message: `Category with name ${deletedCategory.name} updated`,
+      message: `Category with name ${deletedCategory.name} deleted`,
     };
   } catch (error) {
     if (error instanceof Error) {
