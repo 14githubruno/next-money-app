@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge } from "../ui/badge";
-
 import {
   Table,
   TableBody,
@@ -13,11 +12,12 @@ import {
 } from "../ui/table";
 import DeleteDialog from "../ui/dialog/delete-dialog";
 import { type ExpenseTypes } from "@/lib/validations/schemas";
-import Link from "next/link";
-import { useTransition } from "react";
 import { deleteExpense } from "@/lib/actions/expense";
 import { Settings2 } from "lucide-react";
 import { useToast } from "@/hooks/toast/use-toast";
+import Link from "next/link";
+import { useTransition } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 const expensesTableHeadings = [
   "Date",
@@ -30,15 +30,20 @@ const expensesTableHeadings = [
 ];
 
 type ExpensesTableProps = {
+  currentPage: number;
   expenses: ExpenseTypes[];
 };
 
-export function ExpensesTable({ expenses }: ExpensesTableProps) {
+export function ExpensesTable({ currentPage, expenses }: ExpensesTableProps) {
   const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const { toast } = useToast();
 
   const deleteCurrentExpense = (expenseId: string) => {
     startTransition(async () => {
+      const isLast = expenses.length === 1;
       const result = await deleteExpense(expenseId);
 
       startTransition(() => {
@@ -47,6 +52,15 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
             description: result.message,
             variant: "info",
           });
+
+          // if it's the last expense (on the page) being deleted and there are more pages (< 1 page),
+          // push user to previous one
+          if (isLast && currentPage > 1) {
+            const params = new URLSearchParams(searchParams);
+            const pageNumber = currentPage - 1;
+            params.set("page", pageNumber.toString());
+            replace(`${pathname}?${params.toString()}`);
+          }
         } else {
           toast({
             description: result.message,
@@ -58,23 +72,24 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
   };
 
   return (
-    <>
-      <div>
-        <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
-          Overview of all your expenses.
-        </p>
-      </div>
-      <TableRoot className="mt-8">
-        <Table>
-          <TableHead>
+    <TableRoot className="mt-8">
+      <Table>
+        <TableHead>
+          <TableRow>
+            {expensesTableHeadings.map((heading) => {
+              return <TableHeaderCell key={heading}>{heading}</TableHeaderCell>;
+            })}
+          </TableRow>
+        </TableHead>
+        {expenses.length === 0 ? (
+          <TableBody>
             <TableRow>
-              {expensesTableHeadings.map((heading) => {
-                return (
-                  <TableHeaderCell key={heading}>{heading}</TableHeaderCell>
-                );
-              })}
+              <TableCell>
+                <div className="py-4">no result</div>
+              </TableCell>
             </TableRow>
-          </TableHead>
+          </TableBody>
+        ) : (
           <TableBody>
             {expenses.map((expense) => (
               <TableRow key={expense.id}>
@@ -106,8 +121,8 @@ export function ExpensesTable({ expenses }: ExpensesTableProps) {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableRoot>
-    </>
+        )}
+      </Table>
+    </TableRoot>
   );
 }

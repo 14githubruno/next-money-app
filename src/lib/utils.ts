@@ -18,6 +18,18 @@ export function textInBrackets(text: string) {
   return `[${text}]`;
 }
 
+// convert true or false strings (coming from search params) to boolean
+export function convertToBoolean(value: string | string[] | undefined) {
+  switch (value) {
+    case "true":
+      return true;
+    case "false":
+      return false;
+    default:
+      return undefined;
+  }
+}
+
 // set initial/default state to populate category and expense forms
 
 export const categoryFormInitialState: CategoryFormState = {
@@ -37,6 +49,51 @@ export const expenseFormInitialState: ExpenseFormState = {
     note: "",
     categoryId: "",
   },
+};
+
+// handle pagination (based on nextjs-learn example)
+export const generatePagination = (currentPage: number, totalPages: number) => {
+  // If the total number of pages is 7 or less
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  // If the current page is among the first 3 pages
+  if (currentPage < 3) {
+    return [1, 2, 3, "...", totalPages - 1, totalPages];
+  }
+
+  if (currentPage === 3) {
+    return [1, 2, 3, 4, "...", totalPages];
+  }
+
+  // If the current page is among the last 3 pages
+  if (currentPage > totalPages - 2) {
+    return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
+  }
+
+  if (currentPage === 6) {
+    return [
+      1,
+      2,
+      "...",
+      totalPages - 3,
+      totalPages - 2,
+      totalPages - 1,
+      totalPages,
+    ];
+  }
+
+  // If the current page is somewhere in the middle
+  return [
+    1,
+    "...",
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    "...",
+    totalPages,
+  ];
 };
 
 // Tremor Raw cx [v0.0.0]
