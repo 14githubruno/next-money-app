@@ -4,6 +4,7 @@ import { NotebookTabs, HomeIcon, FileChartColumnIcon } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import { Button } from "./ui/button/button";
 
 // links
 const links = [
@@ -27,17 +28,22 @@ export default function NavLinks() {
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          <Link
+          <Button
             key={link.name}
-            href={link.href}
-            className={clsx(
-              "flex grow items-center justify-center gap-2 border border-[#8f63cd6e] p-3 text-sm font-medium hover:bg-[#8659c6] hover:text-white md:flex-none md:justify-start md:p-2 md:px-3",
-              pathname === link.href && "bg-[#8659c6] text-white"
-            )}
+            variant={pathname === link.href ? "base" : "secondary"}
+            asChild
           >
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
-          </Link>
+            <Link
+              key={link.name}
+              href={link.href}
+              className={clsx(
+                "flex items-center justify-center gap-2 text-sm font-medium md:flex-none md:justify-start"
+              )}
+            >
+              <LinkIcon className="w-6" />
+              <p className="hidden md:block">{link.name}</p>
+            </Link>
+          </Button>
         );
       })}
     </>

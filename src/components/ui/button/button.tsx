@@ -17,6 +17,18 @@ const buttonVariants = tv({
   ],
   variants: {
     variant: {
+      base: [
+        // border
+        "border-transparent",
+        // text color
+        "text-white dark:text-black",
+        // background color
+        "bg-black dark:bg-white",
+        // hover color
+        "hover:opacity-75",
+        // disabled
+        "disabled:bg-gray-300 disabled:text-gray-200",
+      ],
       primary: [
         // border
         "border-transparent",

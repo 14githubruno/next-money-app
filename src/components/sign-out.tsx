@@ -1,24 +1,26 @@
 "use client";
 
-import { LeafIcon } from "lucide-react";
 import { logout } from "@/lib/actions/auth";
 import { useActionState } from "react";
+import { Button } from "./ui/button/button";
+import { LogOutIcon } from "lucide-react";
 
 export default function SignOut() {
   const [state, formAction, pending] = useActionState(logout, undefined);
 
   return (
     <form action={formAction}>
-      <button
+      <Button
+        variant="base"
         type="submit"
-        className="flex w-full cursor-pointer items-center justify-center gap-2 border border-[#8f63cd6e] p-3 text-sm font-medium hover:bg-[#8659c6] hover:text-white md:flex-none md:justify-start md:p-2 md:px-3"
         disabled={pending}
+        isLoading={pending}
+        className="flex h-10 w-full grow items-center justify-center gap-2 text-sm font-medium md:flex-none md:justify-start"
       >
-        <LeafIcon className="w-6" />
-        <span className="hidden md:block">
-          {pending ? "Loading..." : "Sign out"}
-        </span>
-      </button>
+        <LogOutIcon className="h-10 w-10" />
+        <span> {pending ? "Loading..." : "Sign out"}</span>
+      </Button>
+
       {state && <p aria-live="polite">{state.message}</p>}
     </form>
   );

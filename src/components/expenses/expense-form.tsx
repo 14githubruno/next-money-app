@@ -88,17 +88,10 @@ export default function ExpenseForm({
     <div className="flex justify-center">
       <Drawer>
         <DrawerTrigger asChild>
-          {isEditing ? (
-            <Button className="flex items-center bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
-              <Plus className="mr-2 h-4 w-4" />
-              Edit expense
-            </Button>
-          ) : (
-            <Button className="flex items-center bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
-              <Plus className="mr-2 h-4 w-4" />
-              Add expense
-            </Button>
-          )}
+          <Button variant="base">
+            <Plus className="mr-2 h-4 w-4" />
+            {isEditing ? "Update expense" : "Add expense"}
+          </Button>
         </DrawerTrigger>
         <DrawerContent className="sm:max-w-lg">
           <DrawerHeader>
@@ -214,7 +207,7 @@ export default function ExpenseForm({
               </Button>
             </DrawerClose>
             <Button
-              variant="primary"
+              variant="base"
               type="submit"
               disabled={pending}
               isLoading={pending}
