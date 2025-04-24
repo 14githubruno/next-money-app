@@ -7,7 +7,7 @@ export default function NotFound() {
       <p>Could not find the resource requested</p>
       <Link
         href="/dashboard/expenses"
-        className="rounded-md border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
+        className="border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
       >
         Go Back
       </Link>

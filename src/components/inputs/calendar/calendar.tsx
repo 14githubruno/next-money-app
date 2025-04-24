@@ -45,7 +45,7 @@ const NavigationButton = React.forwardRef<
         type="button"
         disabled={disabled}
         className={cx(
-          "flex size-8 shrink-0 items-center justify-center rounded-sm border p-1 outline-hidden transition select-none sm:size-[30px]",
+          "flex size-8 shrink-0 items-center justify-center border p-1 outline-hidden transition select-none sm:size-[30px]",
           // text color
           "text-gray-600 hover:text-gray-800",
           "dark:text-gray-400 dark:hover:text-gray-200",
@@ -113,7 +113,7 @@ const Calendar = ({
       classNames={{
         months: "flex space-y-0",
         month: "space-y-4 p-3",
-        nav: "gap-1 flex items-center rounded-full size-full justify-between p-4",
+        nav: "gap-1 flex items-center size-full justify-between p-4",
         table: "w-full border-collapse space-y-1",
         head_cell:
           "w-9 font-medium text-sm sm:text-xs text-center text-gray-400 dark:text-gray-600 pb-2",
@@ -123,14 +123,13 @@ const Calendar = ({
           "text-gray-900 dark:text-gray-50"
         ),
         day: cx(
-          "size-9 rounded-sm text-sm focus:z-10",
+          "size-9 text-sm focus:z-10",
           "text-gray-900 dark:text-gray-50",
           "hover:bg-gray-200 dark:hover:bg-gray-700",
           focusRing
         ),
         day_today: "font-semibold",
         day_selected: cx(
-          "rounded-sm",
           "aria-selected:bg-blue-500 aria-selected:text-white",
           "dark:aria-selected:bg-blue-500 dark:aria-selected:text-white"
         ),
@@ -138,12 +137,11 @@ const Calendar = ({
           "text-gray-300! dark:text-gray-700! line-through disabled:hover:bg-transparent",
         day_outside: "text-gray-400 dark:text-gray-600",
         day_range_middle: cx(
-          "rounded-none!",
           "aria-selected:bg-gray-100! aria-selected:text-gray-900!",
           "dark:aria-selected:bg-gray-900! dark:aria-selected:text-gray-50!"
         ),
-        day_range_start: "rounded-r-none rounded-l!",
-        day_range_end: "rounded-l-none rounded-r!",
+        day_range_start: "",
+        day_range_end: "",
         day_hidden: "invisible",
         ...classNames,
       }}
@@ -298,7 +296,7 @@ const Calendar = ({
               {today && (
                 <span
                   className={cx(
-                    "absolute inset-x-1/2 bottom-1.5 h-0.5 w-4 -translate-x-1/2 rounded-[2px]",
+                    "absolute inset-x-1/2 bottom-1.5 h-0.5 w-4 -translate-x-1/2",
                     {
                       "bg-blue-500 dark:bg-blue-500": !selected,
                       "bg-white! dark:bg-gray-950!": selected,

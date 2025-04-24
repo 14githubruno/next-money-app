@@ -21,7 +21,7 @@ export default function Error({ error, reset }: Props) {
       <h1 className="text-center">Something went wrong</h1>
       <p>{error.message}</p>
       <button
-        className="cursor-pointer rounded-md border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
+        className="cursor-pointer border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
         onClick={() => reset()}
       >
         Please try again

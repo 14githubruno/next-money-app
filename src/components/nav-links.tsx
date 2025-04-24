@@ -31,7 +31,7 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              "flex grow items-center justify-center gap-2 rounded-md border border-[#8f63cd6e] p-3 text-sm font-medium hover:bg-[#8659c6] hover:text-white md:flex-none md:justify-start md:p-2 md:px-3",
+              "flex grow items-center justify-center gap-2 border border-[#8f63cd6e] p-3 text-sm font-medium hover:bg-[#8659c6] hover:text-white md:flex-none md:justify-start md:p-2 md:px-3",
               pathname === link.href && "bg-[#8659c6] text-white"
             )}
           >

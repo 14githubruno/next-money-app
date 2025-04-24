@@ -67,7 +67,7 @@ const TimeSegment = ({ segment, state }: TimeSegmentProps) => {
       ref={ref}
       className={cx(
         // base
-        "relative block w-full appearance-none rounded-md border px-2.5 py-1.5 text-left uppercase tabular-nums shadow-xs outline-hidden transition sm:text-sm",
+        "relative block w-full appearance-none border px-2.5 py-1.5 text-left uppercase tabular-nums shadow-xs outline-hidden transition sm:text-sm",
         // border color
         "border-gray-300 dark:border-gray-800",
         // text color
@@ -146,7 +146,7 @@ TimeInput.displayName = "TimeInput";
 const triggerStyles = tv({
   base: [
     // base
-    "peer flex w-full cursor-pointer appearance-none items-center gap-x-2 truncate rounded-md border px-3 py-2 shadow-xs outline-hidden transition-all sm:text-sm",
+    "peer flex w-full cursor-pointer appearance-none items-center gap-x-2 truncate border px-3 py-2 shadow-xs outline-hidden transition-all sm:text-sm",
     // background color
     "bg-white dark:bg-gray-950",
     // border color
@@ -227,7 +227,7 @@ const CalendarPopover = React.forwardRef<
         onOpenAutoFocus={(e) => e.preventDefault()}
         className={cx(
           // base
-          "relative z-50 w-fit rounded-md border text-sm shadow-xl shadow-black/[2.5%]",
+          "relative z-50 w-fit border text-sm shadow-xl shadow-black/[2.5%]",
           // widths
           "max-w-[95vw] min-w-[calc(var(--radix-select-trigger-width)-2px)]",
           // border color
@@ -364,7 +364,7 @@ const PresetContainer = <TPreset extends Preset, TValue>({
               title={preset.label}
               className={cx(
                 // base
-                "relative w-full overflow-hidden rounded-sm border px-2.5 py-1.5 text-left text-base text-ellipsis whitespace-nowrap shadow-xs outline-hidden transition-all sm:border-none sm:py-2 sm:text-sm sm:shadow-none",
+                "relative w-full overflow-hidden border px-2.5 py-1.5 text-left text-base text-ellipsis whitespace-nowrap shadow-xs outline-hidden transition-all sm:border-none sm:py-2 sm:text-sm sm:shadow-none",
                 // text color
                 "text-gray-700 dark:text-gray-300",
                 // border color

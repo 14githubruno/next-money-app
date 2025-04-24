@@ -25,12 +25,12 @@ export default async function PendingExpenses() {
         <p>You don&apos;t have any pending payment</p>
       ) : (
         <div>
-          <p className="mb-2 rounded-sm bg-purple-50 p-3">
+          <p className="mb-2 bg-purple-50 p-3">
             You have{" "}
             <span className="font-bold text-[#8659c6]">{expenses.length}</span>{" "}
             pending {expenses.length === 1 ? "payment" : "payments"}
           </p>
-          <p className="my-2 rounded-sm bg-purple-200 p-3">
+          <p className="my-2 bg-purple-200 p-3">
             Total Pending:{" "}
             <span className="font-medium">
               ${amount?._sum.amount ? amount?._sum.amount?.toFixed(2) : 0}

@@ -12,7 +12,7 @@ export default async function ExpensesAmount() {
   const expensesAmount = await getTotalAmountExpenses(userId);
 
   return expensesAmount ? (
-    <div className="rounded-sm border border-purple-400 pl-4">
+    <div className="border border-purple-400 pl-4">
       <p>
         The total amount of expenses is:{" "}
         <span className="font-medium">

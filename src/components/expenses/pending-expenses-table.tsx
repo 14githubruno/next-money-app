@@ -42,7 +42,7 @@ export default function PendingExpensesTable({
 
   if (expenses.length === 0) {
     return (
-      <div className="rounded-lg bg-gray-50 py-8 text-center">
+      <div className="bg-gray-50 py-8 text-center">
         <p className="text-gray-500">No unconfirmed expenses found.</p>
       </div>
     );
@@ -69,7 +69,7 @@ export default function PendingExpensesTable({
                     isLoading={
                       isPending && expenseGettingConfirmed === expense.id
                     }
-                    className="inline-flex items-center gap-x-1 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-900 ring-blue-500/30"
+                    className="inline-flex items-center gap-x-1 bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-900 ring-blue-500/30"
                   >
                     {isPending && expenseGettingConfirmed === expense.id ? (
                       <>confirming...</>

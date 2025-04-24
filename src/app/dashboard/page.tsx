@@ -16,7 +16,7 @@ export default async function Dashboard() {
             <ConfirmedExpenses />
           </Suspense>
         </div>
-        <div className="col-start-5 col-end-7 flex flex-col items-center justify-center gap-6 rounded-sm bg-green-50">
+        <div className="col-start-5 col-end-7 flex flex-col items-center justify-center gap-6 bg-green-50">
           <Suspense fallback={<p>Loading...</p>}>
             <ExpensesAmount />
           </Suspense>

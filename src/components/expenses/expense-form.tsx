@@ -89,12 +89,12 @@ export default function ExpenseForm({
       <Drawer>
         <DrawerTrigger asChild>
           {isEditing ? (
-            <Button className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
+            <Button className="flex items-center bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
               <Plus className="mr-2 h-4 w-4" />
               Edit expense
             </Button>
           ) : (
-            <Button className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
+            <Button className="flex items-center bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none">
               <Plus className="mr-2 h-4 w-4" />
               Add expense
             </Button>

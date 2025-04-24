@@ -9,7 +9,7 @@ import { cx, focusInput, focusRing, hasErrorInput } from "@/lib/utils";
 const inputStyles = tv({
   base: [
     // base
-    "relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-xs outline-hidden transition sm:text-sm",
+    "relative block w-full appearance-none border px-2.5 py-2 shadow-xs outline-hidden transition sm:text-sm",
     // border color
     "border-gray-300 dark:border-gray-800",
     // text color
@@ -23,7 +23,7 @@ const inputStyles = tv({
     "dark:disabled:border-gray-700 dark:disabled:bg-gray-800 dark:disabled:text-gray-500",
     // file
     [
-      "file:-my-2 file:-ml-2.5 file:cursor-pointer file:rounded-l-[5px] file:rounded-r-none file:border-0 file:px-3 file:py-2 file:outline-hidden focus:outline-hidden disabled:pointer-events-none file:disabled:pointer-events-none",
+      "file:-my-2 file:-ml-2.5 file:cursor-pointer file:border-0 file:px-3 file:py-2 file:outline-hidden focus:outline-hidden disabled:pointer-events-none file:disabled:pointer-events-none",
       "file:border-solid file:border-gray-300 file:bg-gray-50 file:text-gray-500 file:hover:bg-gray-100 dark:file:border-gray-800 dark:file:bg-gray-950 dark:file:hover:bg-gray-900/20 dark:file:disabled:border-gray-700",
       "file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem]",
       "file:disabled:bg-gray-100 file:disabled:text-gray-500 dark:file:disabled:bg-gray-800",
@@ -110,7 +110,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               aria-label="Change password visibility"
               className={cx(
                 // base
-                "h-fit w-fit rounded-xs outline-hidden transition-all",
+                "h-fit w-fit outline-hidden transition-all",
                 // text
                 "text-gray-400 dark:text-gray-600",
                 // hover
