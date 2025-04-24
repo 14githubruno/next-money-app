@@ -3,7 +3,6 @@
 import { logout } from "@/lib/actions/auth";
 import { useActionState } from "react";
 import { Button } from "./ui/button/button";
-import { LogOutIcon } from "lucide-react";
 
 export default function SignOut() {
   const [state, formAction, pending] = useActionState(logout, undefined);
@@ -17,8 +16,7 @@ export default function SignOut() {
         isLoading={pending}
         className="flex h-10 w-full grow items-center justify-center gap-2 text-sm font-medium md:flex-none md:justify-start"
       >
-        <LogOutIcon className="h-10 w-10" />
-        <span> {pending ? "Loading..." : "Sign out"}</span>
+        {pending ? "Loading..." : "Sign out"}
       </Button>
 
       {state && <p aria-live="polite">{state.message}</p>}
