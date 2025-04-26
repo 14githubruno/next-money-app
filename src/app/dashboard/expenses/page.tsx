@@ -20,7 +20,7 @@ export default async function ExpensesPage(props: {
   const userId = await grabUserId();
 
   const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
+  const query = searchParams?.note || "";
   const currentPage = Number(searchParams?.page) || 1;
   const offset = (currentPage - 1) * PAGE_SIZE;
   const isConfirmedParam = searchParams?.isConfirmed;
