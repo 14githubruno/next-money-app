@@ -12,6 +12,20 @@ export async function grabUserId() {
   return userId;
 }
 
+// grab all user data
+
+export async function grabUser() {
+  const session = await auth();
+  const user = session?.user;
+  return user;
+}
+
+// check if current link is active
+
+export function linkIsActive(pathname: string, href: string): boolean {
+  return pathname === href;
+}
+
 // prepare text in square brackets for dialog deletion
 
 export function textInBrackets(text: string) {

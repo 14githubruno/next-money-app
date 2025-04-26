@@ -2,7 +2,7 @@
 
 import { logout } from "@/lib/actions/auth";
 import { useActionState } from "react";
-import { Button } from "./ui/button/button";
+import { Button } from "../ui/button/button";
 
 export default function SignOut() {
   const [state, formAction, pending] = useActionState(logout, undefined);
@@ -10,15 +10,14 @@ export default function SignOut() {
   return (
     <form action={formAction}>
       <Button
-        variant="base"
+        variant="destructive"
         type="submit"
         disabled={pending}
         isLoading={pending}
-        className="flex h-10 w-full grow items-center justify-center gap-2 text-sm font-medium md:flex-none md:justify-start"
+        className="w-full"
       >
-        {pending ? "Loading..." : "Sign out"}
+        {pending ? "Loading..." : "Yes"}
       </Button>
-
       {state && <p aria-live="polite">{state.message}</p>}
     </form>
   );
