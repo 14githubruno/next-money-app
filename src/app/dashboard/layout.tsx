@@ -14,7 +14,9 @@ export default async function Layout({ children }: Props) {
       <div className="w-full flex-none md:w-64">
         <Sidenav user={user} />
       </div>
-      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+      <div className="flex-grow p-6 md:overflow-y-auto md:px-12">
+        {children}
+      </div>
     </div>
   );
 }

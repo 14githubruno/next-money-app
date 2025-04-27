@@ -51,7 +51,7 @@ export default async function ExpensesPage(props: {
       <div className="mb-6 flex flex-col gap-8">
         <h1 className="text-2xl font-bold">Expenses</h1>
         <div className="flex items-center justify-between">
-          <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
+          <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
             Overview of all your expenses.
           </p>
           <ExpenseForm userId={userId} categories={categories} />
