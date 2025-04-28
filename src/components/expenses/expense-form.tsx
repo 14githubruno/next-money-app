@@ -8,7 +8,7 @@ import {
 } from "@/lib/validations/schemas";
 import { expenseFormInitialState as initState } from "@/lib/utils";
 import { Plus } from "lucide-react";
-import { Button } from "../ui/button/button";
+import { Button } from "../tremor-raw/ui/button";
 import {
   Drawer,
   DrawerBody,
@@ -18,23 +18,20 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "../tremor-raw/ui/drawer";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/inputs/select/select";
-import { Switch } from "@/components/inputs/switch/switch";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/components/inputs/radio-group/radio-group";
-import DatePickerYearNavigation from "@/components/inputs/date-picker/date-picker-year-navigation";
-import { Textarea } from "@/components/inputs/textarea/textarea";
-import { Input } from "@/components/inputs/input/input";
-import { Label } from "@/components/inputs/label/label";
+} from "../tremor-raw/inputs/select";
+import { Switch } from "../tremor-raw/inputs/switch";
+import { RadioGroup, RadioGroupItem } from "../tremor-raw/inputs/radio-group";
+import DatePickerYearNavigation from "../date-picker-year-navigation";
+import { Textarea } from "../tremor-raw/inputs/textarea";
+import { Input } from "../tremor-raw/inputs/input";
+import { Label } from "../tremor-raw/inputs/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type ExpenseFormProps = {

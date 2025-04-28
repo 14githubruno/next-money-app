@@ -7,7 +7,7 @@ import { getTotalExpenseCount } from "@/lib/queries/expense";
 import { ExpensesTable } from "@/components/expenses/expenses-table";
 import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";
-import Pagination from "@/components/ui/pagination/pagination";
+import Pagination from "@/components/pagination";
 import { Suspense } from "react";
 
 const PAGE_SIZE = 5; // expenses per page

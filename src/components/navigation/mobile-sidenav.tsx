@@ -6,8 +6,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
-import { Button } from "../ui/button/button";
+} from "../tremor-raw/ui/drawer";
+import { Button } from "../tremor-raw/ui/button";
 import { RiMenuLine } from "@remixicon/react";
 import NavLink from "./nav-link";
 import { usePathname } from "next/navigation";

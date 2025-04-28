@@ -2,15 +2,15 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { Label } from "@/components/inputs/label/label";
-import { Input } from "@/components/inputs/input/input";
+import { Label } from "../tremor-raw/inputs/label";
+import { Input } from "../tremor-raw/inputs/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/inputs/select/select";
+} from "../tremor-raw/inputs/select";
 
 /**
  *

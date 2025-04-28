@@ -2,7 +2,7 @@
 
 import { logout } from "@/lib/actions/auth";
 import { useActionState } from "react";
-import { Button } from "../ui/button/button";
+import { Button } from "../tremor-raw/ui/button";
 
 export default function SignOut() {
   const [state, formAction, pending] = useActionState(logout, undefined);

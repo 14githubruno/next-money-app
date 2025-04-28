@@ -8,8 +8,8 @@ import {
   TableHeaderCell,
   TableRoot,
   TableRow,
-} from "../ui/table";
-import DeleteDialog from "../ui/dialog/delete-dialog";
+} from "../tremor-raw/ui/table";
+import DeleteDialog from "../delete-dialog";
 import Link from "next/link";
 import { deleteCategory } from "@/lib/actions/category";
 import { Settings2, Lock } from "lucide-react";

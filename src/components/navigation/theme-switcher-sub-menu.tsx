@@ -2,7 +2,7 @@ import {
   DropdownMenuSubMenu,
   DropdownMenuSubMenuContent,
   DropdownMenuSubMenuTrigger,
-} from "../inputs/dropdown-menu";
+} from "../tremor-raw/inputs/dropdown-menu";
 import ThemeSwitcher from "./theme-switcher";
 
 /**

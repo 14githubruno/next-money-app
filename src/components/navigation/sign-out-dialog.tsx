@@ -6,10 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
-
-import { Button } from "../ui/button/button";
-import { DropdownMenuItem } from "@/components/inputs/dropdown-menu";
+} from "../tremor-raw/ui/dialog";
+import { Button } from "../tremor-raw/ui/button";
+import { DropdownMenuItem } from "../tremor-raw/inputs/dropdown-menu";
 import SignOut from "@/components/navigation/sign-out";
 
 export type SignOutDialogProps = {

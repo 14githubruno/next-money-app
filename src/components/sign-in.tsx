@@ -2,7 +2,7 @@
 
 import { login } from "@/lib/actions/auth";
 import { useActionState } from "react";
-import { Button } from "./ui/button/button";
+import { Button } from "./tremor-raw/ui/button";
 
 export default function SignIn() {
   const [state, formAction, pending] = useActionState(login, undefined);

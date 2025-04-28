@@ -4,8 +4,14 @@ import { useState } from "react";
 import { confirmExpense } from "@/lib/actions/expense";
 import { ExpenseTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
-import { Table, TableBody, TableCell, TableRoot, TableRow } from "../ui/table";
-import { Button } from "../ui/button/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRoot,
+  TableRow,
+} from "../tremor-raw/ui/table";
+import { Button } from "../tremor-raw/ui/button";
 import { useToast } from "@/hooks/toast/use-toast";
 
 type PendingExpensesTableProps = {

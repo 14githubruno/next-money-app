@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../inputs/dropdown-menu";
+} from "../tremor-raw/inputs/dropdown-menu";
 import ThemeSwitcherSubMenu from "./theme-switcher-sub-menu";
 import Link from "next/link";
 import SignOutDialog from "./sign-out-dialog";

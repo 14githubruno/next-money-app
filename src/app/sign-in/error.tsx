@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/tremor-raw/ui/button";
 
 type Props = {
   error: Error & { digest?: string };

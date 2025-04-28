@@ -2,8 +2,7 @@
 
 import type { CategoryTypes, ExpenseTypes } from "@/lib/validations/schemas";
 import { Fragment } from "react";
-import { Button } from "../button/button";
-import { Trash } from "lucide-react";
+import { Button } from "./tremor-raw/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -13,7 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from ".";
+} from "./tremor-raw/ui/dialog";
+import { Trash } from "lucide-react";
 import { textInBrackets } from "@/lib/utils";
 
 type DialogDescriptionContentProps = {

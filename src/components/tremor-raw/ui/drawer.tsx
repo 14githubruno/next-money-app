@@ -4,7 +4,7 @@ import * as React from "react";
 import * as DrawerPrimitives from "@radix-ui/react-dialog";
 import { RiCloseLine } from "@remixicon/react";
 import { cx, focusRing } from "@/lib/utils";
-import { Button } from "../button/button";
+import { Button } from "./button";
 
 const Drawer = (
   props: React.ComponentPropsWithoutRef<typeof DrawerPrimitives.Root>

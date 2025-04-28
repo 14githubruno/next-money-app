@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../ui/button/button";
+import { Button } from "../tremor-raw/ui/button";
 import DropdownUserProfile from "./dropdown-user-profile";
 import { cx, focusRing } from "@/lib/utils";
 import { RiMore2Fill } from "@remixicon/react";

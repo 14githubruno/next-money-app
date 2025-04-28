@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { grabUserId } from "@/lib/utils";
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/tremor-raw/ui/button";
 
 export default async function Home() {
   const userId = await grabUserId();
+
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-4">
       <h1 className="text-2xl">Lorem Ipsum</h1>

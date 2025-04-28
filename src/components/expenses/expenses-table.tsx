@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "../ui/badge";
+import { Badge } from "../tremor-raw/ui/badge";
 import {
   Table,
   TableBody,
@@ -9,8 +9,8 @@ import {
   TableHeaderCell,
   TableRoot,
   TableRow,
-} from "../ui/table";
-import DeleteDialog from "../ui/dialog/delete-dialog";
+} from "../tremor-raw/ui/table";
+import DeleteDialog from "../delete-dialog";
 import { type ExpenseTypes } from "@/lib/validations/schemas";
 import { deleteExpense } from "@/lib/actions/expense";
 import { Settings2 } from "lucide-react";

@@ -3,10 +3,13 @@
 "use client";
 
 import { useToast } from "@/hooks/toast/use-toast";
+import {
+  Toast,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/tremor-raw/ui/toast";
 
-import { Toast, ToastProvider, ToastViewport } from "./toast";
-
-const Toaster = () => {
+export default function Toaster() {
   const { toasts } = useToast();
 
   return (
@@ -17,6 +20,4 @@ const Toaster = () => {
       <ToastViewport className="left-1/2 -translate-x-1/2" />
     </ToastProvider>
   );
-};
-
-export { Toaster };
+}

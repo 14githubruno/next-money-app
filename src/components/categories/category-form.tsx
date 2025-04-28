@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../ui/button/button";
+import { Button } from "../tremor-raw/ui/button";
 import {
   Drawer,
   DrawerBody,
@@ -10,14 +10,14 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "../tremor-raw/ui/drawer";
 import { Plus } from "lucide-react";
 import { createCategory, updateCategory } from "@/lib/actions/category";
 import { useActionState, useRef } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
 import { categoryFormInitialState as initState } from "@/lib/utils";
-import { Input } from "@/components/inputs/input/input";
-import { Label } from "@/components/inputs/label/label";
+import { Input } from "../tremor-raw/inputs/input";
+import { Label } from "../tremor-raw/inputs/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type CategoryFormProps = {

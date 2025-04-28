@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DatePicker } from ".";
+import { DatePicker } from "./tremor-raw/inputs/date-picker";
 import { Fragment } from "react";
 
 type DatePickerYearNavigationProps = {

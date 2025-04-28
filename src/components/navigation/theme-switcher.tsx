@@ -3,7 +3,7 @@
 import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-} from "../inputs/dropdown-menu";
+} from "../tremor-raw/inputs/dropdown-menu";
 import { useTheme } from "next-themes";
 import { themes } from "@/lib/static-data";
 import { useState, useEffect } from "react";

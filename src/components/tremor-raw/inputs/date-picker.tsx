@@ -23,11 +23,8 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 import { cx, focusInput, focusRing, hasErrorInput } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button/button";
-import {
-  Calendar as CalendarPrimitive,
-  type Matcher,
-} from "../calendar/calendar";
+import { Button } from "../ui/button";
+import { Calendar as CalendarPrimitive, type Matcher } from "./calendar";
 
 //#region TimeInput
 // ============================================================================
