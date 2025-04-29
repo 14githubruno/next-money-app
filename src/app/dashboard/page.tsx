@@ -7,7 +7,7 @@ export default async function Dashboard() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-lg">Dashboard</h1>
-      <div className="grid grid-cols-6 gap-6">
+      <div className="grid auto-rows-auto grid-cols-6 gap-6">
         <div className="col-start-1 col-end-5 grid grid-cols-1 gap-6">
           <Suspense fallback={<p>Loading...</p>}>
             <PendingExpenses />
@@ -16,7 +16,7 @@ export default async function Dashboard() {
             <ConfirmedExpenses />
           </Suspense>
         </div>
-        <div className="col-start-5 col-end-7 flex flex-col items-center justify-center gap-6 bg-green-50">
+        <div className="col-start-5 col-end-7">
           <Suspense fallback={<p>Loading...</p>}>
             <ExpensesAmount />
           </Suspense>
