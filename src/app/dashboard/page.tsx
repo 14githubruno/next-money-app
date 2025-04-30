@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import PendingExpenses from "@/components/expenses/pending-expenses";
 import ConfirmedExpenses from "@/components/expenses/confirmed-expenses";
+import ExpensesChartWrapper from "@/components/expenses/expenses-chart-wrapper";
 import ExpensesAmount from "@/components/expenses/expenses-amount";
 
 export default async function Dashboard() {
@@ -14,6 +15,9 @@ export default async function Dashboard() {
           </Suspense>
           <Suspense fallback={<p>Loading...</p>}>
             <ConfirmedExpenses />
+          </Suspense>
+          <Suspense fallback={<p>Loading...</p>}>
+            <ExpensesChartWrapper />
           </Suspense>
         </div>
         <div className="col-start-5 col-end-7">
