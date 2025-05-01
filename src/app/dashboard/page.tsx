@@ -4,7 +4,7 @@ import ConfirmedExpenses from "@/components/expenses/confirmed-expenses";
 import ExpensesChartWrapper from "@/components/expenses/expenses-chart-wrapper";
 import ExpensesAmount from "@/components/expenses/expenses-amount";
 
-export default async function Dashboard() {
+export default function Dashboard() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-lg">Dashboard</h1>
