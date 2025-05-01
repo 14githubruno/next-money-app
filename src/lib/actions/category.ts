@@ -1,11 +1,12 @@
 "use server";
 
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
+import { categoryFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
-import { grabUserId } from "../utils";
-import { redirect } from "next/navigation";
+import { getUser } from "../utils";
+import { PredictableError } from "../utils";
 
 /**
  * This file contains all the categories-related queries
@@ -25,8 +26,6 @@ export async function createCategory(
   prevState: CategoryFormState,
   data: FormData
 ): Promise<CategoryFormState> {
-  let isSuccess: boolean = false;
-
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -57,7 +56,9 @@ export async function createCategory(
     });
 
     if (existingCategory) {
-      throw Error(`Category with name ${existingCategory.name} already exists`);
+      throw new PredictableError(
+        `Category with name ${existingCategory.name} already exists`
+      );
     }
 
     const newCategory = await prisma.category.create({
@@ -68,15 +69,16 @@ export async function createCategory(
     });
 
     if (newCategory) {
-      isSuccess = true;
+      revalidatePath("/dashboard/categories");
     }
 
     return {
       success: true,
       message: `Category with name ${newCategory.name} created`,
+      fieldValues: initState.fieldValues,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return {
         success: false,
         message: error.message,
@@ -85,11 +87,6 @@ export async function createCategory(
     }
 
     throw new Error("Error creating category");
-  } finally {
-    if (isSuccess) {
-      revalidatePath("/dashboard/categories");
-      redirect("/dashboard/categories");
-    }
   }
 }
 
@@ -131,7 +128,7 @@ export async function updateCategory(
     });
 
     if (!category || category.userId !== userId) {
-      throw Error(
+      throw new PredictableError(
         "Category not found or you do not have permission to update it"
       );
     }
@@ -147,7 +144,7 @@ export async function updateCategory(
       });
 
       if (existingCategory) {
-        throw new Error("A category with this name already exists");
+        throw new PredictableError("A category with this name already exists");
       }
     }
 
@@ -163,9 +160,10 @@ export async function updateCategory(
     return {
       success: true,
       message: `Category with name ${updatedCategory.name} updated`,
+      fieldValues: updatedCategory,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return {
         success: false,
         message: error.message,
@@ -176,8 +174,7 @@ export async function updateCategory(
     throw new Error("Error updating category");
   } finally {
     if (isSuccess) {
-      revalidatePath("/dashboard/categories");
-      redirect("/dashboard/categories");
+      revalidatePath(`/dashboard/categories/${categoryId}`);
     }
   }
 }
@@ -187,7 +184,7 @@ export async function updateCategory(
  * ========================================================
  */
 export async function deleteCategory(categoryId: string) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   let isDeleted: boolean = false;
 
@@ -202,21 +199,21 @@ export async function deleteCategory(categoryId: string) {
     });
 
     if (!category || category.userId !== userId) {
-      throw new Error(
+      throw new PredictableError(
         "Category not found or you do not have permission to delete it"
       );
     }
 
     // Check if category is used by any expenses
     if (category.expenses.length > 0) {
-      throw new Error(
+      throw new PredictableError(
         "This category cannot be deleted because it is used by one or more expenses"
       );
     }
 
     // Check if it's a default category
     if (category.isDefault) {
-      throw new Error("Default categories cannot be deleted");
+      throw new PredictableError("Default categories cannot be deleted");
     }
 
     const deletedCategory = await prisma.category.delete({
@@ -225,14 +222,14 @@ export async function deleteCategory(categoryId: string) {
 
     if (deletedCategory) {
       isDeleted = true;
-      console.log(deletedCategory);
     }
+
     return {
       success: true,
-      message: `Category with name ${deletedCategory.name} updated`,
+      message: `Category with name ${deletedCategory.name} deleted`,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return {
         success: false,
         message: "Error in deleting category",

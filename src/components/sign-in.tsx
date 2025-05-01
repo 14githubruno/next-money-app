@@ -2,19 +2,22 @@
 
 import { login } from "@/lib/actions/auth";
 import { useActionState } from "react";
+import { Button } from "./tremor-raw/ui/button";
 
 export default function SignIn() {
   const [state, formAction, pending] = useActionState(login, undefined);
 
   return (
     <form className="mx-auto my-0" action={formAction}>
-      <button
+      <Button
+        variant="base"
         type="submit"
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-[#8f63cd6e] p-3 text-sm font-medium hover:bg-[#8659c6] hover:text-white md:flex-none md:justify-start md:p-2 md:px-3"
         disabled={pending}
+        isLoading={pending}
+        className="flex h-10 grow items-center justify-center gap-2 text-sm font-medium md:flex-none md:justify-start"
       >
         {pending ? "Loading..." : "Sign in with Google"}
-      </button>
+      </Button>
       {state && <p aria-live="polite">{state.message}</p>}
     </form>
   );

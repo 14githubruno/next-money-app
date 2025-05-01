@@ -1,11 +1,13 @@
 "use server";
 
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
+import { expenseFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { grabUserId } from "../utils";
+import { getUser } from "../utils";
+import { PredictableError } from "../utils";
 
 /**
  * This file contains all the expenses-related queries
@@ -25,8 +27,6 @@ export async function createExpense(
   prevState: ExpenseFormState,
   data: FormData
 ): Promise<ExpenseFormState> {
-  let isSuccess: boolean = false;
-
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -36,7 +36,6 @@ export async function createExpense(
   const validation = expenseSchema.safeParse(formData);
 
   if (!validation.success) {
-    console.log("wrong validation", validation);
     return {
       success: false,
       message: "Invalid data",
@@ -58,7 +57,7 @@ export async function createExpense(
     });
 
     if (!category) {
-      throw new Error("Invalid category selected");
+      throw new PredictableError("Invalid category selected");
     }
 
     const newExpense = await prisma.expense.create({
@@ -72,16 +71,17 @@ export async function createExpense(
     });
 
     if (newExpense) {
-      isSuccess = true;
-      console.log(newExpense);
+      revalidatePath("/dashboard/expenses");
+      revalidatePath("/dashboard/categories");
     }
 
     return {
       success: true,
       message: `Expense for category ${newExpense.category.name} created`,
+      fieldValues: initState.fieldValues,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return {
         success: false,
         message: error.message,
@@ -90,12 +90,6 @@ export async function createExpense(
     }
 
     throw new Error("Error creating expense");
-  } finally {
-    if (isSuccess) {
-      revalidatePath("/dashboard/expenses");
-      revalidatePath("/dashboard/categories");
-      redirect("/dashboard/expenses");
-    }
   }
 }
 
@@ -137,7 +131,7 @@ export async function updateExpense(
     });
 
     if (!existingExpense || existingExpense.userId !== userId) {
-      throw new Error(
+      throw new PredictableError(
         "Expense not found or you do not have permission to update it"
       );
     }
@@ -154,18 +148,20 @@ export async function updateExpense(
       isSuccess = true;
     }
 
-    return { success: true, message: "Expense updated" };
+    return {
+      success: true,
+      message: "Expense updated",
+      fieldValues: updatedExpense,
+    };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return { success: false, message: error.message, fieldValues };
     }
 
     throw new Error("Error updating expense");
   } finally {
     if (isSuccess) {
-      revalidatePath("/dashboard/categories");
-      revalidatePath("/dashboard/expenses");
-      redirect("/dashboard/expenses");
+      revalidatePath(`/dashboard/expenses/${expenseId}`);
     }
   }
 }
@@ -175,13 +171,11 @@ export async function updateExpense(
  * ========================================================
  */
 export async function deleteExpense(expenseId: string) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   if (!userId) {
     redirect("/sign-in");
   }
-
-  let isDeleted: boolean = false;
 
   try {
     const expense = await prisma.expense.findUnique({
@@ -189,7 +183,7 @@ export async function deleteExpense(expenseId: string) {
     });
 
     if (!expense || expense.userId !== userId) {
-      throw new Error(
+      throw new PredictableError(
         "Expense not found or you do not have permission to delete it"
       );
     }
@@ -199,20 +193,16 @@ export async function deleteExpense(expenseId: string) {
     });
 
     if (deletedExpense) {
-      isDeleted = true;
+      revalidatePath("/dashboard/expenses");
     }
 
     return { success: true, message: "Expense deleted" };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return { success: false, error: error.message };
     }
 
     throw new Error("Error in deleting the expense");
-  } finally {
-    if (isDeleted) {
-      revalidatePath("/dashboard/expenses");
-    }
   }
 }
 
@@ -221,13 +211,11 @@ export async function deleteExpense(expenseId: string) {
  * ========================================================
  */
 export async function confirmExpense(expenseId: string) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   if (!userId) {
     redirect("/sign-in");
   }
-
-  let isConfirmed: boolean = false;
 
   try {
     const expense = await prisma.expense.findUnique({
@@ -247,16 +235,12 @@ export async function confirmExpense(expenseId: string) {
     });
 
     if (confirmedExpense) {
-      isConfirmed = true;
+      revalidatePath("/dashboard");
     }
 
     return { success: true, message: "Expense confirmed" };
   } catch (error) {
     console.log("ERROR CONFIRMING EXPENSES: ", error);
     throw new Error("Error confirming expense");
-  } finally {
-    if (isConfirmed) {
-      revalidatePath("/dashboard");
-    }
   }
 }

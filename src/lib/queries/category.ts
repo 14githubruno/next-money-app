@@ -1,4 +1,5 @@
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
+import { unstable_cache } from "next/cache";
 
 /**
  * This file contains all the categories-related queries
@@ -49,29 +50,31 @@ export async function createDefaultCategories(userId: string) {
  * GET ALL USER CATEGORIES
  * ========================================================
  */
-export async function getCategories<T>(
-  userId: string | undefined,
-  filters?: Record<string, T>
-) {
-  try {
-    const userCategories = await prisma.category.findMany({
-      where: {
-        userId,
-        ...filters,
-      },
-      include: {
-        expenses: true,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-    if (userCategories) return userCategories;
-  } catch (error) {
-    console.error("ERROR CATEGORIES: ", error);
-    throw new Error("Error fetching user categories");
-  }
-}
+
+export const getCategories = unstable_cache(
+  async <T>(userId: string | undefined, filters?: Record<string, T>) => {
+    try {
+      const userCategories = await prisma.category.findMany({
+        where: {
+          userId,
+          ...filters,
+        },
+        include: {
+          expenses: true,
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+      if (userCategories) return userCategories;
+    } catch (error) {
+      console.error("ERROR CATEGORIES: ", error);
+      throw new Error("Error fetching user categories");
+    }
+  },
+  ["categories"],
+  { revalidate: 3600, tags: ["categories"] }
+);
 
 /**
  * GET SINGLE USER CATEGORY

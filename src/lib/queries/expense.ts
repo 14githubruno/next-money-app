@@ -1,4 +1,4 @@
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 
 /**
  * This file contains all the expenses-related
@@ -15,20 +15,24 @@ import prisma from "../../../prisma/prisma";
  */
 export async function getExpenses<T>(
   userId: string | undefined,
-  filters?: Record<string, T>
+  whereFilters?: Record<string, T>,
+  take?: number,
+  skip?: number
 ) {
   try {
     const userExpenses = await prisma.expense.findMany({
       where: {
         userId,
-        ...filters,
+        ...whereFilters,
       },
       include: {
         category: true,
       },
       orderBy: {
-        createdAt: "desc",
+        updatedAt: "desc",
       },
+      skip,
+      take,
     });
     return userExpenses;
   } catch (error) {
@@ -98,5 +102,27 @@ export async function getTotalAmountExpenses<T>(
   } catch (error) {
     console.error("ERROR AGGREGATING: ", error);
     throw new Error("Error aggregating amount expenses");
+  }
+}
+
+/**
+ * GET TOTAL COUNT OF USER EXPENSES
+ * ========================================================
+ */
+export async function getTotalExpenseCount<T>(
+  userId: string | undefined,
+  whereFilters?: Record<string, T>
+): Promise<number> {
+  try {
+    const count = await prisma.expense.count({
+      where: {
+        userId,
+        ...whereFilters,
+      },
+    });
+    return count;
+  } catch (error) {
+    console.error("ERROR GETTING EXPENSE COUNT: ", error);
+    throw new Error("Error fetching total expense count");
   }
 }

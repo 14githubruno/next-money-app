@@ -1,13 +1,38 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useActionState, useCallback } from "react";
+import { useActionState, useRef } from "react";
 import { createExpense, updateExpense } from "@/lib/actions/expense";
 import {
   type CategoryTypes,
   type ExpenseTypes,
 } from "@/lib/validations/schemas";
-import { type ExpenseFormState } from "@/lib/types";
+import { expenseFormInitialState as initState } from "@/lib/utils";
+import { Plus } from "lucide-react";
+import { Button } from "../tremor-raw/ui/button";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../tremor-raw/ui/drawer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../tremor-raw/inputs/select";
+import { Switch } from "../tremor-raw/inputs/switch";
+import { RadioGroup, RadioGroupItem } from "../tremor-raw/inputs/radio-group";
+import DatePickerYearNavigation from "../date-picker-year-navigation";
+import { Textarea } from "../tremor-raw/inputs/textarea";
+import { Input } from "../tremor-raw/inputs/input";
+import { Label } from "../tremor-raw/inputs/label";
+import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type ExpenseFormProps = {
   userId: string;
@@ -16,26 +41,14 @@ type ExpenseFormProps = {
   isEditing?: boolean;
 };
 
-const initState: ExpenseFormState = {
-  success: false,
-  message: "",
-  fieldValues: {
-    amount: 0.01,
-    expenseDate: new Date(),
-    isConfirmed: true,
-    payment: "CASH",
-    note: "-",
-    categoryId: "",
-  },
-};
-
-export function ExpenseForm({
+export default function ExpenseForm({
   userId,
   categories,
   expense,
   isEditing = false,
 }: ExpenseFormProps) {
-  const router = useRouter();
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   // Bind userId and set action state
   const createExpenseByPassingUserId = createExpense.bind(null, userId);
@@ -57,180 +70,155 @@ export function ExpenseForm({
 
   const [state, formAction, pending] = useActionState(action, initialState);
 
-  // Helper function to display field errors
-  const getFieldError = useCallback(
-    (fieldName: string) => {
-      return state?.errors && state.errors[fieldName]?.[0] ? (
-        <p className="mt-1 text-red-600">{state?.errors[fieldName][0]}</p>
-      ) : null;
-    },
-    [state]
-  );
+  // if action is successful, close drawer and toast success,
+  // otherwise keep drawer open and toast errors
+  useFormToast(state, closeButtonRef);
+
+  // fire form
+  const fireForm = () => {
+    if (formRef.current !== null) {
+      formRef.current.requestSubmit();
+    }
+  };
 
   return (
-    <>
-      <form action={formAction} className="mx-auto w-full max-w-lg">
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold">
-            {isEditing ? "Edit Expense" : "Add New Expense"}
-          </h2>
-
-          <div className="space-y-2">
-            <label htmlFor="amount" className="block text-sm font-medium">
-              Amount
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                $
-              </span>
-              <input
-                type="number"
-                id="amount"
-                name="amount"
-                step="0.01"
-                min="0"
-                placeholder="0.00"
-                defaultValue={state.fieldValues?.amount}
-                required
-                className={`w-full rounded-md border border-gray-300 px-3 py-2 pl-8 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
-              />
-            </div>
-            {getFieldError("amount")}
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="categoryId" className="block text-sm font-medium">
-              Category
-            </label>
-            <select
-              id="categoryId"
-              name="categoryId"
-              required
-              defaultValue={state.fieldValues?.categoryId}
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
+    <div className="flex justify-center">
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button variant="base">
+            <Plus className="mr-2 h-4 w-4" />
+            {isEditing ? "Update expense" : "Add expense"}
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="sm:max-w-lg">
+          <DrawerHeader>
+            <DrawerTitle>
+              {isEditing ? "Edit expense" : "Add new expense"}
+            </DrawerTitle>
+          </DrawerHeader>
+          <DrawerBody className="py-6">
+            <form
+              ref={formRef}
+              action={formAction}
+              className="mx-auto w-full max-w-lg"
             >
-              {categories &&
-                categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-            </select>
-            {getFieldError("categoryId")}
-          </div>
+              <div className="space-y-8">
+                <div className="space-y-2">
+                  <Label htmlFor="amount">Amount</Label>
+                  <Input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    step="0.01"
+                    placeholder="0.00"
+                    defaultValue={state.fieldValues?.amount}
+                  />
+                </div>
 
-          <div className="space-y-2">
-            <label htmlFor="note" className="block text-sm font-medium">
-              Note (Optional)
-            </label>
-            <textarea
-              id="note"
-              name="note"
-              rows={3}
-              placeholder="Add details about this expense"
-              defaultValue={state.fieldValues?.note ?? ""}
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
-            />
-            {getFieldError("note")}
-          </div>
+                <div className="space-y-2">
+                  <Label htmlFor="categoryId">Category</Label>
+                  <Select
+                    name="categoryId"
+                    defaultValue={
+                      state.fieldValues?.categoryId !== ""
+                        ? state.fieldValues?.categoryId
+                        : undefined
+                    }
+                  >
+                    <SelectTrigger id="categoryId">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories &&
+                        categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-          <div className="space-y-2">
-            <label htmlFor="expenseDate" className="block text-sm font-medium">
-              Date
-            </label>
-            <input
-              type="date"
-              id="expenseDate"
-              name="expenseDate"
-              defaultValue={
-                state.fieldValues?.expenseDate
-                  ? new Date(state.fieldValues.expenseDate)
-                      .toISOString()
-                      .split("T")[0]
-                  : new Date().toISOString().split("T")[0]
-              }
-              required
-              className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none`}
-            />
-            {getFieldError("expenseDate")}
-          </div>
+                <div className="space-y-2">
+                  <Label htmlFor="note">Note</Label>
+                  <Textarea
+                    id="note"
+                    name="note"
+                    rows={3}
+                    placeholder="Add details about this expense"
+                    defaultValue={state.fieldValues?.note ?? ""}
+                  />
+                </div>
 
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="isConfirmed"
-              name="isConfirmed"
-              defaultChecked={Boolean(state.fieldValues?.isConfirmed)}
-              className="h-4 w-4 rounded border-gray-300 focus:ring-black"
-            />
-            <label htmlFor="isConfirmed" className="ml-2 block text-sm">
-              Is payment confirmed?
-            </label>
-            {getFieldError("isConfirmed")}
-          </div>
+                <div className="space-y-2">
+                  <DatePickerYearNavigation
+                    nameAndId="expenseDate" // input name and id + htmlFor of label
+                    defaultValue={state.fieldValues?.expenseDate}
+                  />
+                </div>
 
-          <div className="space-y-2 pl-6">
-            <label className="block text-sm font-medium">Payment</label>
-            <div className="space-x-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="CASH"
-                  defaultChecked={state.fieldValues?.payment === "CASH"}
-                  className="h-4 w-4 border-gray-300 focus:ring-black focus:ring-offset-2"
-                />
-                <span className="ml-2">Cash</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="CARD"
-                  defaultChecked={state.fieldValues?.payment === "CARD"}
-                  className="h-4 w-4 border-gray-300 text-black focus:ring-black focus:ring-offset-2"
-                />
-                <span className="ml-2">Card</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="CRYPTO"
-                  defaultChecked={state.fieldValues?.payment === "CRYPTO"}
-                  className="h-4 w-4 border-gray-300 focus:ring-black focus:ring-offset-2"
-                />
-                <span className="ml-2">Crypto</span>
-              </label>
-            </div>
-            {getFieldError("payment")}
-          </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="isConfirmed">Payment is confirmed</Label>
+                  <Switch
+                    id="isConfirmed"
+                    name="isConfirmed"
+                    defaultChecked={state.fieldValues?.isConfirmed}
+                  />
+                </div>
 
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
-            >
-              Cancel
-            </button>
-            <button
+                <div>
+                  <fieldset className="space-y-2">
+                    <legend className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                      Type of payment
+                    </legend>
+                    <RadioGroup
+                      name="payment"
+                      defaultValue={state.fieldValues?.payment}
+                    >
+                      <div>
+                        <Label htmlFor="cash">Cash</Label>
+                        <RadioGroupItem value="CASH" id="cash" />
+                      </div>
+                      <div>
+                        <Label htmlFor="card">Card</Label>
+                        <RadioGroupItem value="CARD" id="card" />
+                      </div>
+                      <div>
+                        <Label htmlFor="crypto">Crypto</Label>
+                        <RadioGroupItem value="CRYPTO" id="crypto" />
+                      </div>
+                    </RadioGroup>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </DrawerBody>
+          <DrawerFooter className="mt-6">
+            <DrawerClose asChild>
+              <Button
+                ref={closeButtonRef}
+                className="mt-2 w-full sm:mt-0 sm:w-fit"
+                variant="secondary"
+              >
+                Go back
+              </Button>
+            </DrawerClose>
+            <Button
+              variant="base"
               type="submit"
               disabled={pending}
-              className="rounded-md border border-transparent bg-[#8659c6] px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              isLoading={pending}
+              onClick={fireForm}
             >
               {pending
                 ? "Saving..."
                 : isEditing
                   ? "Update Expense"
                   : "Create Expense"}
-            </button>
-          </div>
-        </div>
-      </form>
-      {state?.message && !state.success && (
-        <p className="mx-auto w-full max-w-lg">{state.message}</p>
-      )}
-    </>
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }

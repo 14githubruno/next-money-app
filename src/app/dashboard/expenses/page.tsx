@@ -1,46 +1,69 @@
-import { ExpensesList } from "@/components/expenses/expenses-list";
 import { redirect, notFound } from "next/navigation";
-import Link from "next/link";
-import { Plus } from "lucide-react";
-import { grabUserId } from "@/lib/utils";
+import { convertToBoolean } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { getExpenses } from "@/lib/queries/expense";
+import { getCategories } from "@/lib/queries/category";
+import { getTotalExpenseCount } from "@/lib/queries/expense";
+import { ExpensesTable } from "@/components/expenses/expenses-table";
+import ExpenseForm from "@/components/expenses/expense-form";
+import ExpenseFilters from "@/components/expenses/expense-filters";
+import Pagination from "@/components/pagination";
+import { Suspense } from "react";
 
-export default async function ExpensesPage() {
-  const userId = await grabUserId();
+const PAGE_SIZE = 5; // expenses per page
+
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function ExpensesPage(props: {
+  searchParams?: SearchParams;
+}) {
+  const { userId } = await getUser();
+
+  const searchParams = await props.searchParams;
+  const query = searchParams?.note || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const offset = (currentPage - 1) * PAGE_SIZE;
+  const isConfirmedParam = searchParams?.isConfirmed;
 
   if (!userId) {
     redirect("/sign-in");
   }
 
-  // Fetch data directly in the server component
-  const expenses = await getExpenses(userId);
+  const whereFilters = {
+    note: { contains: query, mode: "insensitive" },
+    isConfirmed: convertToBoolean(isConfirmedParam),
+  };
 
-  if (!expenses) {
+  const [expenses, categories, totalCount] = await Promise.all([
+    getExpenses(userId, { ...whereFilters }, PAGE_SIZE, offset),
+    getCategories(userId),
+    getTotalExpenseCount(userId, { ...whereFilters }),
+  ]);
+
+  if (!expenses || !categories) {
     notFound();
   }
 
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
   return (
     <div className="p-6">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-8">
         <h1 className="text-2xl font-bold">Expenses</h1>
-        <div className="flex items-center gap-2">
-          <Link
-            className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
-            href="/dashboard/categories/create"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Add Category
-          </Link>
-          <Link
-            className="flex items-center rounded-md bg-[#8659c6] px-4 py-2 text-white focus:ring-2 focus:ring-black focus:ring-offset-2 focus:outline-none"
-            href="/dashboard/expenses/create"
-          >
-            Add Expense &rarr;
-          </Link>
+        <div className="flex items-center justify-between">
+          <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
+            Overview of all your expenses.
+          </p>
+          <ExpenseForm userId={userId} categories={categories} />
         </div>
-      </div>
 
-      <ExpensesList expenses={expenses} />
+        <ExpenseFilters />
+      </div>
+      <Suspense fallback={null}>
+        <ExpensesTable currentPage={currentPage} expenses={expenses} />
+      </Suspense>
+
+      {totalCount > PAGE_SIZE && <Pagination totalPages={totalPages} />}
     </div>
   );
 }
