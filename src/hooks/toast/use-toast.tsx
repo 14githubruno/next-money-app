@@ -1,6 +1,8 @@
 import React from "react";
-
-import { ToastActionElement, ToastProps } from "@/components/ui/toast/toast";
+import {
+  ToastActionElement,
+  ToastProps,
+} from "@/components/tremor-raw/ui/toast";
 
 const TOAST_LIMIT = 4;
 const TOAST_REMOVE_DELAY = 1000000;
