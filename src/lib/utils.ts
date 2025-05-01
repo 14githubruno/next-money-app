@@ -20,6 +20,16 @@ export async function grabUser() {
   return user;
 }
 
+/**
+ * Set custom Error object to catch predictable category and expense errors
+ */
+export class PredictableError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PredictableError";
+  }
+}
+
 // check if current link is active
 
 export function linkIsActive(pathname: string, href: string): boolean {

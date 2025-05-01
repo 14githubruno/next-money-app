@@ -7,6 +7,7 @@ import { expenseFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { grabUserId } from "../utils";
+import { PredictableError } from "../utils";
 
 /**
  * This file contains all the expenses-related queries
@@ -56,7 +57,7 @@ export async function createExpense(
     });
 
     if (!category) {
-      throw new Error("Invalid category selected");
+      throw new PredictableError("Invalid category selected");
     }
 
     const newExpense = await prisma.expense.create({
@@ -80,7 +81,7 @@ export async function createExpense(
       fieldValues: initState.fieldValues,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return {
         success: false,
         message: error.message,
@@ -130,7 +131,7 @@ export async function updateExpense(
     });
 
     if (!existingExpense || existingExpense.userId !== userId) {
-      throw new Error(
+      throw new PredictableError(
         "Expense not found or you do not have permission to update it"
       );
     }
@@ -153,7 +154,7 @@ export async function updateExpense(
       fieldValues: updatedExpense,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return { success: false, message: error.message, fieldValues };
     }
 
@@ -182,7 +183,7 @@ export async function deleteExpense(expenseId: string) {
     });
 
     if (!expense || expense.userId !== userId) {
-      throw new Error(
+      throw new PredictableError(
         "Expense not found or you do not have permission to delete it"
       );
     }
@@ -197,7 +198,7 @@ export async function deleteExpense(expenseId: string) {
 
     return { success: true, message: "Expense deleted" };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof PredictableError) {
       return { success: false, error: error.message };
     }
 
