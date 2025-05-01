@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
 import { expenseFormInitialState as initState } from "../utils";

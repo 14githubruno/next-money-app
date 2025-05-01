@@ -1,4 +1,4 @@
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 
 /**
  * This file contains all the expenses-related

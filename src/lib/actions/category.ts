@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "../../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { categoryFormInitialState as initState } from "../utils";
