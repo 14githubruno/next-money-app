@@ -2,22 +2,23 @@ import { auth } from "@/auth";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { CategoryFormState, ExpenseFormState } from "./types";
+import type { User } from "next-auth";
 
-// grab user id through auth.js
-
-export async function grabUserId() {
+/**
+ * Get logged in user data
+ */
+export async function getUser(): Promise<{
+  user: User | undefined;
+  userId: string | undefined;
+}> {
   const session = await auth();
   const user = session?.user;
   const userId = user?.id;
-  return userId;
-}
 
-// grab all user data
-
-export async function grabUser() {
-  const session = await auth();
-  const user = session?.user;
-  return user;
+  return {
+    user,
+    userId,
+  };
 }
 
 /**

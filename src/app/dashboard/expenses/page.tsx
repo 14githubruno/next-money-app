@@ -1,6 +1,6 @@
 import { redirect, notFound } from "next/navigation";
 import { convertToBoolean } from "@/lib/utils";
-import { grabUserId } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { getExpenses } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
 import { getTotalExpenseCount } from "@/lib/queries/expense";
@@ -17,7 +17,7 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 export default async function ExpensesPage(props: {
   searchParams?: SearchParams;
 }) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   const searchParams = await props.searchParams;
   const query = searchParams?.note || "";

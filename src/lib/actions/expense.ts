@@ -6,7 +6,7 @@ import { type ExpenseFormState } from "../types";
 import { expenseFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { grabUserId } from "../utils";
+import { getUser } from "../utils";
 import { PredictableError } from "../utils";
 
 /**
@@ -171,7 +171,7 @@ export async function updateExpense(
  * ========================================================
  */
 export async function deleteExpense(expenseId: string) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   if (!userId) {
     redirect("/sign-in");
@@ -211,7 +211,7 @@ export async function deleteExpense(expenseId: string) {
  * ========================================================
  */
 export async function confirmExpense(expenseId: string) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   if (!userId) {
     redirect("/sign-in");

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { grabUserId } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { Button } from "@/components/tremor-raw/ui/button";
 
 export default async function Home() {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-4">

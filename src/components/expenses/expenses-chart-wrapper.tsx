@@ -1,5 +1,5 @@
 import { ExpensesChart } from "./expenses-chart";
-import { grabUserId } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { getExpenses } from "@/lib/queries/expense";
 import { notFound } from "next/navigation";
 import { buildExpensesChartDataObject } from "@/lib/chartUtils";
@@ -21,7 +21,7 @@ const whereFiltersUnconfirmed = {
 };
 
 export default async function ExpensesChartWrapper() {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   const [confirmed, unconfirmed] = await Promise.all([
     getExpenses(userId, { ...whereFiltersConfirmed }),

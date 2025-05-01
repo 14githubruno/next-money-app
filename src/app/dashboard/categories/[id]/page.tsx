@@ -1,4 +1,4 @@
-import { grabUserId } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { getSingleCategory } from "@/lib/queries/category";
 import CategoryForm from "@/components/categories/category-form";
@@ -9,7 +9,7 @@ export default async function SingleCategoryPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   const category = await getSingleCategory(id, userId);
 

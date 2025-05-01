@@ -5,7 +5,7 @@ import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { categoryFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
-import { grabUserId } from "../utils";
+import { getUser } from "../utils";
 import { PredictableError } from "../utils";
 
 /**
@@ -184,7 +184,7 @@ export async function updateCategory(
  * ========================================================
  */
 export async function deleteCategory(categoryId: string) {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   let isDeleted: boolean = false;
 

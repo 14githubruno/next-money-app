@@ -1,11 +1,11 @@
-import { grabUserId } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
 import { CategoriesTable } from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
 
 export default async function CategoriesPage() {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   if (!userId) {
     redirect("sign-in");

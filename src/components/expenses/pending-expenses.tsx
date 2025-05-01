@@ -1,4 +1,4 @@
-import { grabUserId } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import PendingExpensesTable from "./pending-expenses-table";
@@ -8,7 +8,7 @@ const pendingExpenses = {
 };
 
 export default async function PendingExpenses() {
-  const userId = await grabUserId();
+  const { userId } = await getUser();
 
   if (!userId) {
     redirect("/sign-in");

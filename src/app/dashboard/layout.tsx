@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { grabUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils";
 import Sidenav from "@/components/navigation/sidenav";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default async function Layout({ children }: Props) {
-  const user = await grabUser();
+  const { user } = await getUser();
 
   return (
     <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
