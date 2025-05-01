@@ -16,7 +16,7 @@ export default auth(async (request) => {
   const isLoggedIn = !!request.auth;
   const pathname = request.nextUrl.pathname;
 
-  const isPrivateRoute = privateRoutes.includes(pathname);
+  const isPrivateRoute = pathname.startsWith(privateRoutes[0]);
   const isAuthRoute = authRoutes.includes(pathname);
   const isApiRoute = pathname.includes("/api");
 
