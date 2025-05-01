@@ -72,9 +72,9 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = cx(
-    "flex h-10 w-10 items-center justify-center text-sm bg-gray-100 ",
+    "flex h-10 w-10 items-center justify-center text-sm",
     position === "middle" && "opacity-50",
-    isActive && "bg-black text-gray-100",
+    isActive ? "bg-black text-gray-100" : "bg-gray-100 text-black",
     !isActive && position !== "middle" && "hover:bg-gray-200"
   );
 

@@ -36,7 +36,7 @@ const RadioGroupIndicator = React.forwardRef<
           // base
           "size-1.5 shrink-0",
           // indicator
-          "bg-white",
+          "bg-white dark:bg-black",
           // disabled
           "group-data-disabled:bg-gray-400 dark:group-data-disabled:bg-gray-500"
         )}
@@ -69,7 +69,7 @@ const RadioGroupItem = React.forwardRef<
           // background color
           "bg-white dark:bg-gray-950",
           // checked
-          "group-data-[state=checked]:border-0 group-data-[state=checked]:border-transparent group-data-[state=checked]:bg-blue-500",
+          "group-data-[state=checked]:border-0 group-data-[state=checked]:border-transparent group-data-[state=checked]:bg-black dark:group-data-[state=checked]:bg-white dark:group-data-[state=checked]:text-black",
           // disabled
           "group-data-disabled:border",
           "group-data-disabled:border-gray-300 group-data-disabled:bg-gray-100 group-data-disabled:text-gray-400",
