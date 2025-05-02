@@ -12,8 +12,8 @@ export default async function ExpensesAmount() {
   const expensesAmount = await getTotalAmountExpenses(userId);
 
   return (
-    <div className="bg-gray-50 p-10">
-      <p className="light:text-black dark:text-black">
+    <div className="flex h-[6.8rem] items-center bg-gray-50 pl-6">
+      <p className="text-black dark:text-black">
         The total amount of expenses is:{" "}
         <span className="font-medium">
           $
