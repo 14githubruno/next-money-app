@@ -11,14 +11,17 @@ export default async function ExpensesAmount() {
 
   const expensesAmount = await getTotalAmountExpenses(userId);
 
-  return expensesAmount ? (
+  return (
     <div className="bg-gray-50 p-10">
       <p className="light:text-black dark:text-black">
         The total amount of expenses is:{" "}
         <span className="font-medium">
-          ${expensesAmount?._sum.amount?.toFixed(2)}
+          $
+          {expensesAmount?._sum.amount
+            ? expensesAmount._sum.amount.toFixed(2)
+            : 0}
         </span>
       </p>
     </div>
-  ) : null;
+  );
 }
