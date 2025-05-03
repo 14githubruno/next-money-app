@@ -27,7 +27,7 @@ const buttonVariants = tv({
         // hover color
         "hover:opacity-75",
         // disabled
-        "disabled:bg-gray-300 disabled:text-gray-200",
+        "disabled:bg-neutral-700 disabled:text-gray-200",
       ],
       primary: [
         // border
