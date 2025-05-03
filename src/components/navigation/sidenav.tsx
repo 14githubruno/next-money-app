@@ -20,10 +20,10 @@ export default function Sidenav({ user }: SidenavProps) {
     <>
       {/* desktop sidenav */}
       <nav className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-        <aside className="flex grow flex-col gap-y-6 overflow-y-auto border-r border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
+        <aside className="flex grow flex-col gap-y-6 overflow-y-auto border-r border-gray-200 p-4 dark:border-gray-800">
           <div className="pb-8">
             <Link aria-label="link-to-home" href={"/"}>
-              <div className="h-4 w-4 bg-black dark:bg-white"></div>
+              <div className="h-4 w-4 bg-gray-950 dark:bg-white"></div>
             </Link>
           </div>
 
@@ -50,11 +50,11 @@ export default function Sidenav({ user }: SidenavProps) {
         </aside>
       </nav>
       {/* top navbar (mobile and tablet screens) */}
-      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-2 shadow-sm sm:gap-x-6 sm:px-4 lg:hidden dark:border-gray-800 dark:bg-gray-950">
+      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 px-2 shadow-sm sm:gap-x-6 sm:px-4 lg:hidden dark:border-gray-800">
         <div className="flex w-full items-center justify-between gap-1 sm:gap-2">
           <UserProfileMobile user={user} />
           <Link aria-label="link-to-home" href={"/"}>
-            <div className="h-4 w-4 bg-black dark:bg-white"></div>
+            <div className="h-4 w-4 bg-gray-950 dark:bg-white"></div>
           </Link>
           <MobileSidenav />
         </div>

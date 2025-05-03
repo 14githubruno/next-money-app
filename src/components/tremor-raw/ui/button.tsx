@@ -21,9 +21,9 @@ const buttonVariants = tv({
         // border
         "border-transparent",
         // text color
-        "text-white dark:text-black",
+        "text-white dark:text-gray-950",
         // background color
-        "bg-black dark:bg-white",
+        "bg-gray-950 dark:bg-white",
         // hover color
         "hover:opacity-75",
         // disabled
