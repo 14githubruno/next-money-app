@@ -34,7 +34,10 @@ export default function Sidenav({ user }: SidenavProps) {
             <ul role="list" className="space-y-2">
               {dashboardNavLinks.map((link) => {
                 return (
-                  <li key={link.name} className="border">
+                  <li
+                    key={link.name}
+                    className="border border-gray-300 dark:border-gray-800"
+                  >
                     <NavLink
                       isActive={linkIsActive(pathname, link.href)}
                       {...link}

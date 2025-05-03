@@ -17,8 +17,8 @@ export default function NavLink({ isActive, href, name, icon }: NavLinkProps) {
       className={cx(
         isActive
           ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950"
-          : "bg-white text-gray-950 dark:bg-gray-950 dark:text-white",
-        "flex items-center gap-x-2.5 px-3 py-2.5 text-sm font-medium",
+          : "bg-white text-gray-600 dark:bg-gray-950 dark:text-gray-400",
+        "flex items-center gap-x-2.5 p-3 text-sm",
         focusRing
       )}
     >

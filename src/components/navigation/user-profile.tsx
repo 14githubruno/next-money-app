@@ -18,7 +18,7 @@ export function UserProfileDesktop({ user }: UserProfileProps) {
         variant="ghost"
         className={cx(
           focusRing,
-          "group flex w-full items-center justify-between p-2 text-sm font-medium text-gray-900 hover:bg-gray-100 data-[state=open]:bg-gray-100 hover:dark:bg-gray-400/10 dark:data-[state=open]:bg-gray-400/10"
+          "group flex w-full items-center justify-between border-gray-300 p-2 text-sm font-medium text-gray-900 hover:bg-gray-100 data-[state=open]:bg-gray-100 dark:border-gray-800 hover:dark:bg-gray-400/10 dark:data-[state=open]:bg-gray-400/10"
         )}
       >
         <span className="flex items-center gap-3">
