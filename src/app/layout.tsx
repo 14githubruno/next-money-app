@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import clsx from "clsx";
 import Toaster from "@/providers/toaster";
 import ThemeProvider from "@/providers/theme-provider";
+import { Dosis } from "next/font/google";
+
+const dosis = Dosis({
+  variable: "--font-dosis",
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-white antialiased dark:bg-gray-950">
+      <body
+        className={clsx(
+          "antialiased",
+          "bg-white dark:bg-gray-950",
+          dosis.variable,
+          "font-dosis"
+        )}
+      >
         <ThemeProvider>
           {children}
           <Toaster />
