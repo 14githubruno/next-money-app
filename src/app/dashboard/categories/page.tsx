@@ -19,9 +19,14 @@ export default async function CategoriesPage() {
 
   return (
     <div className="p-6">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-8">
         <h1 className="text-2xl font-bold">Categories</h1>
-        <CategoryForm userId={userId} />
+        <div className="flex items-center justify-between">
+          <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
+            Overview of all your categories.
+          </p>
+          <CategoryForm userId={userId} />
+        </div>
       </div>
       <CategoriesTable categories={categories} />
     </div>
