@@ -3,23 +3,26 @@ import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { CategoryFormState, ExpenseFormState } from "./types";
 import type { User } from "next-auth";
+import { cache } from "react";
 
 /**
  * Get logged in user data
  */
-export async function getUser(): Promise<{
-  user: User | undefined;
-  userId: string | undefined;
-}> {
-  const session = await auth();
-  const user = session?.user;
-  const userId = user?.id;
+export const getUser = cache(
+  async (): Promise<{
+    user: User | undefined;
+    userId: string | undefined;
+  }> => {
+    const session = await auth();
+    const user = session?.user;
+    const userId = user?.id;
 
-  return {
-    user,
-    userId,
-  };
-}
+    return {
+      user,
+      userId,
+    };
+  }
+);
 
 /**
  * Set custom Error object to catch predictable category and expense errors
