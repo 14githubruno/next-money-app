@@ -3,6 +3,8 @@ import "./globals.css";
 import clsx from "clsx";
 import Toaster from "@/providers/toaster";
 import ThemeProvider from "@/providers/theme-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import TableFilteringProvider from "@/providers/table-filtering-provider";
 import { Dosis } from "next/font/google";
 
 const dosis = Dosis({
@@ -32,7 +34,9 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider>
-          {children}
+          <NuqsAdapter>
+            <TableFilteringProvider>{children}</TableFilteringProvider>
+          </NuqsAdapter>
           <Toaster />
         </ThemeProvider>
       </body>

@@ -18,6 +18,8 @@ import { useToast } from "@/hooks/toast/use-toast";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useTableFiltering } from "@/hooks/use-table-filtering";
+import Loader from "../ui/loader";
 
 const expensesTableHeadings = [
   "Date",
@@ -40,6 +42,7 @@ export function ExpensesTable({ currentPage, expenses }: ExpensesTableProps) {
   const pathname = usePathname();
   const { replace } = useRouter();
   const { toast } = useToast();
+  const { isFiltering } = useTableFiltering();
 
   const deleteCurrentExpense = (expenseId: string) => {
     startTransition(async () => {
@@ -71,8 +74,17 @@ export function ExpensesTable({ currentPage, expenses }: ExpensesTableProps) {
     });
   };
 
-  return (
-    <TableRoot className="mt-8">
+  /**
+   * Display fallback component while URL paramaters are causing
+   * another DB fetch
+   *
+   * @see https://nuqs.47ng.com/docs/options#transitions
+   */
+
+  return isFiltering ? (
+    <Loader height="20.79625rem" />
+  ) : (
+    <TableRoot>
       <Table>
         <TableHead>
           <TableRow>
