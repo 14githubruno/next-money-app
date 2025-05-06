@@ -1,9 +1,7 @@
 import { redirect, notFound } from "next/navigation";
-import { convertToBoolean } from "@/lib/utils";
-import { getUser } from "@/lib/utils";
-import { getExpenses } from "@/lib/queries/expense";
+import { getUser, convertToBoolean } from "@/lib/utils";
+import { getExpenses, getTotalExpenseCount } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
-import { getTotalExpenseCount } from "@/lib/queries/expense";
 import { ExpensesTable } from "@/components/expenses/expenses-table";
 import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";

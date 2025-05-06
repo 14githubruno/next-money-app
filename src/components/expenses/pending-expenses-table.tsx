@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { confirmExpense } from "@/lib/actions/expense";
 import { ExpenseTypes } from "@/lib/validations/schemas";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   Table,
   TableBody,

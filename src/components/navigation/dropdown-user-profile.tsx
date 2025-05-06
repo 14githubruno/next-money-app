@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { type ReactNode, useState, useRef } from "react";
 import type { User } from "next-auth";
 import {
   DropdownMenu,
@@ -14,7 +14,6 @@ import {
 import ThemeSwitcherSubMenu from "./theme-switcher-sub-menu";
 import Link from "next/link";
 import SignOutDialog from "./sign-out-dialog";
-import { useState, useRef } from "react";
 
 type DropdownUserProfileProps = {
   children: ReactNode;
