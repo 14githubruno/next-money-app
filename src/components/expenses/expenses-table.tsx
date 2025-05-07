@@ -82,9 +82,9 @@ export function ExpensesTable({ currentPage, expenses }: ExpensesTableProps) {
    */
 
   return isFiltering ? (
-    <Loader height="20.79625rem" />
+    <Loader height="21rem" />
   ) : (
-    <TableRoot>
+    <TableRoot className="h-[21rem]">
       <Table>
         <TableHead>
           <TableRow>
