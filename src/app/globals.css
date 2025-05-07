@@ -10,7 +10,7 @@
 
 @theme {
   /* fonts */
-  --font-dosis: var(--font-dosis);
+  --font-quicksand: var(--font-quicksand);
 
   /* widths */
   --width-sidebar: 7rem;

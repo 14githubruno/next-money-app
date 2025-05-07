@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import clsx from "clsx";
 import Providers from "@/providers";
-import { Dosis } from "next/font/google";
+import { Quicksand } from "next/font/google";
 
-const dosis = Dosis({
-  variable: "--font-dosis",
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
   subsets: ["latin"],
   weight: ["400"],
 });
@@ -26,8 +26,8 @@ export default function RootLayout({
         className={clsx(
           "antialiased",
           "bg-white dark:bg-gray-950",
-          dosis.variable,
-          "font-dosis"
+          quicksand.variable,
+          "font-quicksand"
         )}
       >
         <Providers>{children}</Providers>
