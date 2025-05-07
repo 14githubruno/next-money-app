@@ -19,12 +19,14 @@ type DropdownUserProfileProps = {
   children: ReactNode;
   align?: "center" | "start" | "end";
   user: User | undefined;
+  isMobile: boolean;
 };
 
 export default function DropdownUserProfile({
   children,
   align = "start",
   user,
+  isMobile,
 }: DropdownUserProfileProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const focusRef = useRef<null | HTMLButtonElement>(null);
@@ -44,6 +46,7 @@ export default function DropdownUserProfile({
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
+        className={`${isMobile ? "lg:hidden" : ""}`} // make sure to *always* hide dropdown on desktop
         onCloseAutoFocus={(event) => {
           if (focusRef.current) {
             focusRef.current.focus();

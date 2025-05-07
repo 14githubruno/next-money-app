@@ -13,11 +13,11 @@ export default async function Layout({ children }: Props) {
   return (
     <div
       className={clsx(
-        "flex h-screen flex-col",
-        "lg:flex-row lg:overflow-hidden"
+        "mt-[var(--height-mobile-nav)] flex h-screen flex-col",
+        "lg:mt-0 lg:flex-row lg:overflow-hidden"
       )}
     >
-      <div className={clsx("w-full flex-none", "lg:w-72")}>
+      <div className={clsx("w-full flex-none", "lg:w-sidebar")}>
         <Sidenav user={user} />
       </div>
       <div className={clsx("grow p-6", "lg:overflow-y-auto lg:px-12")}>

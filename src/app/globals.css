@@ -4,9 +4,16 @@
 /* Enable dark/light mode */
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --height-mobile-nav: 4rem;
+}
+
 @theme {
   /* fonts */
   --font-dosis: var(--font-dosis);
+
+  /* widths */
+  --width-sidebar: 7rem;
 
   /* animations and keyframes */
   --animate-hide: hide 150ms cubic-bezier(0.16, 1, 0.3, 1);

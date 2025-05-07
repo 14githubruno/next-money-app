@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { focusRing } from "@/lib/utils";
-import { RemixiconComponentType } from "@remixicon/react";
+import { LucideIcon } from "lucide-react"; // https://github.com/lucide-icons/lucide/discussions/1869#discussioncomment-12718951
 import { DrawerClose } from "../tremor-raw/ui/drawer";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ type NavLinkProps = {
   isActive: boolean;
   href: string;
   name: string;
-  icon: RemixiconComponentType;
+  icon: LucideIcon;
   isMobile: boolean;
 };
 
@@ -24,16 +24,25 @@ export default function NavLink({
   const navLink = (
     <Link
       href={href}
+      aria-label="link to home"
       className={clsx(
-        isActive
+        "flex items-center rounded-full p-2 text-sm",
+        isMobile && "gap-2 rounded-none",
+        isMobile && isActive
           ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950"
           : "bg-white text-gray-600 dark:bg-gray-950 dark:text-gray-400",
-        "flex items-center gap-x-2.5 p-3 text-sm",
+        !isMobile && isActive && "ring-2 transition-all",
         focusRing
       )}
     >
-      <Icon className="size-5 shrink-0" aria-hidden="true" />
-      {name}
+      <Icon
+        className={clsx(
+          "bg-red dark:bg-red size-5 overflow-hidden",
+          "lg:size-6"
+        )}
+        aria-hidden="true"
+      />
+      {isMobile && name}
     </Link>
   );
 
