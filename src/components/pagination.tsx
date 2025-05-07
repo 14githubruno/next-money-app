@@ -25,7 +25,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
   return (
     <Fragment>
       <div className="flex items-center justify-between">
-        <div className="flex gap-[0.1rem]">
+        <div className="flex gap-3">
           {allPages.map((pageNum, index) => {
             let position: "first" | "last" | "single" | "middle" | undefined;
 
@@ -46,7 +46,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
           })}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <PaginationArrow
             direction="left"
             onClick={() => setPage((p) => p - 1)}
@@ -75,10 +75,14 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = cx(
-    "flex h-10 w-10 items-center justify-center text-sm cursor-pointer",
+    "flex h-10 w-10 items-center justify-center text-sm cursor-pointer rounded-full",
     position === "middle" && "opacity-50",
-    isActive ? "bg-gray-950 text-gray-100" : "bg-gray-100 text-gray-950",
-    !isActive && position !== "middle" && "hover:bg-gray-200"
+    isActive
+      ? "bg-gray-950 text-gray-100 dark:border dark:border-gray-800"
+      : "  bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-gray-100",
+    !isActive &&
+      position !== "middle" &&
+      "hover:bg-gray-200 dark:hover:opacity-50 dark:hover:bg-gray-800"
   );
 
   return isActive || position === "middle" ? (
@@ -100,7 +104,7 @@ function PaginationArrow({
   isDisabled?: boolean;
 }) {
   const classNames =
-    "bg-gray-950 text-gray-100 h-10 w-10 flex items-center justify-center cursor-pointer";
+    "bg-gray-950 text-gray-100 h-10 w-10 flex items-center justify-center cursor-pointer rounded-full dark:bg-gray-800 hover:opacity-75";
 
   const icon =
     direction === "left" ? (
@@ -110,7 +114,12 @@ function PaginationArrow({
     );
 
   return isDisabled ? (
-    <div className={cx("cursor-not-allowed opacity-50", classNames)}>
+    <div
+      className={cx(
+        classNames,
+        "cursor-not-allowed opacity-50 hover:opacity-50"
+      )}
+    >
       {icon}
     </div>
   ) : (
