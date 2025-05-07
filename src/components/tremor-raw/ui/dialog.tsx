@@ -55,6 +55,7 @@ const DialogContent = React.forwardRef<
     <DialogPortal>
       <DialogOverlay>
         <DialogPrimitives.Content
+          aria-describedby={undefined}
           ref={forwardedRef}
           className={cx(
             // base

@@ -76,6 +76,7 @@ const DrawerContent = React.forwardRef<
     <DrawerPortal>
       <DrawerOverlay>
         <DrawerPrimitives.Content
+          aria-describedby={undefined}
           ref={forwardedRef}
           className={cx(
             // base
