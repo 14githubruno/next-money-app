@@ -625,7 +625,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
           >
             {showGridLines ? (
               <CartesianGrid
-                className={cx("stroke-gray-200 stroke-1 dark:stroke-gray-800")}
+                className={cx("stroke-gray-200 stroke-3 dark:stroke-gray-800")}
                 horizontal={true}
                 vertical={false}
               />
@@ -864,7 +864,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 type="linear"
                 dataKey={category}
                 stroke=""
-                strokeWidth={2}
+                strokeWidth={4}
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 isAnimationActive={false}
