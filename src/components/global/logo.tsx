@@ -11,7 +11,7 @@ export default function Logo({ isMobile }: LogoProps) {
   const link = (
     <Link
       className={clsx(
-        "flex w-fit items-center rounded-full p-[0.45rem]",
+        "flex w-fit items-center rounded-lg p-[0.45rem]",
         "border border-gray-300 dark:border-gray-800"
       )}
       aria-label="link-to-home"

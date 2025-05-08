@@ -24,7 +24,7 @@ export function UserProfile({ isMobile, user }: UserProfileProps) {
       >
         <span
           className={cx(
-            "flex size-10 shrink-0 items-center justify-center rounded-full",
+            "flex size-10 shrink-0 items-center justify-center rounded-lg",
             "border border-gray-300 dark:border-gray-800",
             "bg-white dark:bg-gray-950",
             "text-xs text-gray-700 dark:text-gray-300"

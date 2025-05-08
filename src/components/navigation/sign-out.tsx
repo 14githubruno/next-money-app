@@ -14,7 +14,7 @@ export default function SignOut() {
         type="submit"
         disabled={pending}
         isLoading={pending}
-        className="w-full"
+        className="w-full rounded-sm"
       >
         {pending ? "Loading..." : "Yes"}
       </Button>

@@ -145,6 +145,7 @@ export default function ExpenseForm({
                     id="note"
                     name="note"
                     rows={3}
+                    maxLength={150}
                     placeholder="Add details about this expense"
                     defaultValue={state.fieldValues?.note ?? ""}
                   />

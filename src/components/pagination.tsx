@@ -75,7 +75,7 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = cx(
-    "flex h-10 w-10 items-center justify-center text-sm cursor-pointer rounded-full",
+    "flex h-10 w-10 items-center justify-center text-sm cursor-pointer rounded-lg",
     position === "middle" && "opacity-50",
     isActive
       ? "bg-gray-950 text-gray-100 dark:border dark:border-gray-800"
@@ -104,7 +104,7 @@ function PaginationArrow({
   isDisabled?: boolean;
 }) {
   const classNames =
-    "bg-gray-950 text-gray-100 h-10 w-10 flex items-center justify-center cursor-pointer rounded-full dark:bg-gray-800 hover:opacity-75";
+    "bg-gray-950 text-gray-100 h-10 w-10 flex items-center justify-center cursor-pointer rounded-lg dark:bg-gray-800 hover:opacity-75";
 
   const icon =
     direction === "left" ? (

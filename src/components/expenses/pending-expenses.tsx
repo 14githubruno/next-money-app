@@ -21,12 +21,12 @@ export default async function PendingExpenses() {
 
   return (
     <div className="flex h-[27rem] flex-col gap-3">
-      <p className="bg-purple-50 p-3 text-black dark:text-black">
+      <p className="rounded-lg bg-purple-50 p-3 text-black dark:text-black">
         You have{" "}
         <span className="font-bold text-[#8659c6]">{expenses.length}</span>{" "}
         pending {expenses.length === 1 ? "payment" : "payments"}
       </p>
-      <p className="bg-purple-200 p-3 text-black dark:text-black">
+      <p className="rounded-lg bg-purple-200 p-3 text-black dark:text-black">
         Total Pending:{" "}
         <span className="font-medium">
           ${amount?._sum.amount ? amount?._sum.amount?.toFixed(2) : 0}

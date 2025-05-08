@@ -143,7 +143,7 @@ TimeInput.displayName = "TimeInput";
 const triggerStyles = tv({
   base: [
     // base
-    "peer flex w-full cursor-pointer appearance-none items-center gap-x-2 truncate border px-3 py-2 shadow-xs outline-hidden transition-all sm:text-sm",
+    "peer flex w-full cursor-pointer appearance-none rounded-full items-center gap-x-2 truncate border px-3 py-2 shadow-xs outline-hidden transition-all sm:text-sm",
     // background color
     "bg-white dark:bg-gray-950",
     // border color
@@ -224,7 +224,7 @@ const CalendarPopover = React.forwardRef<
         onOpenAutoFocus={(e) => e.preventDefault()}
         className={cx(
           // base
-          "relative z-50 w-fit border text-sm shadow-xl shadow-black/[2.5%]",
+          "relative z-50 w-fit rounded-md border text-sm shadow-xl shadow-black/[2.5%]",
           // widths
           "max-w-[95vw] min-w-[calc(var(--radix-select-trigger-width)-2px)]",
           // border color
@@ -655,7 +655,7 @@ const SingleDatePicker = ({
                   />
                 </div>
               )}
-              <div className="flex items-center gap-x-2 border-t border-gray-200 p-3 dark:border-gray-800">
+              <div className="flex items-center gap-x-2 rounded-full border-t border-gray-200 p-3 dark:border-gray-800">
                 <Button
                   variant="secondary"
                   className="h-8 w-full"

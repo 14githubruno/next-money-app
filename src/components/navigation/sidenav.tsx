@@ -43,7 +43,7 @@ export default function Sidenav({ user }: SidenavProps) {
                 const { tooltip, href } = link;
                 return (
                   <Tooltip asChild side="right" content={tooltip} key={tooltip}>
-                    <li className="rounded-full border border-gray-300 dark:border-gray-800">
+                    <li className="rounded-lg border border-gray-300 dark:border-gray-800">
                       <NavLink
                         isMobile={false}
                         isActive={linkIsActive(pathname, href)}

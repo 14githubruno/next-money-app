@@ -15,6 +15,11 @@
   /* widths */
   --width-sidebar: 7rem;
 
+  /* border-radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 2rem;
+  --radius-lg: calc(infinity * 0.1rem);
+
   /* animations and keyframes */
   --animate-hide: hide 150ms cubic-bezier(0.16, 1, 0.3, 1);
   --animate-slide-down-and-fade: slideDownAndFade 150ms

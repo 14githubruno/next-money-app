@@ -39,7 +39,7 @@ export default function SignOutDialog({
         <DialogFooter className="mt-6">
           <DialogClose asChild>
             <Button
-              className="mt-2 w-full sm:mt-0 sm:w-fit"
+              className="mt-2 w-full rounded-sm sm:mt-0 sm:w-fit"
               variant="secondary"
             >
               No

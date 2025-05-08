@@ -26,8 +26,8 @@ export default function NavLink({
       href={href}
       aria-label="link to home"
       className={clsx(
-        "flex items-center rounded-full p-2 text-sm",
-        isMobile && "gap-2 rounded-none",
+        "flex items-center rounded-lg p-2 text-sm",
+        isMobile && "gap-2",
         isMobile && isActive
           ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950"
           : "bg-white text-gray-600 dark:bg-gray-950 dark:text-gray-400",
