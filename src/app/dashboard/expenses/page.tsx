@@ -7,6 +7,7 @@ import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";
 import Pagination from "@/components/pagination";
 import { Suspense } from "react";
+import { getCurrency } from "@/lib/cookies";
 
 const PAGE_SIZE = 5; // expenses per page
 
@@ -16,6 +17,7 @@ export default async function ExpensesPage(props: {
   searchParams?: SearchParams;
 }) {
   const { userId } = await getUser();
+  const currency = await getCurrency();
 
   const searchParams = await props.searchParams;
   const query = searchParams?.note || "";
@@ -58,7 +60,11 @@ export default async function ExpensesPage(props: {
         <ExpenseFilters />
       </div>
       <Suspense fallback={null}>
-        <ExpensesTable currentPage={currentPage} expenses={expenses} />
+        <ExpensesTable
+          currentPage={currentPage}
+          expenses={expenses}
+          currency={currency}
+        />
       </Suspense>
 
       {totalCount > PAGE_SIZE && <Pagination totalPages={totalPages} />}

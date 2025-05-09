@@ -3,6 +3,7 @@ import { getUser } from "@/lib/utils";
 import { getExpenses } from "@/lib/queries/expense";
 import { notFound } from "next/navigation";
 import { buildExpensesChartDataObject } from "@/lib/chartUtils";
+import { getCurrency } from "@/lib/cookies";
 
 const currentYear = new Date().getFullYear();
 const expenseDate = {
@@ -23,6 +24,8 @@ const whereFiltersUnconfirmed = {
 export default async function ExpensesChartWrapper() {
   const { userId } = await getUser();
 
+  const currency = await getCurrency();
+
   const [confirmed, unconfirmed] = await Promise.all([
     getExpenses(userId, { ...whereFiltersConfirmed }),
     getExpenses(userId, { ...whereFiltersUnconfirmed }),
@@ -39,6 +42,7 @@ export default async function ExpensesChartWrapper() {
     <ExpensesChart
       chartData={chartData}
       chartCategories={["confirmed", "unconfirmed"]}
+      currency={currency}
     />
   );
 }

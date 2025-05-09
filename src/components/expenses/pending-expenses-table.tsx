@@ -12,13 +12,16 @@ import {
 } from "../tremor-raw/ui/table";
 import { Button } from "../tremor-raw/ui/button";
 import { useToast } from "@/hooks/toast/use-toast";
+import { formatPriceWithCurrency } from "@/lib/utils";
 
 type PendingExpensesTableProps = {
   expenses: ExpenseTypes[];
+  currency: string | undefined;
 };
 
 export default function PendingExpensesTable({
   expenses,
+  currency,
 }: PendingExpensesTableProps) {
   const [isPending, startTransition] = useTransition();
   const [expenseGettingConfirmed, setExpenseGettingConfirmed] = useState("");
@@ -63,7 +66,9 @@ export default function PendingExpensesTable({
             return (
               <TableRow key={expense.id}>
                 <TableCell>{expense.category.name}</TableCell>
-                <TableCell>${expense.amount.toFixed(2)}</TableCell>
+                <TableCell>
+                  {formatPriceWithCurrency(expense.amount, currency)}
+                </TableCell>
                 <TableCell>
                   {new Date(expense.expenseDate).toLocaleDateString()}
                 </TableCell>

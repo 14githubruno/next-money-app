@@ -20,6 +20,7 @@ import { useTransition } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useTableFiltering } from "@/hooks/use-table-filtering";
 import Loader from "../ui/loader";
+import { formatPriceWithCurrency } from "@/lib/utils";
 
 const expensesTableHeadings = [
   "Date",
@@ -34,9 +35,14 @@ const expensesTableHeadings = [
 type ExpensesTableProps = {
   currentPage: number;
   expenses: ExpenseTypes[];
+  currency: string | undefined;
 };
 
-export function ExpensesTable({ currentPage, expenses }: ExpensesTableProps) {
+export function ExpensesTable({
+  currentPage,
+  expenses,
+  currency,
+}: ExpensesTableProps) {
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -109,7 +115,9 @@ export function ExpensesTable({ currentPage, expenses }: ExpensesTableProps) {
                   {new Date(expense.expenseDate).toLocaleDateString()}
                 </TableCell>
                 <TableCell>{expense.category.name}</TableCell>
-                <TableCell>{expense.amount.toFixed(2)}</TableCell>
+                <TableCell>
+                  {formatPriceWithCurrency(expense.amount, currency)}
+                </TableCell>
                 <TableCell>{expense.note || "-"}</TableCell>
                 <TableCell>
                   <Badge variant={expense.isConfirmed ? "success" : "warning"}>

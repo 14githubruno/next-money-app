@@ -1,6 +1,8 @@
 import { getUser } from "@/lib/utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
+import { getCurrency } from "@/lib/cookies";
+import { formatPriceWithCurrency } from "@/lib/utils";
 
 const confirmedExpenses = {
   isConfirmed: true,
@@ -12,6 +14,8 @@ export default async function ConfirmedExpenses() {
   if (!userId) {
     redirect("/sign-in");
   }
+
+  const currency = await getCurrency();
 
   const [expenses, amount] = await Promise.all([
     getExpenses<boolean>(userId, confirmedExpenses),
@@ -28,7 +32,7 @@ export default async function ConfirmedExpenses() {
       <p className="rounded-lg bg-emerald-100 p-3 text-black dark:text-black">
         Total Confirmed:{" "}
         <span className="font-medium text-emerald-700">
-          ${amount?._sum.amount ? amount?._sum.amount?.toFixed(2) : 0}
+          {formatPriceWithCurrency(amount._sum.amount ?? 0, currency)}
         </span>
       </p>
     </div>

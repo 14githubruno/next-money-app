@@ -2,6 +2,8 @@ import { getUser } from "@/lib/utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import PendingExpensesTable from "./pending-expenses-table";
+import { getCurrency } from "@/lib/cookies";
+import { formatPriceWithCurrency } from "@/lib/utils";
 
 const pendingExpenses = {
   isConfirmed: false,
@@ -14,6 +16,7 @@ export default async function PendingExpenses() {
     redirect("/sign-in");
   }
 
+  const currency = await getCurrency();
   const [expenses, amount] = await Promise.all([
     getExpenses<boolean>(userId, pendingExpenses),
     getTotalAmountExpenses<boolean>(userId, pendingExpenses),
@@ -29,10 +32,13 @@ export default async function PendingExpenses() {
       <p className="rounded-lg bg-purple-200 p-3 text-black dark:text-black">
         Total Pending:{" "}
         <span className="font-medium">
-          ${amount?._sum.amount ? amount?._sum.amount?.toFixed(2) : 0}
+          {formatPriceWithCurrency(amount._sum.amount ?? 0, currency)}
         </span>
       </p>
-      <PendingExpensesTable expenses={expenses.slice(0, 5)} />
+      <PendingExpensesTable
+        expenses={expenses.slice(0, 5)}
+        currency={currency}
+      />
     </div>
   );
 }

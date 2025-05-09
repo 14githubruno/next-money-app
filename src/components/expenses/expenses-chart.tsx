@@ -1,24 +1,26 @@
 "use client";
 
 import { LineChart } from "../tremor-raw/visualizations/line-chart";
+import { formatPriceWithCurrency } from "@/lib/utils";
 
 type ExpensesChartProps = {
   chartData: Record<string, string | number>[];
   chartCategories: string[];
+  currency: string | undefined;
 };
 
 export const ExpensesChart = ({
   chartData,
   chartCategories,
+  currency,
 }: ExpensesChartProps) => (
   <LineChart
-    className="h-80"
     data={chartData}
     index="date"
     categories={chartCategories}
     colors={["emerald", "violet"]}
     valueFormatter={(number: number) =>
-      `$${Intl.NumberFormat("us").format(number).toString()}`
+      `${formatPriceWithCurrency(number, currency)}`
     }
   />
 );

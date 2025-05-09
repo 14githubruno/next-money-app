@@ -124,6 +124,44 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
+/**
+ * An array of supported and valid currencies
+ */
+export const currencies = Intl.supportedValuesOf("currency");
+
+/**
+ * Default country values.
+ */
+export const DEFAULT_COUNTRY = {
+  code: "US",
+  currency: "USD",
+  locale: "en-US",
+};
+
+/**
+ * Format price with currency (and optional locale).
+ *
+ * @note TO DO: decide if locale needs to be used
+ */
+export function formatPriceWithCurrency(
+  amount: number,
+  currency: string | undefined,
+  locale = DEFAULT_COUNTRY.locale
+): string {
+  const validCurrency =
+    currency && currencies.includes(currency)
+      ? currency
+      : DEFAULT_COUNTRY.currency;
+
+  const formatted = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: validCurrency,
+    notation: "compact",
+  }).format(amount);
+
+  return formatted;
+}
+
 // Tremor Raw cx [v0.0.0]
 
 export function cx(...args: ClassValue[]) {
