@@ -11,7 +11,7 @@ import {
 } from "@remixicon/react";
 import * as React from "react";
 
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 
 const DropdownMenu = DropdownMenuPrimitives.Root;
 DropdownMenu.displayName = "DropdownMenu";

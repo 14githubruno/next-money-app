@@ -1,8 +1,7 @@
 // Tremor Textarea [v1.0.0]
 
 import React from "react";
-
-import { cx, focusInput, hasErrorInput } from "@/lib/utils";
+import { cx, focusInput, hasErrorInput } from "@/lib/utils/tremor-raw/utils";
 
 interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

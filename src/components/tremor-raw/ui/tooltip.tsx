@@ -3,7 +3,7 @@
 import React from "react";
 import * as TooltipPrimitives from "@radix-ui/react-tooltip";
 
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 
 interface TooltipProps
   extends Omit<TooltipPrimitives.TooltipContentProps, "content" | "onClick">,

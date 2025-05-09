@@ -5,8 +5,7 @@ import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { categoryFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
-import { getUser } from "../utils";
-import { PredictableError } from "../utils";
+import { getUser, PredictableError } from "../utils/server-only-utils";
 
 /**
  * This file contains all the categories-related queries

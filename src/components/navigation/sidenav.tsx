@@ -4,7 +4,7 @@ import clsx from "clsx";
 import type { User } from "next-auth";
 import MobileSidenav from "./mobile-sidenav";
 import { UserProfile } from "./user-profile";
-import { dashboardNavLinks } from "@/lib/static-data";
+import { DASHBOARD_LINKS } from "@/lib/constants";
 import { linkIsActive } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Tooltip } from "../tremor-raw/ui/tooltip";
@@ -39,7 +39,7 @@ export default function Sidenav({ user }: SidenavProps) {
               role="list"
               className="flex flex-col items-center justify-center gap-3"
             >
-              {dashboardNavLinks.map((link) => {
+              {DASHBOARD_LINKS.map((link) => {
                 const { tooltip, href } = link;
                 return (
                   <Tooltip asChild side="right" content={tooltip} key={tooltip}>

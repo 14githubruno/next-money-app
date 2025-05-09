@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import { Button } from "@/components/tremor-raw/ui/button";
 
 export default async function Home() {

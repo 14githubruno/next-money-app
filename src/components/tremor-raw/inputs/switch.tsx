@@ -3,8 +3,7 @@
 import React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { tv, type VariantProps } from "tailwind-variants";
-
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 const switchVariants = tv({
   slots: {

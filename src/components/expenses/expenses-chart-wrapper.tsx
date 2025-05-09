@@ -1,9 +1,8 @@
 import { ExpensesChart } from "./expenses-chart";
-import { getUser } from "@/lib/utils";
+import { getUser, getCurrency } from "@/lib/utils/server-only-utils";
 import { getExpenses } from "@/lib/queries/expense";
 import { notFound } from "next/navigation";
-import { buildExpensesChartDataObject } from "@/lib/chartUtils";
-import { getCurrency } from "@/lib/cookies";
+import { buildExpensesChartDataObject } from "@/lib/utils/server-only-utils";
 
 const currentYear = new Date().getFullYear();
 const expenseDate = {

@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import { notFound } from "next/navigation";
 import { getSingleCategory } from "@/lib/queries/category";
 import CategoryForm from "@/components/categories/category-form";

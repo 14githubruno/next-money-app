@@ -1,7 +1,6 @@
-import { getUser } from "@/lib/utils";
+import { getUser, getCurrency } from "@/lib/utils/server-only-utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
-import { getCurrency } from "@/lib/cookies";
 import { formatPriceWithCurrency } from "@/lib/utils";
 
 const confirmedExpenses = {

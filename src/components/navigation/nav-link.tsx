@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { focusRing } from "@/lib/utils";
+import { focusRing } from "@/lib/utils/tremor-raw/utils";
 import { LucideIcon } from "lucide-react"; // https://github.com/lucide-icons/lucide/discussions/1869#discussioncomment-12718951
 import { DrawerClose } from "../tremor-raw/ui/drawer";
 import Link from "next/link";

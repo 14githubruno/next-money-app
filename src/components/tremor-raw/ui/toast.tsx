@@ -10,7 +10,7 @@ import {
   RiLoader2Fill,
 } from "@remixicon/react";
 
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 
 const ToastProvider = ToastPrimitives.Provider;
 ToastProvider.displayName = "ToastProvider";

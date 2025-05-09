@@ -20,8 +20,7 @@ import {
   type DayProps,
   type Matcher,
 } from "react-day-picker";
-
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 interface NavigationButtonProps
   extends React.HTMLAttributes<HTMLButtonElement> {

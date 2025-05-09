@@ -4,7 +4,7 @@ import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { LoaderCircle } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 const buttonVariants = tv({
   base: [

@@ -1,5 +1,5 @@
 import ExpenseForm from "@/components/expenses/expense-form";
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import { notFound } from "next/navigation";
 import { getSingleExpense } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";

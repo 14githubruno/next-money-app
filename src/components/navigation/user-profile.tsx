@@ -2,7 +2,7 @@
 
 import { Button } from "../tremor-raw/ui/button";
 import DropdownUserProfile from "./dropdown-user-profile";
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 import type { User } from "next-auth";
 
 type UserProfileProps = {

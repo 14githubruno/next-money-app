@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
 import { CategoriesTable } from "@/components/categories/categories-table";

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { type ReactNode } from "react";
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import Sidenav from "@/components/navigation/sidenav";
 
 type Props = {

@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import { redirect } from "next/navigation";
 import { getTotalAmountExpenses } from "@/lib/queries/expense";
 

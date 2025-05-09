@@ -3,8 +3,7 @@ import NextAuth from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { geolocation } from "@vercel/functions";
-import { countriesData } from "./lib/static-data";
-import { DEFAULT_COUNTRY } from "./lib/utils";
+import { COUNTRIES_DATA, DEFAULT_COUNTRY } from "./lib/constants";
 
 const privateRoutes = ["/dashboard"];
 const authRoutes = ["/sign-in"];
@@ -19,7 +18,7 @@ async function handleCookieCurrency(request: NextRequest) {
   if (currencyExists) return NextResponse.next();
 
   const { country = DEFAULT_COUNTRY.code } = geolocation(request);
-  const countryInfo = countriesData.find((item) => item.cca2 === country);
+  const countryInfo = COUNTRIES_DATA.find((item) => item.cca2 === country);
   const currencies = countryInfo?.currencies;
   const currency = currencies
     ? Object.keys(currencies)[0]

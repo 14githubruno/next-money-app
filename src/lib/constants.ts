@@ -10,7 +10,7 @@ import {
 /**
  * Dashboard sidenav links
  */
-export const dashboardNavLinks = [
+export const DASHBOARD_LINKS = [
   {
     name: "Overview",
     href: "/dashboard",
@@ -34,7 +34,7 @@ export const dashboardNavLinks = [
 /**
  * Theme modes to populate theme-switcher
  */
-export const themes = [
+export const THEMES = [
   {
     mode: "Light",
     value: "light",
@@ -56,7 +56,39 @@ export const themes = [
 ];
 
 /**
- * Countries with currencies data
+ * Months.
+ */
+export const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/**
+ * An array of supported and valid currencies
+ */
+export const CURRENCIES = Intl.supportedValuesOf("currency");
+
+/**
+ * Default country values.
+ */
+export const DEFAULT_COUNTRY = {
+  code: "US",
+  currency: "USD",
+  locale: "en-US",
+};
+
+/*
+ * Countries with currencies data (and languages)
  */
 type Currency = {
   name: string;
@@ -71,7 +103,7 @@ type CountryData = {
   languages: Languages;
 };
 
-export const countriesData: CountryData[] = [
+export const COUNTRIES_DATA: CountryData[] = [
   {
     cca2: "AW",
     currencies: { AWG: { name: "Aruban florin", symbol: "ƒ" } },

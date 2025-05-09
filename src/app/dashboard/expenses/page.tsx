@@ -1,5 +1,9 @@
 import { redirect, notFound } from "next/navigation";
-import { getUser, convertToBoolean } from "@/lib/utils";
+import {
+  getUser,
+  getCurrency,
+  convertToBoolean,
+} from "@/lib/utils/server-only-utils";
 import { getExpenses, getTotalExpenseCount } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
 import { ExpensesTable } from "@/components/expenses/expenses-table";
@@ -7,7 +11,6 @@ import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";
 import Pagination from "@/components/pagination";
 import { Suspense } from "react";
-import { getCurrency } from "@/lib/cookies";
 
 const PAGE_SIZE = 5; // expenses per page
 

@@ -11,7 +11,7 @@ import { Button } from "../tremor-raw/ui/button";
 import { RiMenuLine } from "@remixicon/react";
 import NavLink from "./nav-link";
 import { usePathname } from "next/navigation";
-import { dashboardNavLinks } from "@/lib/static-data";
+import { DASHBOARD_LINKS } from "@/lib/constants";
 import { linkIsActive } from "@/lib/utils";
 
 export default function MobileSidenav() {
@@ -42,7 +42,7 @@ export default function MobileSidenav() {
         <DrawerBody>
           <nav aria-label="dashboard navigation links">
             <ul role="list" className="space-y-2">
-              {dashboardNavLinks.map((link) => (
+              {DASHBOARD_LINKS.map((link) => (
                 <li key={link.name}>
                   <NavLink
                     isMobile={true}

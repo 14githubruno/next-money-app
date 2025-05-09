@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 import { generatePagination } from "@/lib/utils";
 import { Fragment } from "react";
 import { useQueryState, parseAsInteger } from "nuqs";

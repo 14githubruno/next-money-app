@@ -2,8 +2,7 @@
 
 import React from "react";
 import * as RadioGroupPrimitives from "@radix-ui/react-radio-group";
-
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitives.Root>,

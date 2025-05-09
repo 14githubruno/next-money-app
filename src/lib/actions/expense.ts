@@ -6,8 +6,7 @@ import { type ExpenseFormState } from "../types";
 import { expenseFormInitialState as initState } from "../utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getUser } from "../utils";
-import { PredictableError } from "../utils";
+import { getUser, PredictableError } from "../utils/server-only-utils";
 
 /**
  * This file contains all the expenses-related queries
