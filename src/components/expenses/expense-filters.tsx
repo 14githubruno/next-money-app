@@ -26,7 +26,11 @@ export default function ExpenseFilters() {
   const [page, setPage] = useQueryState("page", { shallow: false });
   const [note, setNote] = useQueryState(
     "note",
-    parseAsString.withOptions({ startTransition, shallow: false })
+    parseAsString.withOptions({
+      startTransition,
+      shallow: false,
+      throttleMs: 800,
+    })
   );
   const [isConfirmed, setIsConfirmed] = useQueryState(
     "isConfirmed",
