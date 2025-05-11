@@ -8,6 +8,7 @@ import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import { formatPriceWithCurrency } from "@/lib/utils";
 import ConfirmedExpensesTable from "./confirmed-expenses-table";
+import LinkToPendingOrConfirmed from "./link-to-pending-or-confirmed";
 
 export default async function ConfirmedExpenses() {
   const { userId } = await getUser();
@@ -51,6 +52,7 @@ export default async function ConfirmedExpenses() {
         expenses={expenses.slice(0, 3)}
         currency={currency}
       />
+      <LinkToPendingOrConfirmed isConfirmed={true} />
     </div>
   );
 }
