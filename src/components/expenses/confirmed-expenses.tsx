@@ -7,6 +7,7 @@ import {
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import { formatPriceWithCurrency } from "@/lib/utils";
+import ConfirmedExpensesTable from "./confirmed-expenses-table";
 
 export default async function ConfirmedExpenses() {
   const { userId } = await getUser();
@@ -46,6 +47,10 @@ export default async function ConfirmedExpenses() {
           {formatPriceWithCurrency(amount._sum.amount ?? 0, currency)}
         </span>
       </p>
+      <ConfirmedExpensesTable
+        expenses={expenses.slice(0, 3)}
+        currency={currency}
+      />
     </div>
   );
 }

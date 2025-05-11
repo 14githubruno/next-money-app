@@ -16,7 +16,7 @@ export default function Dashboard() {
             </Suspense>
           </div>
           <div className="col-start-4 col-end-7">
-            <Suspense fallback={<Loader height="6.9rem" />}>
+            <Suspense fallback={<Loader height="20rem" />}>
               <ConfirmedExpenses />
             </Suspense>
           </div>
