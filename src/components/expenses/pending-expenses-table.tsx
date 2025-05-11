@@ -81,7 +81,7 @@ export default function PendingExpensesTable({
                     isLoading={
                       isPending && expenseGettingConfirmed === expense.id
                     }
-                    className="inline-flex items-center gap-x-1 bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-900 ring-blue-500/30"
+                    className="inline-flex items-center gap-x-1 border-none bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-900 ring-blue-500/30"
                   >
                     {isPending && expenseGettingConfirmed === expense.id ? (
                       <>confirming...</>

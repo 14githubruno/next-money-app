@@ -36,7 +36,7 @@ export default async function ConfirmedExpenses() {
   ]);
 
   return (
-    <div className="flex h-[6.9rem] flex-col gap-3">
+    <div className="relative flex h-[22rem] flex-col gap-3">
       <p className="rounded-lg bg-emerald-50 p-3 text-black dark:text-black">
         You have{" "}
         <span className="font-bold text-emerald-700">{expenses.length}</span>{" "}
@@ -52,7 +52,7 @@ export default async function ConfirmedExpenses() {
         expenses={expenses.slice(0, 3)}
         currency={currency}
       />
-      <LinkToPendingOrConfirmed isConfirmed={true} />
+      {expenses.length > 0 && <LinkToPendingOrConfirmed isConfirmed={true} />}
     </div>
   );
 }
