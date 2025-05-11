@@ -4,12 +4,14 @@ import { LineChart } from "../tremor-raw/visualizations/line-chart";
 import { formatPriceWithCurrency } from "@/lib/utils";
 
 type ExpensesChartProps = {
+  sum: number;
   chartData: Record<string, string | number>[];
   chartCategories: string[];
   currency: string | undefined;
 };
 
 export const ExpensesChart = ({
+  sum,
   chartData,
   chartCategories,
   currency,
@@ -24,5 +26,6 @@ export const ExpensesChart = ({
     }
     startEndOnly
     connectNulls
+    showGridLines={sum > 0}
   />
 );

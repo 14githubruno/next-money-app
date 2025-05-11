@@ -86,6 +86,7 @@ export function buildExpensesChartDataObject(
   confirmed: ExpenseTypes[],
   unconfirmed: ExpenseTypes[]
 ) {
+  const sum = confirmed.length + unconfirmed.length;
   const chartData = [];
 
   for (let i = 0; i < MONTHS.length; i++) {
@@ -96,7 +97,7 @@ export function buildExpensesChartDataObject(
     });
   }
 
-  return chartData;
+  return { sum, chartData };
 }
 
 function calculateAmountPerMonth(expenses: ExpenseTypes[], monthIndex: number) {
