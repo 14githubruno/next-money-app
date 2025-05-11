@@ -11,7 +11,7 @@ export default function Dashboard() {
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-start-1 col-end-4">
-            <Suspense fallback={<Loader height="26rem" />}>
+            <Suspense fallback={<Loader height="20rem" />}>
               <PendingExpenses />
             </Suspense>
           </div>

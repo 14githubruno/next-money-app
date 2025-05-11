@@ -35,7 +35,7 @@ export default async function PendingExpenses() {
   ]);
 
   return (
-    <div className="flex h-[27rem] flex-col gap-3">
+    <div className="flex h-[20rem] flex-col gap-3">
       <p className="rounded-lg bg-purple-50 p-3 text-black dark:text-black">
         You have{" "}
         <span className="font-bold text-[#8659c6]">{expenses.length}</span>{" "}
@@ -48,7 +48,7 @@ export default async function PendingExpenses() {
         </span>
       </p>
       <PendingExpensesTable
-        expenses={expenses.slice(0, 5)}
+        expenses={expenses.slice(0, 3)}
         currency={currency}
       />
     </div>
