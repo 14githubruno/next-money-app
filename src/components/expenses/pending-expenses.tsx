@@ -1,12 +1,13 @@
-import { getUser, getCurrency } from "@/lib/utils/server-only-utils";
+import {
+  getUser,
+  getCurrency,
+  getDateRange,
+  getExpensesOfSelectedYear,
+} from "@/lib/utils/server-only-utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import PendingExpensesTable from "./pending-expenses-table";
 import { formatPriceWithCurrency } from "@/lib/utils";
-
-const pendingExpenses = {
-  isConfirmed: false,
-};
 
 export default async function PendingExpenses() {
   const { userId } = await getUser();
@@ -15,10 +16,22 @@ export default async function PendingExpenses() {
     redirect("/sign-in");
   }
 
-  const currency = await getCurrency();
+  // cookies
+  const [currency, dateRange] = await Promise.all([
+    getCurrency(),
+    getDateRange(),
+  ]);
+
+  // filters
+  const pendingExpenses = {
+    isConfirmed: false,
+    expenseDate: getExpensesOfSelectedYear(dateRange),
+  };
+
+  // queries
   const [expenses, amount] = await Promise.all([
-    getExpenses<boolean>(userId, pendingExpenses),
-    getTotalAmountExpenses<boolean>(userId, pendingExpenses),
+    getExpenses(userId, { ...pendingExpenses }),
+    getTotalAmountExpenses(userId, { ...pendingExpenses }),
   ]);
 
   return (

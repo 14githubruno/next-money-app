@@ -46,6 +46,26 @@ export async function getCurrency() {
 }
 
 /**
+ * Helper to get dateRange cookie.
+ */
+export async function getDateRange() {
+  const cookiesStore = await cookies();
+  return (
+    cookiesStore.get("dateRange")?.value ?? new Date().getFullYear().toString()
+  );
+}
+
+/**
+ * Return prisma date filters based on selected year.
+ */
+export function getExpensesOfSelectedYear(dateRange: string) {
+  return {
+    gte: new Date(`${dateRange}-01-01`).toISOString(),
+    lte: new Date(`${dateRange}-12-31`).toISOString(),
+  };
+}
+
+/**
  * Convert true or false strings (coming from search params) to boolean
  */
 export function convertToBoolean(value: string | string[] | undefined) {

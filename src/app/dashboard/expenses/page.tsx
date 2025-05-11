@@ -2,7 +2,9 @@ import { redirect, notFound } from "next/navigation";
 import {
   getUser,
   getCurrency,
+  getDateRange,
   convertToBoolean,
+  getExpensesOfSelectedYear,
 } from "@/lib/utils/server-only-utils";
 import { getExpenses, getTotalExpenseCount } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
@@ -20,7 +22,10 @@ export default async function ExpensesPage(props: {
   searchParams?: SearchParams;
 }) {
   const { userId } = await getUser();
-  const currency = await getCurrency();
+  const [currency, dateRange] = await Promise.all([
+    getCurrency(),
+    getDateRange(),
+  ]);
 
   const searchParams = await props.searchParams;
   const query = searchParams?.note || "";
@@ -35,6 +40,7 @@ export default async function ExpensesPage(props: {
   const whereFilters = {
     note: { contains: query, mode: "insensitive" },
     isConfirmed: convertToBoolean(isConfirmedParam),
+    expenseDate: getExpensesOfSelectedYear(dateRange),
   };
 
   const [expenses, categories, totalCount] = await Promise.all([

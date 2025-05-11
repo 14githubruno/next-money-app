@@ -1,11 +1,12 @@
-import { getUser, getCurrency } from "@/lib/utils/server-only-utils";
+import {
+  getUser,
+  getCurrency,
+  getDateRange,
+  getExpensesOfSelectedYear,
+} from "@/lib/utils/server-only-utils";
 import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import { formatPriceWithCurrency } from "@/lib/utils";
-
-const confirmedExpenses = {
-  isConfirmed: true,
-};
 
 export default async function ConfirmedExpenses() {
   const { userId } = await getUser();
@@ -14,11 +15,22 @@ export default async function ConfirmedExpenses() {
     redirect("/sign-in");
   }
 
-  const currency = await getCurrency();
+  // cookies
+  const [currency, dateRange] = await Promise.all([
+    getCurrency(),
+    getDateRange(),
+  ]);
 
+  // filters
+  const confirmedExpenses = {
+    isConfirmed: true,
+    expenseDate: getExpensesOfSelectedYear(dateRange),
+  };
+
+  // queries
   const [expenses, amount] = await Promise.all([
-    getExpenses<boolean>(userId, confirmedExpenses),
-    getTotalAmountExpenses<boolean>(userId, confirmedExpenses),
+    getExpenses(userId, { ...confirmedExpenses }),
+    getTotalAmountExpenses(userId, { ...confirmedExpenses }),
   ]);
 
   return (
