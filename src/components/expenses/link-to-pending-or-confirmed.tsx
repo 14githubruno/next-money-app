@@ -18,7 +18,9 @@ export default function LinkToPendingOrConfirmed({
       variant="base"
       className={clsx("absolute bottom-0 w-full", "lg:w-auto")}
     >
-      <Link href={`/dashboard/expenses?${param}`}>See all {text} expenses</Link>
+      <Link href={`/dashboard/expenses?${param}`}>
+        See all {text} expenses &rarr;
+      </Link>
     </Button>
   );
 }
