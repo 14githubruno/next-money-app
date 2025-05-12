@@ -60,7 +60,12 @@ export const getCategories = unstable_cache(
           ...filters,
         },
         include: {
-          expenses: true,
+          expenses: {
+            select: {
+              isConfirmed: true,
+              amount: true,
+            },
+          },
         },
         orderBy: {
           createdAt: "asc",
@@ -93,7 +98,12 @@ export async function getSingleCategory<T>(
         ...filters,
       },
       include: {
-        expenses: true,
+        expenses: {
+          select: {
+            isConfirmed: true,
+            amount: true,
+          },
+        },
       },
     });
     if (category) return category;
