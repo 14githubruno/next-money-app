@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import {
   Select,
   SelectContent,
@@ -11,6 +12,7 @@ import { Label } from "./tremor-raw/inputs/label";
 import { setDateRange } from "@/lib/actions/cookie";
 import { generateListOfYears } from "@/lib/utils";
 import { useActionState, useRef, useMemo } from "react";
+import { usePathname, useParams } from "next/navigation";
 
 type DateRangeSelectProps = {
   dateRange: string | undefined;
@@ -20,6 +22,11 @@ export default function DateRangeSelect({ dateRange }: DateRangeSelectProps) {
   const years = useMemo(() => {
     return generateListOfYears();
   }, []);
+
+  // do not display the select date range on the single expense page
+  const pathname = usePathname();
+  const params = useParams();
+  const isSingleExpensePage = pathname.includes("expenses") && params.id;
 
   const [state, formAction, pending] = useActionState(setDateRange, {
     dateRange:
@@ -37,7 +44,11 @@ export default function DateRangeSelect({ dateRange }: DateRangeSelectProps) {
   };
 
   return (
-    <form ref={formRef} action={formAction}>
+    <form
+      className={clsx(isSingleExpensePage && "hidden")}
+      ref={formRef}
+      action={formAction}
+    >
       <div className="space-y-2">
         <Label htmlFor="dateRange">Expenses year</Label>
         <Select
