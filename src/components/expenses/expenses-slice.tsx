@@ -41,7 +41,7 @@ export default async function ExpensesSlice({
   ]);
 
   // filters
-  const confirmedExpenses = {
+  const whereFilters = {
     isConfirmed: expensesAreConfirmed, // true or false
     expenseDate: getExpensesOfSelectedYear(dateRange),
   };
@@ -49,9 +49,9 @@ export default async function ExpensesSlice({
 
   // queries
   const [expenses, amount, count] = await Promise.all([
-    getExpenses(userId, { ...confirmedExpenses }, expensesToTake),
-    getTotalAmountExpenses(userId, { ...confirmedExpenses }),
-    getTotalExpenseCount(userId, { ...confirmedExpenses }),
+    getExpenses(userId, { ...whereFilters }, expensesToTake),
+    getTotalAmountExpenses(userId, { ...whereFilters }),
+    getTotalExpenseCount(userId, { ...whereFilters }),
   ]);
 
   return (
