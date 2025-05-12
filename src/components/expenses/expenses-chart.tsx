@@ -20,7 +20,7 @@ export const ExpensesChart = ({
     data={chartData}
     index="date"
     categories={chartCategories}
-    colors={["emerald", "violet"]}
+    colors={["emerald", "yellow"]}
     valueFormatter={(number: number) =>
       `${formatPriceWithCurrency(number, currency)}`
     }

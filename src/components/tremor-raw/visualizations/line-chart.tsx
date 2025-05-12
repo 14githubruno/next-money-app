@@ -62,7 +62,7 @@ const LegendItem = ({
     >
       <span
         className={cx(
-          "h-[3px] w-3.5 shrink-0 rounded-lg",
+          "h-4 w-4 shrink-0 rounded-lg",
           getColorClassName(color, "bg"),
           activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100"
         )}
@@ -422,7 +422,7 @@ const ChartTooltip = ({
                 <span
                   aria-hidden="true"
                   className={cx(
-                    "h-[3px] w-3.5 shrink-0 rounded-lg",
+                    "h-4 w-4 shrink-0 rounded-lg",
                     getColorClassName(color, "bg")
                   )}
                 />
@@ -625,7 +625,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
           >
             {showGridLines ? (
               <CartesianGrid
-                className={cx("stroke-gray-200 stroke-3 dark:stroke-gray-800")}
+                className={cx("stroke-gray-200 stroke-1 dark:stroke-gray-800")}
                 horizontal={true}
                 vertical={false}
               />
@@ -802,7 +802,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                       )}
                       cx={cxCoord}
                       cy={cyCoord}
-                      r={5}
+                      r={9}
                       fill=""
                       stroke={stroke}
                       strokeLinecap={strokeLinecap}
@@ -864,7 +864,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 type="linear"
                 dataKey={category}
                 stroke=""
-                strokeWidth={4}
+                strokeWidth={2}
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 isAnimationActive={false}
