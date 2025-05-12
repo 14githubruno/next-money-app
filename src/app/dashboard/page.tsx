@@ -8,7 +8,7 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-lg">Dashboard</h1>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-12">
         <div className={clsx("flex flex-col gap-6", "lg:flex-row")}>
           <div className="flex-[1]">
             <Suspense

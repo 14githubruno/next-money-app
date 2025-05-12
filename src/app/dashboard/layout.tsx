@@ -23,7 +23,12 @@ export default async function Layout({ children }: Props) {
       <div className={clsx("w-full flex-none", "lg:w-sidebar")}>
         <Sidenav user={user} />
       </div>
-      <div className={clsx("grow p-6", "lg:overflow-y-auto lg:px-12")}>
+      <div
+        className={clsx(
+          "flex grow flex-col gap-6 p-6",
+          "lg:overflow-y-auto lg:px-12"
+        )}
+      >
         <DateRangeSelect dateRange={dateRange} />
         {children}
       </div>
