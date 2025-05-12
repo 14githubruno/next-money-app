@@ -28,16 +28,16 @@ export default function ExpensesSliceLabel({
   const paragraphClasses = "rounded-lg p-3 text-black dark:text-black";
   const firstParagraphBG = expensesAreConfirmed
     ? "bg-emerald-50"
-    : "bg-purple-50";
+    : "bg-yellow-50";
   const secondParagraphBG = expensesAreConfirmed
     ? "bg-emerald-100"
-    : "bg-purple-200";
+    : "bg-yellow-100";
 
   // span classes
   const spanClasses = "font-bold";
   const spanTextColor = expensesAreConfirmed
     ? "text-emerald-700"
-    : "text-[#8659c6]";
+    : "text-yellow-900";
 
   return (
     <Fragment>
