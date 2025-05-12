@@ -6,6 +6,9 @@
 
 :root {
   --height-mobile-nav: 4rem;
+  --height-expenses-slice: 22rem;
+  --height-expenses-table: 21rem;
+  --height-expenses-chart: 20rem;
 }
 
 @theme {

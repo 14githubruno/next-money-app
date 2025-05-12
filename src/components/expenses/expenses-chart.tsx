@@ -17,6 +17,7 @@ export const ExpensesChart = ({
   currency,
 }: ExpensesChartProps) => (
   <LineChart
+    className="h-[var(--height-expenses-chart)]"
     data={chartData}
     index="date"
     categories={chartCategories}

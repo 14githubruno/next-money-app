@@ -88,9 +88,9 @@ export function ExpensesTable({
    */
 
   return isFiltering ? (
-    <Loader height="21rem" />
+    <Loader height="var(--height-expenses-table)" />
   ) : (
-    <TableRoot className="h-[21rem]">
+    <TableRoot className="h-[--height-expenses-table]">
       <Table>
         <TableHead>
           <TableRow>

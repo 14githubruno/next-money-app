@@ -55,7 +55,7 @@ export default async function ExpensesSlice({
   ]);
 
   return (
-    <div className="relative flex h-[22rem] flex-col gap-3">
+    <div className="relative flex h-[var(--height-expenses-slice)] flex-col gap-3">
       <ExpensesSliceLabel
         expensesAreConfirmed={expensesAreConfirmed}
         expensesLength={count}
