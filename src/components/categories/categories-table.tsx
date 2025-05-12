@@ -17,13 +17,22 @@ import { CategoryTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
 import { useToast } from "@/hooks/toast/use-toast";
 
-const categoriesHeadings = ["Name", "Expenses", "Default", "Actions"];
+const categoriesHeadings = [
+  "Name",
+  "Expenses of the year",
+  "Default",
+  "Actions",
+];
 
 type CategoriesTableProps = {
-  categories: CategoryTypes[];
+  categoriesForTable: CategoryTypes[];
+  categoriesWithAllExpenses: CategoryTypes[];
 };
 
-export function CategoriesTable({ categories }: CategoriesTableProps) {
+export function CategoriesTable({
+  categoriesForTable,
+  categoriesWithAllExpenses,
+}: CategoriesTableProps) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -68,12 +77,12 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {categories.map((category) => {
+          {categoriesForTable.map((category) => {
             return (
               <TableRow key={category.id}>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>
-                  {category?.expenses ? category.expenses.length : 0}
+                  {`${category?.expenses ? category.expenses.length : 0}/${categoriesWithAllExpenses.find((cat) => cat.name === category.name)?.expenses?.length}`}
                 </TableCell>
                 <TableCell>
                   {category.isDefault && <Lock className="h-4 w-4" />}

@@ -52,7 +52,11 @@ export async function createDefaultCategories(userId: string) {
  */
 
 export const getCategories = unstable_cache(
-  async <T>(userId: string | undefined, filters?: Record<string, T>) => {
+  async <T>(
+    userId: string | undefined,
+    filters?: Record<string, T>,
+    expensesWhereFilters?: Record<string, T>
+  ) => {
     try {
       const userCategories = await prisma.category.findMany({
         where: {
@@ -65,6 +69,7 @@ export const getCategories = unstable_cache(
               isConfirmed: true,
               amount: true,
             },
+            where: { ...expensesWhereFilters },
           },
         },
         orderBy: {

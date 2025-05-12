@@ -1,4 +1,8 @@
-import { getUser } from "@/lib/utils/server-only-utils";
+import {
+  getUser,
+  getDateRange,
+  getExpensesOfSelectedYear,
+} from "@/lib/utils/server-only-utils";
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
 import { CategoriesTable } from "@/components/categories/categories-table";
@@ -11,9 +15,19 @@ export default async function CategoriesPage() {
     redirect("sign-in");
   }
 
-  const categories = await getCategories(userId);
+  // make sure to also select the number of expenses per category based on selected year
+  const dateRange = await getDateRange();
+  const expensesWhereFilter = {
+    expenseDate: getExpensesOfSelectedYear(dateRange),
+  };
 
-  if (!categories) {
+  const [categoriesWithSelectedYearExpenses, categoriesWithAllExpenses] =
+    await Promise.all([
+      getCategories(userId, {}, { ...expensesWhereFilter }),
+      getCategories(userId),
+    ]);
+
+  if (!categoriesWithSelectedYearExpenses || !categoriesWithAllExpenses) {
     notFound();
   }
 
@@ -28,7 +42,10 @@ export default async function CategoriesPage() {
           <CategoryForm userId={userId} />
         </div>
       </div>
-      <CategoriesTable categories={categories} />
+      <CategoriesTable
+        categoriesForTable={categoriesWithSelectedYearExpenses}
+        categoriesWithAllExpenses={categoriesWithAllExpenses}
+      />
     </div>
   );
 }
