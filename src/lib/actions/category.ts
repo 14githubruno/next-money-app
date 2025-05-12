@@ -231,7 +231,7 @@ export async function deleteCategory(categoryId: string) {
     if (error instanceof PredictableError) {
       return {
         success: false,
-        message: "Error in deleting category",
+        message: error.message,
       };
     }
 
