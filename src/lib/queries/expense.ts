@@ -26,7 +26,11 @@ export async function getExpenses<T>(
         ...whereFilters,
       },
       include: {
-        category: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
       },
       orderBy: {
         updatedAt: "desc",
@@ -49,7 +53,6 @@ export async function getExpenses<T>(
 export async function getSingleExpense<T>(
   expenseId: string,
   userId: string | undefined,
-  toViewExpense = false,
   filters?: Record<string, T>
 ) {
   try {
@@ -59,16 +62,13 @@ export async function getSingleExpense<T>(
         userId: userId!,
         ...filters,
       },
-
       include: {
-        category: toViewExpense
-          ? {
-              select: {
-                name: true,
-                _count: true,
-              },
-            }
-          : true,
+        category: {
+          select: {
+            name: true,
+            _count: true,
+          },
+        },
       },
     });
 

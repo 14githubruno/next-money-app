@@ -51,5 +51,5 @@ export const expenseSchema = z.object({
  */
 export type ExpenseSchema = z.infer<typeof expenseSchema>;
 export type ExpenseTypes = Expense & {
-  category: Category;
+  category: Partial<Category>;
 };
