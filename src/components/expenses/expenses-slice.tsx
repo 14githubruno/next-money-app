@@ -83,7 +83,7 @@ export default async function ExpensesSlice({
       {/* 
        Show link if: 
        - there is at least 1 confirmed expense
-       - there are more than 3 unconfirmed expenses  
+       - there are more than 3 pending expenses  
       */}
       {expensesAreConfirmed
         ? count > 0 && (

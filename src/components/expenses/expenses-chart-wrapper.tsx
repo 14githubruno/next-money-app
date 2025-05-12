@@ -25,33 +25,30 @@ export default async function ExpensesChartWrapper() {
     expenseDate,
     isConfirmed: true,
   };
-  const whereFiltersUnconfirmed = {
+  const whereFiltersPending = {
     expenseDate,
     isConfirmed: false,
   };
 
   // queries
-  const [confirmed, unconfirmed] = await Promise.all([
+  const [confirmed, pending] = await Promise.all([
     getExpenses(userId, { ...whereFiltersConfirmed }),
-    getExpenses(userId, { ...whereFiltersUnconfirmed }),
+    getExpenses(userId, { ...whereFiltersPending }),
   ]);
 
-  if (!confirmed && !unconfirmed) {
+  if (!confirmed && !pending) {
     notFound();
   }
 
   // create chart data
-  const { sum, chartData } = buildExpensesChartDataObject(
-    confirmed,
-    unconfirmed
-  );
+  const { sum, chartData } = buildExpensesChartDataObject(confirmed, pending);
 
   // set chart
   const chart = (
     <ExpensesChart
       sum={sum}
       chartData={chartData}
-      chartCategories={["confirmed", "unconfirmed"]}
+      chartCategories={["confirmed", "pending"]}
       currency={currency}
     />
   );

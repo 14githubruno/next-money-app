@@ -121,7 +121,7 @@ export function ExpensesTable({
                 <TableCell>{expense.note || "-"}</TableCell>
                 <TableCell>
                   <Badge variant={expense.isConfirmed ? "success" : "warning"}>
-                    {expense.isConfirmed ? "confirmed" : "to confirm"}
+                    {expense.isConfirmed ? "confirmed" : "pending"}
                   </Badge>
                 </TableCell>
                 <TableCell>{expense.payment.toLowerCase()}</TableCell>

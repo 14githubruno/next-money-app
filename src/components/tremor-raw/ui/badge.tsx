@@ -7,7 +7,7 @@ import { cx } from "@/lib/utils/tremor-raw/utils";
 
 const badgeVariants = tv({
   base: cx(
-    "inline-flex rounded-lg items-center gap-x-1 whitespace-nowrap px-2 py-1 text-xs font-medium ring-1 ring-inset"
+    "inline-flex rounded-lg items-center min-w-[4.6rem] justify-center gap-x-1 whitespace-nowrap px-2 py-1 text-xs font-medium ring-1 ring-inset"
   ),
   variants: {
     variant: {

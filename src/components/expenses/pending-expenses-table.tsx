@@ -54,7 +54,7 @@ export default function PendingExpensesTable({
     return (
       <div className="flex h-full items-center justify-center rounded-md bg-gray-50 dark:bg-neutral-900">
         <p className="text-gray-500 dark:text-white">
-          No unconfirmed expenses found
+          No pending expenses found
         </p>
       </div>
     );

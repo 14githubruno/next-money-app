@@ -84,16 +84,16 @@ export function convertToBoolean(value: string | string[] | undefined) {
  */
 export function buildExpensesChartDataObject(
   confirmed: ExpenseTypes[],
-  unconfirmed: ExpenseTypes[]
+  pending: ExpenseTypes[]
 ) {
-  const sum = confirmed.length + unconfirmed.length;
+  const sum = confirmed.length + pending.length;
   const chartData = [];
 
   for (let i = 0; i < MONTHS.length; i++) {
     chartData.push({
       date: MONTHS[i].slice(0, 3),
       confirmed: calculateAmountPerMonth(confirmed, i),
-      unconfirmed: calculateAmountPerMonth(unconfirmed, i),
+      pending: calculateAmountPerMonth(pending, i),
     });
   }
 

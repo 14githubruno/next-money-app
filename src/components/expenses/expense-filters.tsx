@@ -52,7 +52,7 @@ export default function ExpenseFilters() {
           onChange={(e) => setNote(e.target.value)}
         />
 
-        {/* select confirmed or unconfirmed */}
+        {/* select confirmed or pending */}
         <Label className="sr-only" htmlFor="expenseIsConfirmed">
           Expense is confirmed
         </Label>
