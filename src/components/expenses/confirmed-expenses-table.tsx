@@ -11,14 +11,16 @@ import { Badge } from "../tremor-raw/ui/badge";
 
 type ConfirmedExpensesTableProps = {
   expenses: ExpenseTypes[];
+  count: number;
   currency: string | undefined;
 };
 
 export default function ConfirmedExpensesTable({
   expenses,
+  count,
   currency,
 }: ConfirmedExpensesTableProps) {
-  if (expenses.length === 0) {
+  if (count === 0) {
     return (
       <div className="flex h-full items-center justify-center rounded-md bg-gray-50 dark:bg-neutral-900">
         <p className="text-gray-500 dark:text-white">

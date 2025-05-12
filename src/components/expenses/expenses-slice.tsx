@@ -4,7 +4,11 @@ import {
   getDateRange,
   getExpensesOfSelectedYear,
 } from "@/lib/utils/server-only-utils";
-import { getExpenses, getTotalAmountExpenses } from "@/lib/queries/expense";
+import {
+  getExpenses,
+  getTotalAmountExpenses,
+  getTotalExpenseCount,
+} from "@/lib/queries/expense";
 import { redirect } from "next/navigation";
 import ExpensesSliceLabel from "./expenses-slice-label";
 import ConfirmedExpensesTable from "./confirmed-expenses-table";
@@ -41,18 +45,20 @@ export default async function ExpensesSlice({
     isConfirmed: expensesAreConfirmed, // true or false
     expenseDate: getExpensesOfSelectedYear(dateRange),
   };
+  const expensesToTake = 3;
 
   // queries
-  const [expenses, amount] = await Promise.all([
-    getExpenses(userId, { ...confirmedExpenses }),
+  const [expenses, amount, count] = await Promise.all([
+    getExpenses(userId, { ...confirmedExpenses }, expensesToTake),
     getTotalAmountExpenses(userId, { ...confirmedExpenses }),
+    getTotalExpenseCount(userId, { ...confirmedExpenses }),
   ]);
 
   return (
     <div className="relative flex h-[22rem] flex-col gap-3">
       <ExpensesSliceLabel
         expensesAreConfirmed={expensesAreConfirmed}
-        expensesLength={expenses.length}
+        expensesLength={count}
         expensesAmount={amount._sum.amount ?? 0}
         currency={currency}
       />
@@ -63,12 +69,14 @@ export default async function ExpensesSlice({
       */}
       {expensesAreConfirmed ? (
         <ConfirmedExpensesTable
-          expenses={expenses.slice(0, 3)}
+          expenses={expenses}
+          count={count}
           currency={currency}
         />
       ) : (
         <PendingExpensesTable
-          expenses={expenses.slice(0, 3)}
+          expenses={expenses}
+          count={count}
           currency={currency}
         />
       )}
@@ -78,10 +86,10 @@ export default async function ExpensesSlice({
        - there are more than 3 unconfirmed expenses  
       */}
       {expensesAreConfirmed
-        ? expenses.length > 0 && (
+        ? count > 0 && (
             <LinkToPendingOrConfirmed isConfirmed={expensesAreConfirmed} />
           )
-        : expenses.length > 3 && (
+        : count > 3 && (
             <LinkToPendingOrConfirmed isConfirmed={expensesAreConfirmed} />
           )}
     </div>
