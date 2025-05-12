@@ -23,12 +23,12 @@ import Loader from "../ui/loader";
 import { formatPriceWithCurrency } from "@/lib/utils";
 
 const expensesTableHeadings = [
-  "Date",
+  "Expense Date",
   "Category",
   "Amount",
   "Note",
-  "Confirmed",
-  "Type",
+  "Status",
+  "Payment",
   "Actions",
 ];
 
