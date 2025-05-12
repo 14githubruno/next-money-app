@@ -24,8 +24,6 @@ export const ExpensesChart = ({
     valueFormatter={(number: number) =>
       `${formatPriceWithCurrency(number, currency)}`
     }
-    startEndOnly
-    connectNulls
     showGridLines={sum > 0}
   />
 );
