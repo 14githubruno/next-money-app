@@ -4,7 +4,7 @@ import { prisma } from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { categoryFormInitialState as initState } from "../utils";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { getUser, PredictableError } from "../utils/server-only-utils";
 
 /**
@@ -68,7 +68,7 @@ export async function createCategory(
     });
 
     if (newCategory) {
-      revalidatePath("/dashboard/categories");
+      revalidateTag("categories");
     }
 
     return {
@@ -173,7 +173,7 @@ export async function updateCategory(
     throw new Error("Error updating category");
   } finally {
     if (isSuccess) {
-      revalidatePath(`/dashboard/categories/${categoryId}`);
+      revalidateTag("categories");
     }
   }
 }
@@ -238,7 +238,7 @@ export async function deleteCategory(categoryId: string) {
     throw new Error("Error deleting category");
   } finally {
     if (isDeleted) {
-      revalidatePath("/dashboard/categories");
+      revalidateTag("categories");
     }
   }
 }
