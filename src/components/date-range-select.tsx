@@ -45,7 +45,7 @@ export default function DateRangeSelect({ dateRange }: DateRangeSelectProps) {
 
   return (
     <form
-      className={clsx(isSingleExpensePage && "hidden")}
+      className={clsx(isSingleExpensePage && "hidden", "lg:w-fit")}
       ref={formRef}
       action={formAction}
     >
