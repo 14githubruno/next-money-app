@@ -39,7 +39,7 @@ export function CategoriesTable({
   const deleteCurrentCategory = (category: CategoryTypes) => {
     const { id, expenses, isDefault } = category;
 
-    if (expenses && expenses.length) {
+    if (expenses && expenses > 0) {
       alert("This category has expenses. It can't be deleted.");
       return;
     } else if (isDefault) {
@@ -82,7 +82,7 @@ export function CategoriesTable({
               <TableRow key={category.id}>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>
-                  {`${category?.expenses ? category.expenses.length : 0}/${categoriesWithAllExpenses.find((cat) => cat.name === category.name)?.expenses?.length}`}
+                  {`${category.expenses}/${categoriesWithAllExpenses.find((cat) => cat.name === category.name)?.expenses}`}
                 </TableCell>
                 <TableCell>
                   {category.isDefault && <Lock className="h-4 w-4" />}

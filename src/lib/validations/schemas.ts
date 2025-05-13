@@ -22,7 +22,7 @@ export const categorySchema = z.object({
  */
 export type CategorySchema = z.infer<typeof categorySchema>;
 export type CategoryTypes = Category & {
-  expenses?: Partial<Expense>[];
+  expenses?: number;
 };
 
 /**

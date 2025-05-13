@@ -64,19 +64,26 @@ export const getCategories = unstable_cache(
           ...filters,
         },
         include: {
-          expenses: {
+          _count: {
             select: {
-              isConfirmed: true,
-              amount: true,
+              expenses: {
+                where: { ...expensesWhereFilters },
+              },
             },
-            where: { ...expensesWhereFilters },
           },
         },
         orderBy: {
           createdAt: "asc",
         },
       });
-      if (userCategories) return userCategories;
+
+      if (userCategories) {
+        return userCategories.map((category) => ({
+          ...category,
+          expenses: category._count.expenses,
+          _count: undefined,
+        }));
+      }
     } catch (error) {
       console.error("ERROR CATEGORIES: ", error);
       throw new Error("Error fetching user categories");
@@ -104,16 +111,22 @@ export async function getSingleCategory<T>(
         ...filters,
       },
       include: {
-        expenses: {
+        _count: {
           select: {
-            isConfirmed: true,
-            amount: true,
+            expenses: {
+              where: { ...expensesWhereFilters },
+            },
           },
-          where: { ...expensesWhereFilters },
         },
       },
     });
-    if (category) return category;
+
+    if (category)
+      return {
+        ...category,
+        expenses: category._count.expenses,
+        _count: undefined,
+      };
   } catch (error) {
     console.error("ERROR SINGLE CATEGORY: ", error);
     throw new Error("Error fetching single user category");
