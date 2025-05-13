@@ -60,7 +60,7 @@ export default function DropdownUserProfile({
           {user && user.email && user.email}
         </DropdownMenuLabel>
         <DropdownMenuGroup>
-          <ThemeSwitcherSubMenu />
+          <ThemeSwitcherSubMenu isMobile={isMobile} />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
