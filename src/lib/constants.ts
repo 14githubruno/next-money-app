@@ -8,6 +8,18 @@ import {
 } from "lucide-react";
 
 /**
+ * Pages titles
+ */
+export const PAGES_TITLES = {
+  h1: {
+    dashboard: "Overview",
+    dashboardAccount: "Account",
+    dashboardCategories: "Categories",
+    dashboardExpenses: "Expenses",
+  },
+};
+
+/**
  * Dashboard sidenav links
  */
 export const DASHBOARD_LINKS = [

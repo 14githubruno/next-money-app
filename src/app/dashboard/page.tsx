@@ -3,11 +3,13 @@ import { Suspense } from "react";
 import Loader from "@/components/ui/loader";
 import ExpensesSlice from "@/components/expenses/expenses-slice";
 import ExpensesChartWrapper from "@/components/expenses/expenses-chart-wrapper";
+import Heading from "@/components/ui/heading";
+import { PAGES_TITLES } from "@/lib/constants";
 
 export default function Dashboard() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg">Dashboard</h1>
+      <Heading level={1} text={PAGES_TITLES.h1.dashboard} />
       <div className="flex flex-col gap-12">
         <div className={clsx("flex flex-col gap-6", "lg:flex-row")}>
           <div className="flex-[1]">

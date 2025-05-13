@@ -5,8 +5,10 @@ import {
 } from "@/lib/utils/server-only-utils";
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
+import Heading from "@/components/ui/heading";
 import { CategoriesTable } from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
+import { PAGES_TITLES } from "@/lib/constants";
 
 export default async function CategoriesPage() {
   const { userId } = await getUser();
@@ -34,7 +36,7 @@ export default async function CategoriesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-6">
-        <h1 className="text-2xl font-bold">Categories</h1>
+        <Heading level={1} text={PAGES_TITLES.h1.dashboardCategories} />
         <div className="flex items-center justify-between">
           <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
             Overview of all your categories.
