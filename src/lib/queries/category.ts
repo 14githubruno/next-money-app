@@ -97,38 +97,43 @@ export const getCategories = unstable_cache(
  * GET SINGLE USER CATEGORY
  * ========================================================
  */
-export async function getSingleCategory<T>(
-  categoryId: string,
-  userId: string | undefined,
-  filters?: Record<string, T>,
-  expensesWhereFilters?: Record<string, T>
-) {
-  try {
-    const category = await prisma.category.findFirst({
-      where: {
-        id: categoryId,
-        userId: userId!,
-        ...filters,
-      },
-      include: {
-        _count: {
-          select: {
-            expenses: {
-              where: { ...expensesWhereFilters },
+
+export const getSingleCategory = unstable_cache(
+  async <T>(
+    categoryId: string,
+    userId: string | undefined,
+    filters?: Record<string, T>,
+    expensesWhereFilters?: Record<string, T>
+  ) => {
+    try {
+      const category = await prisma.category.findFirst({
+        where: {
+          id: categoryId,
+          userId: userId!,
+          ...filters,
+        },
+        include: {
+          _count: {
+            select: {
+              expenses: {
+                where: { ...expensesWhereFilters },
+              },
             },
           },
         },
-      },
-    });
+      });
 
-    if (category)
-      return {
-        ...category,
-        expenses: category._count.expenses,
-        _count: undefined,
-      };
-  } catch (error) {
-    console.error("ERROR SINGLE CATEGORY: ", error);
-    throw new Error("Error fetching single user category");
-  }
-}
+      if (category)
+        return {
+          ...category,
+          expenses: category._count.expenses,
+          _count: undefined,
+        };
+    } catch (error) {
+      console.error("ERROR SINGLE CATEGORY: ", error);
+      throw new Error("Error fetching single user category");
+    }
+  },
+  [`categories`],
+  { revalidate: 3600, tags: ["categories"] }
+);

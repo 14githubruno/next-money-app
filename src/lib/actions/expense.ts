@@ -4,7 +4,7 @@ import { prisma } from "../../../prisma/prisma";
 import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
 import { expenseFormInitialState as initState } from "../utils";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { getUser, PredictableError } from "../utils/server-only-utils";
 
@@ -70,8 +70,8 @@ export async function createExpense(
     });
 
     if (newExpense) {
-      revalidatePath("/dashboard/expenses");
-      revalidatePath("/dashboard/categories");
+      revalidateTag("categories");
+      revalidateTag("expenses");
     }
 
     return {
@@ -160,7 +160,8 @@ export async function updateExpense(
     throw new Error("Error updating expense");
   } finally {
     if (isSuccess) {
-      revalidatePath(`/dashboard/expenses/${expenseId}`);
+      revalidateTag("categories");
+      revalidateTag("expenses");
     }
   }
 }
@@ -192,7 +193,8 @@ export async function deleteExpense(expenseId: string) {
     });
 
     if (deletedExpense) {
-      revalidatePath("/dashboard/expenses");
+      revalidateTag("categories");
+      revalidateTag("expenses");
     }
 
     return { success: true, message: "Expense deleted" };
@@ -234,7 +236,8 @@ export async function confirmExpense(expenseId: string) {
     });
 
     if (confirmedExpense) {
-      revalidatePath("/dashboard");
+      revalidateTag("categories");
+      revalidateTag("expenses");
     }
 
     return { success: true, message: "Expense confirmed" };
