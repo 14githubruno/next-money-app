@@ -81,17 +81,11 @@ export default async function ExpensesSlice({
         />
       )}
       {/* 
-       Show link if: 
-       - there is at least 1 confirmed expense
-       - there are more than 3 pending expenses  
+       Show link if there are more than 3 expenses (pending/confirmed) 
       */}
-      {expensesAreConfirmed
-        ? count > 0 && (
-            <LinkToPendingOrConfirmed isConfirmed={expensesAreConfirmed} />
-          )
-        : count > 3 && (
-            <LinkToPendingOrConfirmed isConfirmed={expensesAreConfirmed} />
-          )}
+      {count > 3 && (
+        <LinkToPendingOrConfirmed isConfirmed={expensesAreConfirmed} />
+      )}
     </div>
   );
 }
