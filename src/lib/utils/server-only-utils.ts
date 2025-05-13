@@ -102,7 +102,7 @@ export function buildExpensesChartDataObject(
 
 function calculateAmountPerMonth(expenses: ExpenseTypes[], monthIndex: number) {
   const expensesByMonth = expenses.filter(
-    (exp) => exp.expenseDate.getMonth() === monthIndex
+    (exp) => new Date(exp.expenseDate).getMonth() === monthIndex
   );
 
   if (expensesByMonth.length === 0) {
