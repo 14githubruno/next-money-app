@@ -1,4 +1,8 @@
-import { getUser } from "@/lib/utils/server-only-utils";
+import {
+  getUser,
+  getDateRange,
+  getExpensesOfSelectedYear,
+} from "@/lib/utils/server-only-utils";
 import { notFound } from "next/navigation";
 import { getSingleCategory } from "@/lib/queries/category";
 import CategoryForm from "@/components/categories/category-form";
@@ -10,8 +14,18 @@ export default async function SingleCategoryPage({
 }) {
   const { id } = await params;
   const { userId } = await getUser();
+  const dateRange = await getDateRange();
 
-  const category = await getSingleCategory(id, userId);
+  const expensesWhereFilters = {
+    expenseDate: getExpensesOfSelectedYear(dateRange),
+  };
+
+  const category = await getSingleCategory(
+    id,
+    userId,
+    {},
+    { ...expensesWhereFilters }
+  );
 
   if (!category) {
     notFound();

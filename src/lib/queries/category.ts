@@ -93,7 +93,8 @@ export const getCategories = unstable_cache(
 export async function getSingleCategory<T>(
   categoryId: string,
   userId: string | undefined,
-  filters?: Record<string, T>
+  filters?: Record<string, T>,
+  expensesWhereFilters?: Record<string, T>
 ) {
   try {
     const category = await prisma.category.findFirst({
@@ -108,6 +109,7 @@ export async function getSingleCategory<T>(
             isConfirmed: true,
             amount: true,
           },
+          where: { ...expensesWhereFilters },
         },
       },
     });
