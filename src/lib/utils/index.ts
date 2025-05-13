@@ -117,11 +117,11 @@ export function formatPriceWithCurrency(
  */
 export function generateListOfYears(): string[] {
   const years = [];
-  const firstYear = 2010;
+  const firstYear = 2025;
   const currentYear = new Date().getFullYear();
-  const yearsAfterCurrentYear = 5;
+  const yearsAfterCurrentYear = 2;
 
-  for (let i = firstYear; i < currentYear + yearsAfterCurrentYear; i++) {
+  for (let i = firstYear; i <= currentYear + yearsAfterCurrentYear; i++) {
     years.push(i.toString());
   }
 
