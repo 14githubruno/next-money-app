@@ -40,7 +40,6 @@ export const getExpenses = unstable_cache(
         skip,
         take,
       });
-      console.log("expense getting", whereFilters);
       return userExpenses;
     } catch (error) {
       console.error("ERROR EXPENSES: ", error);
@@ -129,7 +128,6 @@ export const getTotalExpenseCount = unstable_cache(
           ...whereFilters,
         },
       });
-      console.log("count", count);
       return count;
     } catch (error) {
       console.error("ERROR GETTING EXPENSE COUNT: ", error);
