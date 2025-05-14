@@ -41,7 +41,7 @@ export default async function CategoriesPage() {
           <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
             Overview of all your categories.
           </p>
-          <CategoryForm userId={userId} />
+          <CategoryForm />
         </div>
       </div>
       <CategoriesTable

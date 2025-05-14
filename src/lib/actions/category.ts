@@ -21,10 +21,11 @@ import { getUser, PredictableError } from "../utils/server-only-utils";
  * ========================================================
  */
 export async function createCategory(
-  userId: string,
   prevState: CategoryFormState,
   data: FormData
 ): Promise<CategoryFormState> {
+  const { userId } = await getUser();
+
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -63,7 +64,7 @@ export async function createCategory(
     const newCategory = await prisma.category.create({
       data: {
         ...categoryData,
-        userId,
+        userId: userId!,
       },
     });
 
@@ -94,11 +95,12 @@ export async function createCategory(
  * ========================================================
  */
 export async function updateCategory(
-  userId: string,
   categoryId: string | undefined,
   prevState: CategoryFormState,
   data: FormData
 ): Promise<CategoryFormState> {
+  const { userId } = await getUser();
+
   let isSuccess: boolean = false;
 
   const formData = Object.fromEntries(data);

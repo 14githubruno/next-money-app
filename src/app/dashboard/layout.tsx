@@ -16,7 +16,7 @@ export default async function Layout({ children }: Props) {
   return (
     <div
       className={clsx(
-        "mt-[var(--height-mobile-nav)] flex h-screen flex-col",
+        "mt-[var(--height-mobile-nav)] flex flex-col",
         "lg:mt-0 lg:flex-row lg:overflow-hidden"
       )}
     >

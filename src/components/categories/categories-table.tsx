@@ -10,12 +10,12 @@ import {
   TableRow,
 } from "../tremor-raw/ui/table";
 import DeleteDialog from "../delete-dialog";
-import Link from "next/link";
 import { deleteCategory } from "@/lib/actions/category";
-import { Settings2, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { useTransition } from "react";
 import { useToast } from "@/hooks/toast/use-toast";
+import CategoryForm from "./category-form";
 
 const categoriesHeadings = [
   "Name",
@@ -89,9 +89,10 @@ export function CategoriesTable({
                 </TableCell>
                 <TableCell>
                   <div className="flex space-x-4">
-                    <Link href={`/dashboard/categories/${category.id}`}>
+                    {/* <Link href={`/dashboard/categories/${category.id}`}>
                       <Settings2 className="h-4 w-4" />
-                    </Link>
+                    </Link> */}
+                    <CategoryForm category={category} isEditing={true} />
                     <DeleteDialog
                       deleteAction={() => deleteCurrentCategory(category)}
                       isPending={isPending}
