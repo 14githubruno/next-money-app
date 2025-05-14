@@ -174,6 +174,7 @@ export async function updateCategory(
   } finally {
     if (isSuccess) {
       revalidateTag("categories");
+      revalidateTag("expenses");
     }
   }
 }
