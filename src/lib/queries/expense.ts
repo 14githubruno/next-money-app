@@ -34,6 +34,9 @@ export const getExpenses = unstable_cache(
             },
           },
         },
+        omit: {
+          userId: true,
+        },
         orderBy: {
           updatedAt: "desc",
         },

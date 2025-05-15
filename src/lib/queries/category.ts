@@ -72,6 +72,9 @@ export const getCategories = unstable_cache(
             },
           },
         },
+        omit: {
+          userId: true,
+        },
         orderBy: {
           createdAt: "asc",
         },
