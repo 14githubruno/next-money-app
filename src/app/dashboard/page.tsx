@@ -12,7 +12,7 @@ export default function Dashboard() {
       <Heading level={1} text={PAGES_TITLES.h1.dashboard} />
       <div className="flex flex-col gap-12">
         <div className={clsx("flex flex-col gap-6", "lg:flex-row")}>
-          <div className="flex-[1]">
+          <div className={clsx("lg:w-1/2")}>
             <Suspense
               fallback={
                 <ComponentLoader height="var(--height-expenses-slice)" />
@@ -21,7 +21,7 @@ export default function Dashboard() {
               <ExpensesSlice expensesAreConfirmed={false} />
             </Suspense>
           </div>
-          <div className="flex-[1]">
+          <div className={clsx("lg:w-1/2")}>
             <Suspense
               fallback={
                 <ComponentLoader height="var(--height-expenses-slice)" />
