@@ -9,7 +9,7 @@
   --height-expenses-slice: 22rem;
   --height-expenses-table: 21rem;
   --height-expenses-chart: 20rem;
-  --height-date-range-select: 5rem;
+  --height-date-range-select: 4rem;
 }
 
 @theme {
