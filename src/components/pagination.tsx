@@ -75,14 +75,15 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = cx(
-    "flex h-10 w-10 items-center justify-center text-sm cursor-pointer rounded-lg",
-    position === "middle" && "opacity-50",
+    "hidden",
+    "lg:flex lg:h-10 lg:w-10 lg:items-center lg:justify-center lg:text-sm lg:cursor-pointer lg:rounded-lg",
+    position === "middle" && "lg:opacity-50",
     isActive
-      ? "bg-gray-950 text-gray-100 dark:border dark:border-gray-800"
-      : "  bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-gray-100",
+      ? "lg:bg-gray-950 lg:text-gray-100 lg:dark:border lg:dark:border-gray-800"
+      : "lg:bg-gray-100 lg:dark:bg-gray-800 lg:text-gray-950 lg:dark:text-gray-100",
     !isActive &&
       position !== "middle" &&
-      "hover:bg-gray-200 dark:hover:opacity-50 dark:hover:bg-gray-800"
+      "lg:hover:bg-gray-200 lg:dark:hover:opacity-50 lg:dark:hover:bg-gray-800"
   );
 
   return isActive || position === "middle" ? (
