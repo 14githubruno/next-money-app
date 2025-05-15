@@ -51,44 +51,6 @@ export const getExpenses = unstable_cache(
 );
 
 /**
- * GET SINGLE EXPENSE
- * ========================================================
- */
-
-export const getSingleExpense = unstable_cache(
-  async <T>(
-    expenseId: string,
-    userId: string | undefined,
-    filters?: Record<string, T>
-  ) => {
-    try {
-      const expense = await prisma.expense.findUnique({
-        where: {
-          id: expenseId,
-          userId: userId!,
-          ...filters,
-        },
-        include: {
-          category: {
-            select: {
-              name: true,
-              _count: true,
-            },
-          },
-        },
-      });
-
-      return expense;
-    } catch (error) {
-      console.error("ERROR SINGLE EXPENSE: ", error);
-      throw new Error("Error fetching single user expense");
-    }
-  },
-  ["expenses"],
-  { revalidate: 3600, tags: ["expenses"] }
-);
-
-/**
  * GET TOTAL AMOUNT OF EXPENSES
  * ========================================================
  */
