@@ -21,7 +21,7 @@ export default async function Layout({ children }: Props) {
       )}
     >
       <div className={clsx("w-full flex-none", "lg:w-sidebar")}>
-        <Sidenav user={user} />
+        <Sidenav userName={user?.name} userEmail={user?.email} />
       </div>
       <div
         className={clsx(

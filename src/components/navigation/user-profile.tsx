@@ -3,16 +3,20 @@
 import { Button } from "../tremor-raw/ui/button";
 import DropdownUserProfile from "./dropdown-user-profile";
 import { cx } from "@/lib/utils/tremor-raw/utils";
-import type { User } from "next-auth";
 
 type UserProfileProps = {
-  user: User | undefined;
+  userName: string | null | undefined;
+  userEmail: string | null | undefined;
   isMobile: boolean;
 };
 
-export function UserProfile({ isMobile, user }: UserProfileProps) {
+export function UserProfile({
+  userName,
+  userEmail,
+  isMobile,
+}: UserProfileProps) {
   return (
-    <DropdownUserProfile isMobile={isMobile} user={user}>
+    <DropdownUserProfile userEmail={userEmail} isMobile={isMobile}>
       <Button
         aria-label="User settings"
         variant="ghost"
@@ -31,7 +35,7 @@ export function UserProfile({ isMobile, user }: UserProfileProps) {
           )}
           aria-hidden="true"
         >
-          {user && user.name && user.name.slice(0, 1).toUpperCase()}
+          {userName && userName.slice(0, 1).toUpperCase()}
         </span>
       </Button>
     </DropdownUserProfile>

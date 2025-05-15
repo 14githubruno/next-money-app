@@ -1,7 +1,6 @@
 "use client";
 
 import { type ReactNode, useState, useRef } from "react";
-import type { User } from "next-auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,14 +17,14 @@ import SignOutDialog from "./sign-out-dialog";
 type DropdownUserProfileProps = {
   children: ReactNode;
   align?: "center" | "start" | "end";
-  user: User | undefined;
+  userEmail: string | null | undefined;
   isMobile: boolean;
 };
 
 export default function DropdownUserProfile({
   children,
   align = "start",
-  user,
+  userEmail,
   isMobile,
 }: DropdownUserProfileProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -56,9 +55,7 @@ export default function DropdownUserProfile({
         }}
         align={align}
       >
-        <DropdownMenuLabel>
-          {user && user.email && user.email}
-        </DropdownMenuLabel>
+        <DropdownMenuLabel>{userEmail && userEmail}</DropdownMenuLabel>
         <DropdownMenuGroup>
           <ThemeSwitcherSubMenu isMobile={isMobile} />
         </DropdownMenuGroup>

@@ -1,7 +1,6 @@
 "use client";
 
 import clsx from "clsx";
-import type { User } from "next-auth";
 import MobileSidenav from "./mobile-sidenav";
 import { UserProfile } from "./user-profile";
 import { DASHBOARD_LINKS } from "@/lib/constants";
@@ -12,10 +11,11 @@ import Logo from "../global/logo";
 import NavLink from "./nav-link";
 
 type SidenavProps = {
-  user: User | undefined;
+  userName: string | null | undefined;
+  userEmail: string | null | undefined;
 };
 
-export default function Sidenav({ user }: SidenavProps) {
+export default function Sidenav({ userName, userEmail }: SidenavProps) {
   const pathname = usePathname();
 
   return (
@@ -55,7 +55,11 @@ export default function Sidenav({ user }: SidenavProps) {
               })}
             </ul>
           </nav>
-          <UserProfile isMobile={false} user={user} />
+          <UserProfile
+            isMobile={false}
+            userName={userName}
+            userEmail={userEmail}
+          />
         </aside>
       </nav>
       {/* top navbar (mobile and tablet screens) */}
@@ -70,7 +74,11 @@ export default function Sidenav({ user }: SidenavProps) {
         )}
       >
         <div className="flex w-full items-center justify-between px-2">
-          <UserProfile isMobile={true} user={user} />
+          <UserProfile
+            isMobile={true}
+            userName={userName}
+            userEmail={userEmail}
+          />
           <Logo isMobile={true} />
           <MobileSidenav />
         </div>
