@@ -22,10 +22,11 @@ import { getUser, PredictableError } from "../utils/server-only-utils";
  * ========================================================
  */
 export async function createExpense(
-  userId: string,
   prevState: ExpenseFormState,
   data: FormData
 ): Promise<ExpenseFormState> {
+  const { userId } = await getUser();
+
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -62,7 +63,7 @@ export async function createExpense(
     const newExpense = await prisma.expense.create({
       data: {
         ...expenseData,
-        userId,
+        userId: userId!,
       },
       include: {
         category: true,
@@ -97,11 +98,12 @@ export async function createExpense(
  * ========================================================
  */
 export async function updateExpense(
-  userId: string,
   expenseId: string | undefined,
   prevState: ExpenseFormState,
   data: FormData
 ): Promise<ExpenseFormState> {
+  const { userId } = await getUser();
+
   let isSuccess: boolean = false;
 
   const formData = Object.fromEntries(data);

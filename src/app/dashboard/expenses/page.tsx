@@ -65,7 +65,7 @@ export default async function ExpensesPage(props: {
           <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
             Overview of all your expenses.
           </p>
-          <ExpenseForm userId={userId} categories={categories} />
+          <ExpenseForm categories={categories} />
         </div>
 
         <ExpenseFilters />
@@ -73,6 +73,7 @@ export default async function ExpensesPage(props: {
       <Suspense fallback={null}>
         <ExpensesTable
           currentPage={currentPage}
+          categories={categories}
           expenses={expenses}
           currency={currency}
         />

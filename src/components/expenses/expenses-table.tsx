@@ -10,12 +10,14 @@ import {
   TableRoot,
   TableRow,
 } from "../tremor-raw/ui/table";
+import ExpenseForm from "./expense-form";
 import DeleteDialog from "../delete-dialog";
-import { type ExpenseTypes } from "@/lib/validations/schemas";
+import {
+  type ExpenseTypes,
+  type CategoryTypes,
+} from "@/lib/validations/schemas";
 import { deleteExpense } from "@/lib/actions/expense";
-import { Settings2 } from "lucide-react";
 import { useToast } from "@/hooks/toast/use-toast";
-import Link from "next/link";
 import { useTransition } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useTableFiltering } from "@/hooks/use-table-filtering";
@@ -34,12 +36,14 @@ const expensesTableHeadings = [
 
 type ExpensesTableProps = {
   currentPage: number;
+  categories: CategoryTypes[];
   expenses: ExpenseTypes[];
   currency: string | undefined;
 };
 
 export function ExpensesTable({
   currentPage,
+  categories,
   expenses,
   currency,
 }: ExpensesTableProps) {
@@ -127,9 +131,11 @@ export function ExpensesTable({
                 <TableCell>{expense.payment.toLowerCase()}</TableCell>
                 <TableCell>
                   <div className="flex space-x-4">
-                    <Link href={`/dashboard/expenses/${expense.id}`}>
-                      <Settings2 className="h-4 w-4" />
-                    </Link>
+                    <ExpenseForm
+                      categories={categories}
+                      expense={expense}
+                      isEditing={true}
+                    />
                     <DeleteDialog
                       deleteAction={() => deleteCurrentExpense(expense.id)}
                       isPending={isPending}
