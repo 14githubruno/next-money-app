@@ -21,7 +21,7 @@ import { useToast } from "@/hooks/toast/use-toast";
 import { useTransition } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useTableFiltering } from "@/hooks/use-table-filtering";
-import Loader from "../ui/loader";
+import { ComponentLoader } from "../ui/loaders";
 import { formatPriceWithCurrency } from "@/lib/utils";
 
 const expensesTableHeadings = [
@@ -92,7 +92,7 @@ export function ExpensesTable({
    */
 
   return isFiltering ? (
-    <Loader height="var(--height-expenses-table)" />
+    <ComponentLoader height="var(--height-expenses-table)" />
   ) : (
     <TableRoot className="h-[var(--height-expenses-table)]">
       <Table>
