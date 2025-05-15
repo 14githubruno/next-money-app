@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard,
+  House,
   ListOrdered,
   ReceiptText,
   Sun,
@@ -26,7 +26,7 @@ export const DASHBOARD_LINKS = [
   {
     name: "Overview",
     href: "/dashboard",
-    icon: LayoutDashboard,
+    icon: House,
     tooltip: "Overview",
   },
   {
