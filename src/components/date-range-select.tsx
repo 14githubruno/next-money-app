@@ -12,7 +12,6 @@ import { Label } from "./tremor-raw/inputs/label";
 import { setDateRange } from "@/lib/actions/cookie";
 import { generateListOfYears } from "@/lib/utils";
 import { useActionState, useRef, useMemo } from "react";
-import { usePathname, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LoaderCircle } from "lucide-react";
 
@@ -27,11 +26,6 @@ export default function DateRangeSelect({ dateRange }: DateRangeSelectProps) {
 
   // display date range only when mounted
   const [isMounted, setIsMounted] = useState(false);
-
-  // do not display the select date range on the single expense page
-  const pathname = usePathname();
-  const params = useParams();
-  const isSingleExpensePage = pathname.includes("expenses") && params.id;
 
   const [state, formAction, pending] = useActionState(setDateRange, {
     dateRange:
@@ -64,11 +58,7 @@ export default function DateRangeSelect({ dateRange }: DateRangeSelectProps) {
 
   if (isMounted)
     return (
-      <form
-        className={clsx(isSingleExpensePage && "hidden", "lg:w-fit")}
-        ref={formRef}
-        action={formAction}
-      >
+      <form className={clsx("lg:w-fit")} ref={formRef} action={formAction}>
         <div className="flex h-[var(--height-date-range-select)] flex-col justify-center gap-2">
           <Label htmlFor="dateRange">Expenses year</Label>
           <Select
