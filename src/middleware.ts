@@ -1,15 +1,44 @@
 import authConfig from "../auth.config";
 import NextAuth from "next-auth";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+import { cookies } from "next/headers";
+import { geolocation } from "@vercel/functions";
+import { COUNTRIES_DATA, DEFAULT_COUNTRY } from "./lib/constants";
 
 const privateRoutes = ["/dashboard"];
 const authRoutes = ["/sign-in"];
 
-// Use only one of the two middleware options below
-// 1. Use middleware directly
-// export const { auth: middleware } = NextAuth(authConfig)
+/**
+ * Check if currency cookie exists. If it doesn't, set it.
+ */
+async function handleCookieCurrency(request: NextRequest) {
+  const cookieStore = await cookies();
+  const currencyExists = cookieStore.has("currency");
 
-// 2. Wrapped middleware option
+  if (currencyExists) return NextResponse.next();
+
+  const { country = DEFAULT_COUNTRY.code } = geolocation(request);
+  const countryInfo = COUNTRIES_DATA.find((item) => item.cca2 === country);
+  const currencies = countryInfo?.currencies;
+  const currency = currencies
+    ? Object.keys(currencies)[0]
+    : DEFAULT_COUNTRY.currency;
+
+  cookieStore.set({
+    name: "currency",
+    value: currency,
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+  });
+}
+
+/**
+ * Use only one of the two middleware options below:
+ * - 1) Use middleware directly
+ * @example export const { auth: middleware } = NextAuth(authConfig)
+ *
+ * - 2) Wrapped middleware option
+ * @note Option `2` is used.
+ */
 const { auth } = NextAuth(authConfig);
 
 export default auth(async (request) => {
@@ -27,8 +56,11 @@ export default auth(async (request) => {
   if (isLoggedIn && isAuthRoute)
     return NextResponse.redirect(new URL("/dashboard", request.url));
 
-  // allow user to sign in, if they are not
-  if (!isLoggedIn && isAuthRoute) return NextResponse.next();
+  // allow user to sign in, if they are not; plus, set currency as cookie if not found
+  if (!isLoggedIn && isAuthRoute) {
+    await handleCookieCurrency(request);
+    return NextResponse.next();
+  }
 
   // protect private routes
   if (!isLoggedIn && isPrivateRoute)

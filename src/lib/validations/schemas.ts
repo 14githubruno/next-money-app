@@ -21,8 +21,9 @@ export const categorySchema = z.object({
  * ========================================================
  */
 export type CategorySchema = z.infer<typeof categorySchema>;
-export type CategoryTypes = Category & {
-  expenses?: Expense[];
+type TCategory = Omit<Category, "userId">;
+export type CategoryTypes = TCategory & {
+  expenses?: number;
 };
 
 /**
@@ -50,6 +51,7 @@ export const expenseSchema = z.object({
  * ========================================================
  */
 export type ExpenseSchema = z.infer<typeof expenseSchema>;
-export type ExpenseTypes = Expense & {
-  category: Category;
+type TExpense = Omit<Expense, "userId">;
+export type ExpenseTypes = TExpense & {
+  category: Partial<TCategory>;
 };

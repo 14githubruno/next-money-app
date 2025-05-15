@@ -26,9 +26,9 @@ import {
   getYAxisDomain,
   hasOnlyOneValueForKey,
   type AvailableChartColorsKeys,
-} from "@/lib/chartUtils";
+} from "@/lib/utils/tremor-raw/chart-utils";
 import { useOnWindowResize } from "@/hooks/use-on-window-resize";
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 
 //#region Legend
 
@@ -62,7 +62,7 @@ const LegendItem = ({
     >
       <span
         className={cx(
-          "h-[3px] w-3.5 shrink-0 rounded-full",
+          "h-4 w-4 shrink-0 rounded-lg",
           getColorClassName(color, "bg"),
           activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100"
         )}
@@ -422,7 +422,7 @@ const ChartTooltip = ({
                 <span
                   aria-hidden="true"
                   className={cx(
-                    "h-[3px] w-3.5 shrink-0 rounded-full",
+                    "h-4 w-4 shrink-0 rounded-lg",
                     getColorClassName(color, "bg")
                   )}
                 />
@@ -802,7 +802,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                       )}
                       cx={cxCoord}
                       cy={cyCoord}
-                      r={5}
+                      r={9}
                       fill=""
                       stroke={stroke}
                       strokeLinecap={strokeLinecap}

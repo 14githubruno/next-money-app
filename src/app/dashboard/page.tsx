@@ -1,28 +1,41 @@
+import clsx from "clsx";
 import { Suspense } from "react";
-import PendingExpenses from "@/components/expenses/pending-expenses";
-import ConfirmedExpenses from "@/components/expenses/confirmed-expenses";
+import { ComponentLoader } from "@/components/ui/loaders";
+import ExpensesSlice from "@/components/expenses/expenses-slice";
 import ExpensesChartWrapper from "@/components/expenses/expenses-chart-wrapper";
-import ExpensesAmount from "@/components/expenses/expenses-amount";
+import Heading from "@/components/ui/heading";
+import { PAGES_TITLES } from "@/lib/constants";
 
 export default function Dashboard() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg">Dashboard</h1>
-      <div className="grid auto-rows-auto grid-cols-6 gap-6">
-        <div className="col-start-1 col-end-5 grid grid-cols-1 gap-6">
-          <Suspense fallback={<p>Loading...</p>}>
-            <PendingExpenses />
-          </Suspense>
-          <Suspense fallback={<p>Loading...</p>}>
-            <ConfirmedExpenses />
-          </Suspense>
-          <Suspense fallback={<p>Loading...</p>}>
-            <ExpensesChartWrapper />
-          </Suspense>
+      <Heading level={1} text={PAGES_TITLES.h1.dashboard} />
+      <div className="flex flex-col gap-12">
+        <div className={clsx("flex flex-col gap-6", "lg:flex-row")}>
+          <div className={clsx("lg:w-1/2")}>
+            <Suspense
+              fallback={
+                <ComponentLoader height="var(--height-expenses-slice)" />
+              }
+            >
+              <ExpensesSlice expensesAreConfirmed={false} />
+            </Suspense>
+          </div>
+          <div className={clsx("lg:w-1/2")}>
+            <Suspense
+              fallback={
+                <ComponentLoader height="var(--height-expenses-slice)" />
+              }
+            >
+              <ExpensesSlice expensesAreConfirmed={true} />
+            </Suspense>
+          </div>
         </div>
-        <div className="col-start-5 col-end-7">
-          <Suspense fallback={<p>Loading...</p>}>
-            <ExpensesAmount />
+        <div>
+          <Suspense
+            fallback={<ComponentLoader height="var(--height-expenses-chart)" />}
+          >
+            <ExpensesChartWrapper />
           </Suspense>
         </div>
       </div>

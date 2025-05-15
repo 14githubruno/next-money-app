@@ -7,7 +7,7 @@ import {
   type ExpenseTypes,
 } from "@/lib/validations/schemas";
 import { expenseFormInitialState as initState } from "@/lib/utils";
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { Button } from "../tremor-raw/ui/button";
 import {
   Drawer,
@@ -35,14 +35,12 @@ import { Label } from "../tremor-raw/inputs/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type ExpenseFormProps = {
-  userId: string;
   categories: CategoryTypes[];
   expense?: ExpenseTypes;
   isEditing?: boolean;
 };
 
 export default function ExpenseForm({
-  userId,
   categories,
   expense,
   isEditing = false,
@@ -50,24 +48,23 @@ export default function ExpenseForm({
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  // Bind userId and set action state
-  const createExpenseByPassingUserId = createExpense.bind(null, userId);
-  const updateExpenseByPassingUserIdAndExpenseId = updateExpense.bind(
+  // Bind expenseID if editing expense
+  const updateExpenseByPassingExpenseId = updateExpense.bind(
     null,
-    userId,
     isEditing && expense ? expense.id : undefined
   );
 
+  // set action
   const action =
-    expense && isEditing
-      ? updateExpenseByPassingUserIdAndExpenseId
-      : createExpenseByPassingUserId;
+    expense && isEditing ? updateExpenseByPassingExpenseId : createExpense;
 
+  // set initial state
   const initialState =
     expense && isEditing
       ? { ...initState, fieldValues: { ...expense } }
       : { ...initState };
 
+  // use action state
   const [state, formAction, pending] = useActionState(action, initialState);
 
   // if action is successful, close drawer and toast success,
@@ -85,10 +82,19 @@ export default function ExpenseForm({
     <div className="flex justify-center">
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="base">
-            <Plus className="mr-2 h-4 w-4" />
-            {isEditing ? "Update expense" : "Add expense"}
-          </Button>
+          {isEditing ? (
+            <button aria-label="edit category">
+              <Pencil
+                className="size-4 shrink-0 bg-transparent"
+                aria-hidden="true"
+              />
+            </button>
+          ) : (
+            <Button variant="base">
+              <Plus className="mr-2 h-4 w-4" />
+              Add expense
+            </Button>
+          )}
         </DrawerTrigger>
         <DrawerContent className="sm:max-w-lg">
           <DrawerHeader>
@@ -145,6 +151,7 @@ export default function ExpenseForm({
                     id="note"
                     name="note"
                     rows={3}
+                    maxLength={150}
                     placeholder="Add details about this expense"
                     defaultValue={state.fieldValues?.note ?? ""}
                   />

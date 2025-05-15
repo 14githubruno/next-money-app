@@ -1,7 +1,7 @@
+import clsx from "clsx";
 import {
   Drawer,
   DrawerBody,
-  DrawerClose,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
@@ -11,7 +11,7 @@ import { Button } from "../tremor-raw/ui/button";
 import { RiMenuLine } from "@remixicon/react";
 import NavLink from "./nav-link";
 import { usePathname } from "next/navigation";
-import { dashboardNavLinks } from "@/lib/static-data";
+import { DASHBOARD_LINKS } from "@/lib/constants";
 import { linkIsActive } from "@/lib/utils";
 
 export default function MobileSidenav() {
@@ -23,32 +23,32 @@ export default function MobileSidenav() {
         <Button
           variant="ghost"
           aria-label="open sidenav"
-          className="group flex items-center rounded-md p-2 text-sm font-medium hover:bg-gray-100 data-[state=open]:bg-gray-100 hover:dark:bg-gray-400/10 dark:data-[state=open]:bg-gray-400/10"
+          className={clsx(
+            "group flex items-center rounded-md p-2 text-sm font-medium",
+            "hover:bg-gray-100 hover:dark:bg-gray-400/10",
+            "data-[state=open]:bg-gray-100 dark:data-[state=open]:bg-gray-400/10"
+          )}
         >
           <RiMenuLine
-            className="size-6 shrink-0 sm:size-5"
+            className={clsx("size-5 shrink-0", "md:size-6")}
             aria-hidden="true"
           />
         </Button>
       </DrawerTrigger>
       <DrawerContent className="sm:max-w-lg">
         <DrawerHeader>
-          <DrawerTitle>Retail Analytics</DrawerTitle>
+          <DrawerTitle>Dashboard menu</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
-          <nav
-            aria-label="dashboard navigation links"
-            className="flex flex-1 flex-col space-y-10"
-          >
+          <nav aria-label="dashboard navigation links">
             <ul role="list" className="space-y-2">
-              {dashboardNavLinks.map((link) => (
+              {DASHBOARD_LINKS.map((link) => (
                 <li key={link.name}>
-                  <DrawerClose asChild>
-                    <NavLink
-                      isActive={linkIsActive(pathname, link.href)}
-                      {...link}
-                    />
-                  </DrawerClose>
+                  <NavLink
+                    isMobile={true}
+                    isActive={linkIsActive(pathname, link.href)}
+                    {...link}
+                  />
                 </li>
               ))}
             </ul>

@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Toaster from "@/providers/toaster";
-import ThemeProvider from "@/providers/theme-provider";
+import clsx from "clsx";
+import Providers from "@/providers";
+import { Quicksand } from "next/font/google";
+
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,11 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased">
-        <ThemeProvider>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+      <body
+        className={clsx(
+          "antialiased",
+          "bg-white dark:bg-gray-950",
+          quicksand.variable,
+          "font-quicksand"
+        )}
+      >
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

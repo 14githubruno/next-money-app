@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { confirmExpense } from "@/lib/actions/expense";
 import { ExpenseTypes } from "@/lib/validations/schemas";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -13,13 +12,18 @@ import {
 } from "../tremor-raw/ui/table";
 import { Button } from "../tremor-raw/ui/button";
 import { useToast } from "@/hooks/toast/use-toast";
+import { formatPriceWithCurrency } from "@/lib/utils";
 
 type PendingExpensesTableProps = {
   expenses: ExpenseTypes[];
+  count: number;
+  currency: string | undefined;
 };
 
 export default function PendingExpensesTable({
   expenses,
+  count,
+  currency,
 }: PendingExpensesTableProps) {
   const [isPending, startTransition] = useTransition();
   const [expenseGettingConfirmed, setExpenseGettingConfirmed] = useState("");
@@ -46,10 +50,12 @@ export default function PendingExpensesTable({
     });
   };
 
-  if (expenses.length === 0) {
+  if (count === 0) {
     return (
-      <div className="bg-gray-50 py-8 text-center">
-        <p className="text-gray-500">No unconfirmed expenses found.</p>
+      <div className="flex h-full items-center justify-center rounded-md bg-gray-50 dark:bg-neutral-900">
+        <p className="text-gray-500 dark:text-white">
+          No pending expenses found
+        </p>
       </div>
     );
   }
@@ -62,7 +68,9 @@ export default function PendingExpensesTable({
             return (
               <TableRow key={expense.id}>
                 <TableCell>{expense.category.name}</TableCell>
-                <TableCell>${expense.amount.toFixed(2)}</TableCell>
+                <TableCell>
+                  {formatPriceWithCurrency(expense.amount, currency)}
+                </TableCell>
                 <TableCell>
                   {new Date(expense.expenseDate).toLocaleDateString()}
                 </TableCell>
@@ -75,7 +83,7 @@ export default function PendingExpensesTable({
                     isLoading={
                       isPending && expenseGettingConfirmed === expense.id
                     }
-                    className="inline-flex items-center gap-x-1 bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-900 ring-blue-500/30"
+                    className="inline-flex items-center gap-x-1 border-none bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-900 ring-blue-500/30"
                   >
                     {isPending && expenseGettingConfirmed === expense.id ? (
                       <>confirming...</>

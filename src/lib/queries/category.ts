@@ -52,7 +52,11 @@ export async function createDefaultCategories(userId: string) {
  */
 
 export const getCategories = unstable_cache(
-  async <T>(userId: string | undefined, filters?: Record<string, T>) => {
+  async <T>(
+    userId: string | undefined,
+    filters?: Record<string, T>,
+    expensesWhereFilters?: Record<string, T>
+  ) => {
     try {
       const userCategories = await prisma.category.findMany({
         where: {
@@ -60,13 +64,29 @@ export const getCategories = unstable_cache(
           ...filters,
         },
         include: {
-          expenses: true,
+          _count: {
+            select: {
+              expenses: {
+                where: { ...expensesWhereFilters },
+              },
+            },
+          },
+        },
+        omit: {
+          userId: true,
         },
         orderBy: {
           createdAt: "asc",
         },
       });
-      if (userCategories) return userCategories;
+
+      if (userCategories) {
+        return userCategories.map((category) => ({
+          ...category,
+          expenses: category._count.expenses,
+          _count: undefined,
+        }));
+      }
     } catch (error) {
       console.error("ERROR CATEGORIES: ", error);
       throw new Error("Error fetching user categories");
@@ -75,30 +95,3 @@ export const getCategories = unstable_cache(
   ["categories"],
   { revalidate: 3600, tags: ["categories"] }
 );
-
-/**
- * GET SINGLE USER CATEGORY
- * ========================================================
- */
-export async function getSingleCategory<T>(
-  categoryId: string,
-  userId: string | undefined,
-  filters?: Record<string, T>
-) {
-  try {
-    const category = await prisma.category.findFirst({
-      where: {
-        id: categoryId,
-        userId: userId!,
-        ...filters,
-      },
-      include: {
-        expenses: true,
-      },
-    });
-    if (category) return category;
-  } catch (error) {
-    console.error("ERROR SINGLE CATEGORY: ", error);
-    throw new Error("Error fetching single user category");
-  }
-}

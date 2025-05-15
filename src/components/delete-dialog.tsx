@@ -67,7 +67,7 @@ function DialogDescriptionContent({
                 of category
                 <span className="font-bold">
                   {" "}
-                  {textInBrackets(expense.category.name)}
+                  {textInBrackets(expense.category.name as string)}
                 </span>
                 .
               </span>

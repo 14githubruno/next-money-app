@@ -1,64 +1,88 @@
 "use client";
 
-import type { User } from "next-auth";
+import clsx from "clsx";
 import MobileSidenav from "./mobile-sidenav";
-import { UserProfileDesktop, UserProfileMobile } from "./user-profile";
-import Link from "next/link";
-import NavLink from "./nav-link";
-import { dashboardNavLinks } from "@/lib/static-data";
+import { UserProfile } from "./user-profile";
+import { DASHBOARD_LINKS } from "@/lib/constants";
 import { linkIsActive } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { Tooltip } from "../tremor-raw/ui/tooltip";
+import Logo from "../global/logo";
+import NavLink from "./nav-link";
 
 type SidenavProps = {
-  user: User | undefined;
+  userName: string | null | undefined;
+  userEmail: string | null | undefined;
 };
 
-export default function Sidenav({ user }: SidenavProps) {
+export default function Sidenav({ userName, userEmail }: SidenavProps) {
   const pathname = usePathname();
 
   return (
     <>
       {/* desktop sidenav */}
-      <nav className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-        <aside className="flex grow flex-col gap-y-6 overflow-y-auto border-r border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
-          <div className="pb-8">
-            <Link aria-label="link-to-home" href={"/"}>
-              <div className="h-4 w-4 bg-black dark:bg-white"></div>
-            </Link>
-          </div>
-
-          <nav
-            aria-label="dashboard navigation links"
-            className="flex flex-1 flex-col space-y-10"
-          >
-            <ul role="list" className="space-y-2">
-              {dashboardNavLinks.map((link) => {
+      <nav
+        className={clsx(
+          "hidden",
+          "lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-sidebar lg:flex-col"
+        )}
+      >
+        <aside
+          className={clsx(
+            "flex grow flex-col items-center justify-between gap-y-6 overflow-y-auto p-4",
+            "border-r border-gray-200 dark:border-gray-800"
+          )}
+        >
+          <Logo isMobile={false} />
+          <nav aria-label="dashboard navigation links">
+            <ul
+              role="list"
+              className="flex flex-col items-center justify-center gap-3"
+            >
+              {DASHBOARD_LINKS.map((link) => {
+                const { tooltip, href } = link;
                 return (
-                  <li key={link.name} className="border">
-                    <NavLink
-                      isActive={linkIsActive(pathname, link.href)}
-                      {...link}
-                    />
-                  </li>
+                  <Tooltip asChild side="right" content={tooltip} key={tooltip}>
+                    <li className="rounded-lg border border-gray-300 dark:border-gray-800">
+                      <NavLink
+                        isMobile={false}
+                        isActive={linkIsActive(pathname, href)}
+                        {...link}
+                      />
+                    </li>
+                  </Tooltip>
                 );
               })}
             </ul>
           </nav>
-          <div className="mt-auto">
-            <UserProfileDesktop user={user} />
-          </div>
+          <UserProfile
+            isMobile={false}
+            userName={userName}
+            userEmail={userEmail}
+          />
         </aside>
       </nav>
       {/* top navbar (mobile and tablet screens) */}
-      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-2 shadow-sm sm:gap-x-6 sm:px-4 lg:hidden dark:border-gray-800 dark:bg-gray-950">
-        <div className="flex w-full items-center justify-between gap-1 sm:gap-2">
-          <UserProfileMobile user={user} />
-          <Link aria-label="link-to-home" href={"/"}>
-            <div className="h-4 w-4 bg-black dark:bg-white"></div>
-          </Link>
+      <nav
+        className={clsx(
+          "h-[var(--height-mobile-nav)] w-full px-2",
+          "fixed top-0 z-50 flex items-center justify-between",
+          "border-b border-gray-200 dark:border-gray-800",
+          "bg-white/95 dark:bg-gray-950/95",
+          "shadow-xs dark:shadow-gray-900",
+          "lg:hidden"
+        )}
+      >
+        <div className="flex w-full items-center justify-between px-2">
+          <UserProfile
+            isMobile={true}
+            userName={userName}
+            userEmail={userEmail}
+          />
+          <Logo isMobile={true} />
           <MobileSidenav />
         </div>
-      </div>
+      </nav>
     </>
   );
 }

@@ -2,8 +2,7 @@
 
 import React from "react";
 import * as RadioGroupPrimitives from "@radix-ui/react-radio-group";
-
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitives.Root>,
@@ -34,7 +33,7 @@ const RadioGroupIndicator = React.forwardRef<
       <div
         className={cx(
           // base
-          "size-1.5 shrink-0",
+          "size-1.5 shrink-0 rounded-lg",
           // indicator
           "bg-white dark:bg-black",
           // disabled
@@ -63,7 +62,7 @@ const RadioGroupItem = React.forwardRef<
       <div
         className={cx(
           // base
-          "flex size-4 shrink-0 items-center justify-center border shadow-xs",
+          "flex size-4 shrink-0 items-center justify-center rounded-lg border shadow-xs",
           // border color
           "border-gray-300 dark:border-gray-800",
           // background color

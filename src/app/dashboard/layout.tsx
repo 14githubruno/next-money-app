@@ -1,6 +1,9 @@
+import clsx from "clsx";
 import { type ReactNode } from "react";
-import { getUser } from "@/lib/utils";
+import { getUser } from "@/lib/utils/server-only-utils";
 import Sidenav from "@/components/navigation/sidenav";
+import { getDateRange } from "@/lib/utils/server-only-utils";
+import DateRangeSelect from "@/components/date-range-select";
 
 type Props = {
   children: ReactNode;
@@ -8,13 +11,25 @@ type Props = {
 
 export default async function Layout({ children }: Props) {
   const { user } = await getUser();
+  const dateRange = await getDateRange();
 
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="w-full flex-none md:w-64">
-        <Sidenav user={user} />
+    <div
+      className={clsx(
+        "mt-[var(--height-mobile-nav)] flex flex-col",
+        "lg:mt-0 lg:flex-row lg:overflow-hidden"
+      )}
+    >
+      <div className={clsx("w-full flex-none", "lg:w-sidebar")}>
+        <Sidenav userName={user?.name} userEmail={user?.email} />
       </div>
-      <div className="flex-grow p-6 md:overflow-y-auto md:px-12">
+      <div
+        className={clsx(
+          "flex grow flex-col gap-6 p-6",
+          "lg:overflow-y-auto lg:px-12"
+        )}
+      >
+        <DateRangeSelect dateRange={dateRange} />
         {children}
       </div>
     </div>

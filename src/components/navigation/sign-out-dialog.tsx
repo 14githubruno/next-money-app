@@ -21,35 +21,33 @@ export default function SignOutDialog({
   onOpenChange,
 }: SignOutDialogProps) {
   return (
-    <>
-      <Dialog onOpenChange={onOpenChange}>
-        <DialogTrigger className="w-full text-left">
-          <DropdownMenuItem
-            onSelect={(event) => {
-              event.preventDefault();
-              onSelect();
-            }}
-          >
-            Sign out
-          </DropdownMenuItem>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Do you want to sign out?</DialogTitle>
-          </DialogHeader>
-          <DialogFooter className="mt-6">
-            <DialogClose asChild>
-              <Button
-                className="mt-2 w-full sm:mt-0 sm:w-fit"
-                variant="secondary"
-              >
-                No
-              </Button>
-            </DialogClose>
-            <SignOut />
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+    <Dialog onOpenChange={onOpenChange}>
+      <DialogTrigger className="w-full text-left">
+        <DropdownMenuItem
+          onSelect={(event) => {
+            event.preventDefault();
+            onSelect();
+          }}
+        >
+          Sign out
+        </DropdownMenuItem>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Do you want to sign out?</DialogTitle>
+        </DialogHeader>
+        <DialogFooter className="mt-6">
+          <DialogClose asChild>
+            <Button
+              className="mt-2 w-full rounded-sm sm:mt-0 sm:w-fit"
+              variant="secondary"
+            >
+              No
+            </Button>
+          </DialogClose>
+          <SignOut />
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

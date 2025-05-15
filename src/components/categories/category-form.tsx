@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "../tremor-raw/ui/button";
+
 import {
   Drawer,
   DrawerBody,
@@ -11,7 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../tremor-raw/ui/drawer";
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { createCategory, updateCategory } from "@/lib/actions/category";
 import { useActionState, useRef } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
@@ -21,37 +22,34 @@ import { Label } from "../tremor-raw/inputs/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";
 
 type CategoryFormProps = {
-  userId: string;
   category?: CategoryTypes | null;
   isEditing?: boolean;
 };
 
 export default function CategoryForm({
-  userId,
   category,
   isEditing = false,
 }: CategoryFormProps) {
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  // Bind userId and set action state
-  const createCategoryPassingUserId = createCategory.bind(null, userId);
-  const updateCategoryPassingUserIdAndCategoryId = updateCategory.bind(
+  // Bind categoryID when editing category
+  const updateCategoryWithCategoryID = updateCategory.bind(
     null,
-    userId,
     isEditing && category ? category.id : undefined
   );
 
+  // set action (create or update)
   const action =
-    category && isEditing
-      ? updateCategoryPassingUserIdAndCategoryId
-      : createCategoryPassingUserId;
+    category && isEditing ? updateCategoryWithCategoryID : createCategory;
 
+  // set initial state
   const initialState =
     category && isEditing
       ? { ...initState, fieldValues: { ...category } }
       : { ...initState };
 
+  // use action state
   const [state, formAction, pending] = useActionState(action, initialState);
 
   // if action is successful, close drawer and toast success,
@@ -69,10 +67,19 @@ export default function CategoryForm({
     <div className="flex justify-center">
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="base">
-            <Plus className="mr-2 h-4 w-4" />
-            {isEditing ? "Update category" : "Add category"}
-          </Button>
+          {isEditing ? (
+            <button aria-label="edit category">
+              <Pencil
+                className="size-4 shrink-0 bg-transparent"
+                aria-hidden="true"
+              />
+            </button>
+          ) : (
+            <Button variant="base">
+              <Plus className="mr-2 h-4 w-4" />
+              Add category
+            </Button>
+          )}
         </DrawerTrigger>
         <DrawerContent className="sm:max-w-lg">
           <DrawerHeader>

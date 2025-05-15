@@ -1,44 +1,66 @@
 import { ExpensesChart } from "./expenses-chart";
-import { getUser } from "@/lib/utils";
+import {
+  getUser,
+  getCurrency,
+  getDateRange,
+  getExpensesOfSelectedYear,
+} from "@/lib/utils/server-only-utils";
 import { getExpenses } from "@/lib/queries/expense";
 import { notFound } from "next/navigation";
-import { buildExpensesChartDataObject } from "@/lib/chartUtils";
-
-const currentYear = new Date().getFullYear();
-const expenseDate = {
-  gte: new Date(`${currentYear}-01-01`).toISOString(),
-  lte: new Date(`${currentYear}-12-31`).toISOString(),
-};
-
-const whereFiltersConfirmed = {
-  expenseDate,
-  isConfirmed: true,
-};
-
-const whereFiltersUnconfirmed = {
-  expenseDate,
-  isConfirmed: false,
-};
+import { buildExpensesChartDataObject } from "@/lib/utils/server-only-utils";
+import { Fragment } from "react";
 
 export default async function ExpensesChartWrapper() {
   const { userId } = await getUser();
 
-  const [confirmed, unconfirmed] = await Promise.all([
-    getExpenses(userId, { ...whereFiltersConfirmed }),
-    getExpenses(userId, { ...whereFiltersUnconfirmed }),
+  // cookies
+  const [currency, dateRange] = await Promise.all([
+    getCurrency(),
+    getDateRange(),
   ]);
 
-  if (!confirmed && !unconfirmed) {
+  // filters
+  const expenseDate = getExpensesOfSelectedYear(dateRange);
+  const whereFiltersConfirmed = {
+    expenseDate,
+    isConfirmed: true,
+  };
+  const whereFiltersPending = {
+    expenseDate,
+    isConfirmed: false,
+  };
+
+  // queries
+  const [confirmed, pending] = await Promise.all([
+    getExpenses(userId, { ...whereFiltersConfirmed }),
+    getExpenses(userId, { ...whereFiltersPending }),
+  ]);
+
+  if (!confirmed && !pending) {
     notFound();
   }
 
   // create chart data
-  const chartData = buildExpensesChartDataObject(confirmed, unconfirmed);
+  const { sum, chartData } = buildExpensesChartDataObject(confirmed, pending);
 
-  return (
+  // set chart
+  const chart = (
     <ExpensesChart
+      sum={sum}
       chartData={chartData}
-      chartCategories={["confirmed", "unconfirmed"]}
+      chartCategories={["confirmed", "pending"]}
+      currency={currency}
     />
+  );
+
+  return sum === 0 ? (
+    <div className="relative">
+      {chart}
+      <p className="absolute top-[45%] left-1/2 -translate-x-[45%]">
+        No expenses found
+      </p>
+    </div>
+  ) : (
+    <Fragment>{chart}</Fragment>
   );
 }

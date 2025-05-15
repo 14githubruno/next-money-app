@@ -1,58 +1,61 @@
 "use client";
 
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import { cx } from "@/lib/utils";
-import Link from "next/link";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 import { generatePagination } from "@/lib/utils";
-import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment } from "react";
+import { useQueryState, parseAsInteger } from "nuqs";
+import { useTableFiltering } from "@/hooks/use-table-filtering";
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const allPages = generatePagination(currentPage, totalPages);
+type PaginationProps = {
+  totalPages: number;
+};
 
-  const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
-  };
+export default function Pagination({ totalPages }: PaginationProps) {
+  const { startTransition } = useTableFiltering();
+  const [page, setPage] = useQueryState(
+    "page",
+    parseAsInteger
+      .withDefault(1)
+      .withOptions({ startTransition, shallow: false })
+  );
+
+  const allPages = generatePagination(page, totalPages);
 
   return (
     <Fragment>
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex gap-[0.1rem]">
-          {allPages.map((page, index) => {
+      <div className="flex items-center justify-between">
+        <div className="flex gap-3">
+          {allPages.map((pageNum, index) => {
             let position: "first" | "last" | "single" | "middle" | undefined;
 
             if (index === 0) position = "first";
             if (index === allPages.length - 1) position = "last";
             if (allPages.length === 1) position = "single";
-            if (page === "...") position = "middle";
+            if (pageNum === "...") position = "middle";
 
             return (
               <PaginationNumber
                 key={`${page}-${index}`}
-                href={createPageURL(page)}
-                page={page}
+                onClick={() => setPage(pageNum as number)}
+                page={pageNum}
                 position={position}
-                isActive={currentPage === page}
+                isActive={page === pageNum}
               />
             );
           })}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <PaginationArrow
             direction="left"
-            href={createPageURL(currentPage - 1)}
-            isDisabled={currentPage <= 1}
+            onClick={() => setPage((p) => p - 1)}
+            isDisabled={page <= 1}
           />
           <PaginationArrow
             direction="right"
-            href={createPageURL(currentPage + 1)}
-            isDisabled={currentPage >= totalPages}
+            onClick={() => setPage((p) => p + 1)}
+            isDisabled={page >= totalPages}
           />
         </div>
       </div>
@@ -62,42 +65,47 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 
 function PaginationNumber({
   page,
-  href,
+  onClick,
   isActive,
   position,
 }: {
   page: number | string;
-  href: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   position?: "first" | "last" | "middle" | "single";
   isActive: boolean;
 }) {
   const className = cx(
-    "flex h-10 w-10 items-center justify-center text-sm",
-    position === "middle" && "opacity-50",
-    isActive ? "bg-black text-gray-100" : "bg-gray-100 text-black",
-    !isActive && position !== "middle" && "hover:bg-gray-200"
+    "hidden",
+    "lg:flex lg:h-10 lg:w-10 lg:items-center lg:justify-center lg:text-sm lg:cursor-pointer lg:rounded-lg",
+    position === "middle" && "lg:opacity-50",
+    isActive
+      ? "lg:bg-gray-950 lg:text-gray-100 lg:dark:border lg:dark:border-gray-800"
+      : "lg:bg-gray-100 lg:dark:bg-gray-800 lg:text-gray-950 lg:dark:text-gray-100",
+    !isActive &&
+      position !== "middle" &&
+      "lg:hover:bg-gray-200 lg:dark:hover:opacity-50 lg:dark:hover:bg-gray-800"
   );
 
   return isActive || position === "middle" ? (
     <div className={className}>{page}</div>
   ) : (
-    <Link href={href} className={className}>
+    <button onClick={onClick} className={className}>
       {page}
-    </Link>
+    </button>
   );
 }
 
 function PaginationArrow({
-  href,
+  onClick,
   direction,
   isDisabled,
 }: {
-  href: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   direction: "left" | "right";
   isDisabled?: boolean;
 }) {
   const classNames =
-    "bg-black text-gray-100 h-10 w-10 flex items-center justify-center";
+    "bg-gray-950 text-gray-100 h-10 w-10 flex items-center justify-center cursor-pointer rounded-lg dark:bg-gray-800 hover:opacity-75";
 
   const icon =
     direction === "left" ? (
@@ -107,12 +115,17 @@ function PaginationArrow({
     );
 
   return isDisabled ? (
-    <div className={cx("cursor-not-allowed opacity-50", classNames)}>
+    <div
+      className={cx(
+        classNames,
+        "cursor-not-allowed opacity-50 hover:opacity-50"
+      )}
+    >
       {icon}
     </div>
   ) : (
-    <Link className={classNames} href={href}>
+    <button onClick={onClick} className={classNames}>
       {icon}
-    </Link>
+    </button>
   );
 }

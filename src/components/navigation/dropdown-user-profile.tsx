@@ -1,7 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
-import type { User } from "next-auth";
+import { type ReactNode, useState, useRef } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,18 +13,19 @@ import {
 import ThemeSwitcherSubMenu from "./theme-switcher-sub-menu";
 import Link from "next/link";
 import SignOutDialog from "./sign-out-dialog";
-import { useState, useRef } from "react";
 
 type DropdownUserProfileProps = {
   children: ReactNode;
   align?: "center" | "start" | "end";
-  user: User | undefined;
+  userEmail: string | null | undefined;
+  isMobile: boolean;
 };
 
 export default function DropdownUserProfile({
   children,
   align = "start",
-  user,
+  userEmail,
+  isMobile,
 }: DropdownUserProfileProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const focusRef = useRef<null | HTMLButtonElement>(null);
@@ -45,6 +45,7 @@ export default function DropdownUserProfile({
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
+        className={`${isMobile ? "lg:hidden" : ""}`} // make sure to *always* hide dropdown on desktop
         onCloseAutoFocus={(event) => {
           if (focusRef.current) {
             focusRef.current.focus();
@@ -54,11 +55,9 @@ export default function DropdownUserProfile({
         }}
         align={align}
       >
-        <DropdownMenuLabel>
-          {user && user.email && user.email}
-        </DropdownMenuLabel>
+        <DropdownMenuLabel>{userEmail && userEmail}</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <ThemeSwitcherSubMenu />
+          <ThemeSwitcherSubMenu isMobile={isMobile} />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

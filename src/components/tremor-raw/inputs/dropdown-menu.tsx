@@ -11,7 +11,7 @@ import {
 } from "@remixicon/react";
 import * as React from "react";
 
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 
 const DropdownMenu = DropdownMenuPrimitives.Root;
 DropdownMenu.displayName = "DropdownMenu";
@@ -36,7 +36,7 @@ const DropdownMenuSubMenuTrigger = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "relative flex cursor-default items-center py-1.5 pr-1 pl-2 transition-colors outline-none select-none data-[state=checked]:font-semibold sm:text-sm",
+      "relative flex cursor-default items-center rounded-sm py-1.5 pr-1 pl-2 transition-colors outline-none select-none data-[state=checked]:font-semibold sm:text-sm",
       // text color
       "text-gray-900 dark:text-gray-50",
       // disabled
@@ -69,7 +69,7 @@ const DropdownMenuSubMenuContent = React.forwardRef<
       collisionPadding={collisionPadding}
       className={cx(
         // base
-        "relative z-50 overflow-hidden border p-1 shadow-xl shadow-black/[2.5%]",
+        "relative z-50 overflow-hidden rounded-sm border p-1 shadow-xl shadow-black/[2.5%]",
         // widths
         "min-w-32",
         // heights
@@ -113,7 +113,7 @@ const DropdownMenuContent = React.forwardRef<
         ref={forwardedRef}
         className={cx(
           // base
-          "relative z-50 overflow-hidden border p-1 shadow-xl shadow-black/[2.5%]",
+          "relative z-50 overflow-hidden rounded-sm border p-1 shadow-xl shadow-black/[2.5%]",
           // widths
           "min-w-[calc(var(--radix-dropdown-menu-trigger-width))]",
           // heights
@@ -152,7 +152,7 @@ const DropdownMenuItem = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "group/DropdownMenuItem relative flex cursor-pointer items-center py-1.5 pr-1 pl-2 transition-colors outline-none select-none data-[state=checked]:font-semibold sm:text-sm",
+      "group/DropdownMenuItem relative flex cursor-pointer items-center rounded-sm py-1.5 pr-1 pl-2 transition-colors outline-none select-none data-[state=checked]:font-semibold sm:text-sm",
       // text color
       "text-gray-900 dark:text-gray-50",
       // disabled
@@ -261,7 +261,7 @@ const DropdownMenuRadioItem = React.forwardRef<
       ref={forwardedRef}
       className={cx(
         // base
-        "group/DropdownMenuRadioItem relative flex cursor-pointer items-center gap-x-2 py-1.5 pr-1 pl-8 transition-colors outline-none select-none data-[state=checked]:font-semibold sm:text-sm",
+        "group/DropdownMenuRadioItem relative flex cursor-pointer items-center gap-x-2 rounded-sm py-1.5 pr-1 pl-8 transition-colors outline-none select-none data-[state=checked]:font-semibold sm:text-sm",
         // text color
         "text-gray-900 dark:text-gray-50",
         // disabled

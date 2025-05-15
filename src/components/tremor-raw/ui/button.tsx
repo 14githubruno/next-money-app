@@ -4,12 +4,12 @@ import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { LoaderCircle } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 const buttonVariants = tv({
   base: [
     // base
-    "relative inline-flex cursor-pointer items-center justify-center whitespace-nowrap border px-3 py-2 text-center text-sm font-medium shadow-xs transition-all duration-100 ease-in-out",
+    "relative inline-flex cursor-pointer rounded-lg items-center justify-center whitespace-nowrap border px-3 py-2 text-center text-sm font-medium shadow-xs transition-all duration-100 ease-in-out",
     // disabled
     "disabled:pointer-events-none disabled:shadow-none",
     // focus
@@ -21,13 +21,13 @@ const buttonVariants = tv({
         // border
         "border-transparent",
         // text color
-        "text-white dark:text-black",
+        "text-white dark:text-gray-950",
         // background color
-        "bg-black dark:bg-white",
+        "bg-gray-950 dark:bg-white",
         // hover color
         "hover:opacity-75",
         // disabled
-        "disabled:bg-gray-300 disabled:text-gray-200",
+        "disabled:bg-neutral-700 disabled:text-gray-200",
       ],
       primary: [
         // border

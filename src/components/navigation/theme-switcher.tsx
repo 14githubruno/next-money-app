@@ -5,7 +5,7 @@ import {
   DropdownMenuRadioItem,
 } from "../tremor-raw/inputs/dropdown-menu";
 import { useTheme } from "next-themes";
-import { themes } from "@/lib/static-data";
+import { THEMES } from "@/lib/constants";
 import { useState, useEffect } from "react";
 
 /**
@@ -31,7 +31,7 @@ export default function ThemeSwitcher() {
         setTheme(value);
       }}
     >
-      {themes.map((theme) => {
+      {THEMES.map((theme) => {
         const Icon = theme.icon;
         return (
           <DropdownMenuRadioItem

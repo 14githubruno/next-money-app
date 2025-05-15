@@ -4,9 +4,8 @@ import { prisma } from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
 import { categoryFormInitialState as initState } from "../utils";
-import { revalidatePath } from "next/cache";
-import { getUser } from "../utils";
-import { PredictableError } from "../utils";
+import { revalidateTag } from "next/cache";
+import { getUser, PredictableError } from "../utils/server-only-utils";
 
 /**
  * This file contains all the categories-related queries
@@ -22,10 +21,11 @@ import { PredictableError } from "../utils";
  * ========================================================
  */
 export async function createCategory(
-  userId: string,
   prevState: CategoryFormState,
   data: FormData
 ): Promise<CategoryFormState> {
+  const { userId } = await getUser();
+
   const formData = Object.fromEntries(data);
 
   // avoid type conflicts with FormData
@@ -64,12 +64,12 @@ export async function createCategory(
     const newCategory = await prisma.category.create({
       data: {
         ...categoryData,
-        userId,
+        userId: userId!,
       },
     });
 
     if (newCategory) {
-      revalidatePath("/dashboard/categories");
+      revalidateTag("categories");
     }
 
     return {
@@ -95,11 +95,12 @@ export async function createCategory(
  * ========================================================
  */
 export async function updateCategory(
-  userId: string,
   categoryId: string | undefined,
   prevState: CategoryFormState,
   data: FormData
 ): Promise<CategoryFormState> {
+  const { userId } = await getUser();
+
   let isSuccess: boolean = false;
 
   const formData = Object.fromEntries(data);
@@ -174,7 +175,8 @@ export async function updateCategory(
     throw new Error("Error updating category");
   } finally {
     if (isSuccess) {
-      revalidatePath(`/dashboard/categories/${categoryId}`);
+      revalidateTag("categories");
+      revalidateTag("expenses");
     }
   }
 }
@@ -232,14 +234,14 @@ export async function deleteCategory(categoryId: string) {
     if (error instanceof PredictableError) {
       return {
         success: false,
-        message: "Error in deleting category",
+        message: error.message,
       };
     }
 
     throw new Error("Error deleting category");
   } finally {
     if (isDeleted) {
-      revalidatePath("/dashboard/categories");
+      revalidateTag("categories");
     }
   }
 }

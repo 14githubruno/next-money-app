@@ -10,7 +10,7 @@ import {
   RiLoader2Fill,
 } from "@remixicon/react";
 
-import { cx } from "@/lib/utils";
+import { cx } from "@/lib/utils/tremor-raw/utils";
 
 const ToastProvider = ToastPrimitives.Provider;
 ToastProvider.displayName = "ToastProvider";
@@ -112,7 +112,7 @@ const Toast = React.forwardRef<
         ref={forwardedRef}
         className={cx(
           // base
-          "flex h-fit min-h-16 w-full overflow-hidden border shadow-lg shadow-black/5",
+          "flex h-fit min-h-16 w-full overflow-hidden rounded-lg border shadow-lg shadow-black/5",
           // background color
           "bg-white dark:bg-[#090E1A]",
           // border color

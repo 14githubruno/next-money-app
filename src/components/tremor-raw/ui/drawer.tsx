@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as DrawerPrimitives from "@radix-ui/react-dialog";
 import { RiCloseLine } from "@remixicon/react";
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 import { Button } from "./button";
 
 const Drawer = (
@@ -76,10 +76,11 @@ const DrawerContent = React.forwardRef<
     <DrawerPortal>
       <DrawerOverlay>
         <DrawerPrimitives.Content
+          aria-describedby={undefined}
           ref={forwardedRef}
           className={cx(
             // base
-            "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6",
+            "fixed inset-y-2 z-50 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-hidden max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:rounded-tr-none sm:rounded-br-none sm:p-6",
             // border color
             "border-gray-200 dark:border-gray-900",
             // background color

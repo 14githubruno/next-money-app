@@ -1,7 +1,7 @@
 "use client";
 
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
+import clsx from "clsx";
+import { useSearchParams } from "next/navigation";
 import { Label } from "../tremor-raw/inputs/label";
 import { Input } from "../tremor-raw/inputs/input";
 import {
@@ -11,6 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../tremor-raw/inputs/select";
+import { Button } from "../tremor-raw/ui/button";
+import { useQueryState, parseAsString } from "nuqs";
+import { useTableFiltering } from "@/hooks/use-table-filtering";
 
 /**
  *
@@ -18,67 +21,78 @@ import {
  */
 export default function ExpenseFilters() {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const { isFiltering, startTransition } = useTableFiltering();
 
-  const handleSearch = useDebouncedCallback((note) => {
-    updateParams({ note });
-  }, 300);
-
-  const handleIsConfirmedChange = (isConfirmedToString: string) => {
-    updateParams({ isConfirmed: isConfirmedToString });
-  };
-
-  const updateParams = (
-    newParams: Record<string, string | null | undefined>
-  ) => {
-    const params = new URLSearchParams(searchParams);
-
-    // during params updates, always set page 1 as default
-    params.set("page", "1");
-
-    for (const [key, value] of Object.entries(newParams)) {
-      if (value) {
-        params.set(key, value);
-      } else {
-        params.delete(key);
-      }
-    }
-
-    replace(`${pathname}?${params.toString()}`);
-  };
+  const [page, setPage] = useQueryState("page", { shallow: false });
+  const [note, setNote] = useQueryState(
+    "note",
+    parseAsString.withOptions({
+      startTransition,
+      shallow: false,
+      throttleMs: 800,
+    })
+  );
+  const [isConfirmed, setIsConfirmed] = useQueryState(
+    "isConfirmed",
+    parseAsString.withOptions({ startTransition, shallow: false })
+  );
 
   return (
-    <form className="flex items-center gap-1">
-      {/* search by note */}
-      <Label className="sr-only" htmlFor="search">
-        Search by note
-      </Label>
-      <Input
-        type="text"
-        id="search"
-        placeholder="search by note"
-        onChange={(e) => handleSearch(e.target.value)}
-        defaultValue={searchParams.get("note")?.toString()}
-      />
+    <div className={clsx("flex flex-col gap-1", "lg:flex-row")}>
+      <form className="flex grow items-center gap-1">
+        {/* search by note */}
+        <Label className="sr-only" htmlFor="search">
+          Search by note
+        </Label>
+        <Input
+          type="text"
+          id="search"
+          placeholder="search by note"
+          value={note ?? ""}
+          onChange={(e) => setNote(e.target.value)}
+        />
 
-      {/* select confirmed or unconfirmed */}
-      <Label className="sr-only" htmlFor="expenseIsConfirmed">
-        Expense is confirmed
-      </Label>
-      <Select
-        onValueChange={handleIsConfirmedChange}
-        name="expenseIsConfirmed"
-        defaultValue={searchParams.get("isConfirmed") ?? ""}
+        {/* select confirmed or pending */}
+        <Label className="sr-only" htmlFor="expenseIsConfirmed">
+          Expense is confirmed
+        </Label>
+        <Select
+          onValueChange={setIsConfirmed}
+          name="expenseIsConfirmed"
+          value={isConfirmed ?? ""}
+        >
+          <SelectTrigger id="expenseIsConfirmed">
+            <SelectValue placeholder="expense confirmation" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={"true"}>{"true"}</SelectItem>
+            <SelectItem value={"false"}>{"false"}</SelectItem>
+          </SelectContent>
+        </Select>
+      </form>
+      {/* clear filters 
+      
+      
+       Disable button if:
+       - is filtering
+       - if there is only page param
+       - if there are no params
+      */}
+      <Button
+        disabled={
+          isFiltering ||
+          (searchParams.size === 1 && page !== null) ||
+          searchParams.size === 0
+        }
+        variant="light"
+        onClick={() => {
+          setPage(null);
+          setNote(null);
+          setIsConfirmed(null);
+        }}
       >
-        <SelectTrigger id="expenseIsConfirmed">
-          <SelectValue placeholder="expense confirmation" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={"true"}>{"true"}</SelectItem>
-          <SelectItem value={"false"}>{"false"}</SelectItem>
-        </SelectContent>
-      </Select>
-    </form>
+        Reset
+      </Button>
+    </div>
   );
 }

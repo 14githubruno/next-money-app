@@ -20,8 +20,7 @@ import {
   type DayProps,
   type Matcher,
 } from "react-day-picker";
-
-import { cx, focusRing } from "@/lib/utils";
+import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
 
 interface NavigationButtonProps
   extends React.HTMLAttributes<HTMLButtonElement> {
@@ -45,7 +44,7 @@ const NavigationButton = React.forwardRef<
         type="button"
         disabled={disabled}
         className={cx(
-          "flex size-8 shrink-0 items-center justify-center border p-1 outline-hidden transition select-none sm:size-[30px]",
+          "flex size-8 shrink-0 items-center justify-center rounded-lg border p-1 outline-hidden transition select-none sm:size-[30px]",
           // text color
           "text-gray-600 hover:text-gray-800",
           "dark:text-gray-400 dark:hover:text-gray-200",
@@ -123,7 +122,7 @@ const Calendar = ({
           "text-gray-900 dark:text-gray-50"
         ),
         day: cx(
-          "size-9 text-sm focus:z-10",
+          "size-9 text-sm focus:z-10 rounded-lg",
           "text-gray-900 dark:text-gray-50",
           "hover:bg-gray-200 dark:hover:bg-gray-700",
           focusRing

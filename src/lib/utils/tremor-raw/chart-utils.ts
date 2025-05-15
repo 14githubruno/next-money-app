@@ -1,7 +1,5 @@
 // Tremor Raw chartColors [v0.1.0]
 
-import type { ExpenseTypes } from "./validations/schemas";
-
 export type ColorUtility = "bg" | "stroke" | "fill" | "text";
 
 export const chartColors = {
@@ -28,6 +26,12 @@ export const chartColors = {
     stroke: "stroke-amber-500",
     fill: "fill-amber-500",
     text: "text-amber-500",
+  },
+  yellow: {
+    bg: "bg-yellow-400",
+    stroke: "stroke-yellow-400",
+    fill: "fill-yellow-400",
+    text: "text-yellow-400",
   },
   gray: {
     bg: "bg-gray-500",
@@ -124,55 +128,4 @@ export function hasOnlyOneValueForKey<T>(
     }
   }
   return true;
-}
-
-// build chart data for expenses based on data coming from db
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-export function buildExpensesChartDataObject(
-  confirmed: ExpenseTypes[],
-  unconfirmed: ExpenseTypes[]
-) {
-  const chartData = [];
-
-  for (let i = 0; i < months.length; i++) {
-    chartData.push({
-      date: months[i].slice(0, 3),
-      confirmed: calculateAmountPerMonth(confirmed, i),
-      unconfirmed: calculateAmountPerMonth(unconfirmed, i),
-    });
-  }
-
-  return chartData;
-}
-
-function calculateAmountPerMonth(expenses: ExpenseTypes[], monthIndex: number) {
-  const expensesByMonth = expenses.filter(
-    (exp) => exp.expenseDate.getMonth() === monthIndex
-  );
-
-  if (expensesByMonth.length === 0) {
-    return 0;
-  }
-
-  const amounts = expensesByMonth.map((exp) => exp.amount);
-  const total = amounts.reduce((total, num) => {
-    return (total += num);
-  }, 0);
-
-  return total;
 }
