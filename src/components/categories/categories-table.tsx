@@ -67,7 +67,7 @@ export function CategoriesTable({
   };
 
   return (
-    <TableRoot className="mt-8">
+    <TableRoot>
       <Table>
         <TableHead>
           <TableRow>
