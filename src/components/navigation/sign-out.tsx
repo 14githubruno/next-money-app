@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import { Button } from "../tremor-raw/ui/button";
 
 export default function SignOut() {
-  const [state, formAction, pending] = useActionState(logout, undefined);
+  const [, formAction, pending] = useActionState(logout, undefined);
 
   return (
     <form action={formAction}>
@@ -18,7 +18,6 @@ export default function SignOut() {
       >
         {pending ? "Loading..." : "Yes"}
       </Button>
-      {state && <p aria-live="polite">{state.message}</p>}
     </form>
   );
 }
