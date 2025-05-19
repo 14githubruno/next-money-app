@@ -14,9 +14,7 @@ import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";
 import Pagination from "@/components/pagination";
 import { Suspense } from "react";
-import { PAGES_TITLES } from "@/lib/constants";
-
-const PAGE_SIZE = 5; // expenses per page
+import { PAGES_TITLES, EXPENSES_PER } from "@/lib/constants";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -32,7 +30,7 @@ export default async function ExpensesPage(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.note || "";
   const currentPage = Number(searchParams?.page) || 1;
-  const offset = (currentPage - 1) * PAGE_SIZE;
+  const offset = (currentPage - 1) * EXPENSES_PER.page;
   const isConfirmedParam = searchParams?.isConfirmed;
 
   if (!userId) {
@@ -46,7 +44,7 @@ export default async function ExpensesPage(props: {
   };
 
   const [expenses, categories, totalCount] = await Promise.all([
-    getExpenses(userId, { ...whereFilters }, PAGE_SIZE, offset),
+    getExpenses(userId, { ...whereFilters }, EXPENSES_PER.page, offset),
     getCategories(userId),
     getTotalExpenseCount(userId, { ...whereFilters }),
   ]);
@@ -55,7 +53,7 @@ export default async function ExpensesPage(props: {
     notFound();
   }
 
-  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  const totalPages = Math.ceil(totalCount / EXPENSES_PER.page);
 
   return (
     <div className="flex flex-col gap-6">
@@ -79,7 +77,7 @@ export default async function ExpensesPage(props: {
         />
       </Suspense>
 
-      {totalCount > PAGE_SIZE && <Pagination totalPages={totalPages} />}
+      {totalCount > EXPENSES_PER.page && <Pagination totalPages={totalPages} />}
     </div>
   );
 }

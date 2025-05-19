@@ -1566,3 +1566,13 @@ export const COUNTRIES_DATA: CountryData[] = [
     },
   },
 ];
+
+/**
+ * Expenses to query.
+ * - 5 per page `dashboard/expenses/page.tsx`
+ * - 3 per slice `expenses-slice.tsx`
+ */
+export const EXPENSES_PER = {
+  page: 5,
+  slice: 3,
+};
