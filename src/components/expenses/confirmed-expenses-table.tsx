@@ -6,7 +6,7 @@ import {
   TableRoot,
   TableRow,
 } from "../tremor-raw/ui/table";
-import { formatPriceWithCurrency } from "@/lib/utils";
+import { formatPriceWithCurrency, formatDate } from "@/lib/utils";
 import { Badge } from "../tremor-raw/ui/badge";
 
 type ConfirmedExpensesTableProps = {
@@ -42,7 +42,7 @@ export default function ConfirmedExpensesTable({
                   {formatPriceWithCurrency(expense.amount, currency)}
                 </TableCell>
                 <TableCell>
-                  {new Date(expense.expenseDate).toLocaleDateString()}
+                  {formatDate(new Date(expense.expenseDate))}
                 </TableCell>
                 <TableCell>{expense.note || "-"}</TableCell>
                 <TableCell>

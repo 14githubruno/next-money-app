@@ -127,3 +127,10 @@ export function generateListOfYears(): string[] {
 
   return years;
 }
+
+/**
+ * Centralize date formatting for tables
+ */
+export function formatDate(date: Date) {
+  return date.toLocaleDateString();
+}
