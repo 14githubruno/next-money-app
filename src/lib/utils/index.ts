@@ -113,7 +113,7 @@ export function formatPriceWithCurrency(
 
 /**
  * Create list of years based on current year `new Date().getFullYear()`
- * @note The list starts at year 2010 and always ends five years after the current year.
+ * @note The list starts at year 2025 and always ends 2 years after the current year.
  */
 export function generateListOfYears(): string[] {
   const years = [];
