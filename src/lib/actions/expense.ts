@@ -3,7 +3,7 @@
 import { prisma } from "../../../prisma/prisma";
 import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
-import { expenseFormInitialState as initState } from "../utils";
+import { EXPENSE_FORM_INITIAL_STATE as initState } from "../constants";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { getUser, PredictableError } from "../utils/server-only-utils";

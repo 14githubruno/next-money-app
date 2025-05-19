@@ -1,4 +1,3 @@
-import type { CategoryFormState, ExpenseFormState } from "../types";
 import { DEFAULT_COUNTRY, CURRENCIES } from "../constants";
 
 /**
@@ -14,31 +13,6 @@ export function linkIsActive(pathname: string, href: string): boolean {
 export function textInBrackets(text: string) {
   return `[${text}]`;
 }
-
-/**
- * Initial/default state of category form fields.
- */
-export const categoryFormInitialState: CategoryFormState = {
-  success: false,
-  message: "",
-  fieldValues: { name: "" },
-};
-
-/**
- * Initial/default state of form fields.
- */
-export const expenseFormInitialState: ExpenseFormState = {
-  success: false,
-  message: "",
-  fieldValues: {
-    amount: 0.01,
-    expenseDate: new Date(),
-    isConfirmed: false,
-    payment: "CASH",
-    note: "",
-    categoryId: "",
-  },
-};
 
 /**
  * Handle table pagination.

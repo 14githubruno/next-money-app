@@ -6,7 +6,7 @@ import {
   type CategoryTypes,
   type ExpenseTypes,
 } from "@/lib/validations/schemas";
-import { expenseFormInitialState as initState } from "@/lib/utils";
+import { EXPENSE_FORM_INITIAL_STATE as initState } from "@/lib/constants";
 import { Plus, Pencil } from "lucide-react";
 import { Button } from "../tremor-raw/ui/button";
 import {
