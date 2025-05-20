@@ -1,7 +1,7 @@
 // Tremor Input [v2.0.0]
 
 import React from "react";
-import { RiEyeFill, RiEyeOffFill, RiSearchLine } from "@remixicon/react";
+import { Eye, EyeClosed, Search } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
 import {
   cx,
@@ -98,10 +98,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               "text-gray-400 dark:text-gray-600"
             )}
           >
-            <RiSearchLine
-              className="size-[1.125rem] shrink-0"
-              aria-hidden="true"
-            />
+            <Search className="size-[1.125rem] shrink-0" aria-hidden="true" />
           </div>
         )}
         {isPassword && (
@@ -130,9 +127,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {typeState === "password" ? "Show password" : "Hide password"}
               </span>
               {typeState === "password" ? (
-                <RiEyeFill aria-hidden="true" className="size-5 shrink-0" />
+                <Eye aria-hidden="true" className="size-5 shrink-0" />
               ) : (
-                <RiEyeOffFill aria-hidden="true" className="size-5 shrink-0" />
+                <EyeClosed aria-hidden="true" className="size-5 shrink-0" />
               )}
             </button>
           </div>

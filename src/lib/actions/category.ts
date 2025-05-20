@@ -3,7 +3,7 @@
 import { prisma } from "../../../prisma/prisma";
 import { categorySchema } from "../validations/schemas";
 import { type CategoryFormState } from "../types";
-import { categoryFormInitialState as initState } from "../utils";
+import { CATEGORY_FORM_INITIAL_STATE as initState } from "../constants";
 import { revalidateTag } from "next/cache";
 import { getUser, PredictableError } from "../utils/server-only-utils";
 

@@ -67,7 +67,7 @@ export function CategoriesTable({
   };
 
   return (
-    <TableRoot className="mt-8">
+    <TableRoot>
       <Table>
         <TableHead>
           <TableRow>
@@ -89,9 +89,6 @@ export function CategoriesTable({
                 </TableCell>
                 <TableCell>
                   <div className="flex space-x-4">
-                    {/* <Link href={`/dashboard/categories/${category.id}`}>
-                      <Settings2 className="h-4 w-4" />
-                    </Link> */}
                     <CategoryForm category={category} isEditing={true} />
                     <DeleteDialog
                       deleteAction={() => deleteCurrentCategory(category)}

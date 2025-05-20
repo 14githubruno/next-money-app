@@ -8,7 +8,7 @@ import {
   DrawerTrigger,
 } from "../tremor-raw/ui/drawer";
 import { Button } from "../tremor-raw/ui/button";
-import { RiMenuLine } from "@remixicon/react";
+import { EllipsisVertical } from "lucide-react";
 import NavLink from "./nav-link";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_LINKS } from "@/lib/constants";
@@ -29,7 +29,7 @@ export default function MobileSidenav() {
             "data-[state=open]:bg-gray-100 dark:data-[state=open]:bg-gray-400/10"
           )}
         >
-          <RiMenuLine
+          <EllipsisVertical
             className={clsx("size-5 shrink-0", "md:size-6")}
             aria-hidden="true"
           />

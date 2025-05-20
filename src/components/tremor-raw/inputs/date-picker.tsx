@@ -16,7 +16,7 @@ import {
   type DateFieldState,
   type DateSegment,
 } from "@react-stately/datepicker";
-import { RiCalendar2Fill, RiSubtractFill } from "@remixicon/react";
+import { Calendar, Minus } from "lucide-react";
 import { format, type Locale } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { tv, type VariantProps } from "tailwind-variants";
@@ -193,7 +193,7 @@ const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
           className={cx(triggerStyles({ hasError }), className)}
           {...props}
         >
-          <RiCalendar2Fill className="size-5 shrink-0 text-gray-400 dark:text-gray-600" />
+          <Calendar className="size-5 shrink-0 text-gray-400 dark:text-gray-600" />
           <span className="flex-1 overflow-hidden text-left text-ellipsis whitespace-nowrap text-gray-900 dark:text-gray-50">
             {children ? (
               children
@@ -970,7 +970,7 @@ const RangeDatePicker = ({
                       isRequired={props.required}
                     />
                   </div>
-                  <RiSubtractFill className="size-4 shrink-0 text-gray-400" />
+                  <Minus className="size-4 shrink-0 text-gray-400" />
                   <div className="flex flex-1 items-center gap-x-2">
                     <span className="dark:text-gray-30 text-gray-700">
                       {translations?.end ?? "End"}:

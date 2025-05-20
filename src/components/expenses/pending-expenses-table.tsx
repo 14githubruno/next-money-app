@@ -12,7 +12,7 @@ import {
 } from "../tremor-raw/ui/table";
 import { Button } from "../tremor-raw/ui/button";
 import { useToast } from "@/hooks/toast/use-toast";
-import { formatPriceWithCurrency } from "@/lib/utils";
+import { formatPriceWithCurrency, formatDate } from "@/lib/utils";
 
 type PendingExpensesTableProps = {
   expenses: ExpenseTypes[];
@@ -72,7 +72,7 @@ export default function PendingExpensesTable({
                   {formatPriceWithCurrency(expense.amount, currency)}
                 </TableCell>
                 <TableCell>
-                  {new Date(expense.expenseDate).toLocaleDateString()}
+                  {formatDate(new Date(expense.expenseDate))}
                 </TableCell>
                 <TableCell>{expense.note || "-"}</TableCell>
                 <TableCell>

@@ -22,7 +22,7 @@ import { useTransition } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useTableFiltering } from "@/hooks/use-table-filtering";
 import { ComponentLoader } from "../ui/loaders";
-import { formatPriceWithCurrency } from "@/lib/utils";
+import { formatPriceWithCurrency, formatDate } from "@/lib/utils";
 
 const expensesTableHeadings = [
   "Expense Date",
@@ -116,7 +116,7 @@ export function ExpensesTable({
             {expenses.map((expense) => (
               <TableRow key={expense.id}>
                 <TableCell>
-                  {new Date(expense.expenseDate).toLocaleDateString()}
+                  {formatDate(new Date(expense.expenseDate))}
                 </TableCell>
                 <TableCell>{expense.category.name}</TableCell>
                 <TableCell>

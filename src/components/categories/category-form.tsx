@@ -16,7 +16,7 @@ import { Plus, Pencil } from "lucide-react";
 import { createCategory, updateCategory } from "@/lib/actions/category";
 import { useActionState, useRef } from "react";
 import { type CategoryTypes } from "@/lib/validations/schemas";
-import { categoryFormInitialState as initState } from "@/lib/utils";
+import { CATEGORY_FORM_INITIAL_STATE as initState } from "@/lib/constants";
 import { Input } from "../tremor-raw/inputs/input";
 import { Label } from "../tremor-raw/inputs/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";

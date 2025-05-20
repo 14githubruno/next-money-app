@@ -4,11 +4,11 @@
 
 import * as React from "react";
 import {
-  RiArrowLeftDoubleLine,
-  RiArrowLeftSLine,
-  RiArrowRightDoubleLine,
-  RiArrowRightSLine,
-} from "@remixicon/react";
+  ChevronsLeft,
+  ChevronLeft,
+  ChevronsRight,
+  ChevronRight,
+} from "lucide-react";
 import { addYears, format, isSameMonth } from "date-fns";
 import {
   DayPicker,
@@ -145,12 +145,8 @@ const Calendar = ({
         ...classNames,
       }}
       components={{
-        IconLeft: () => (
-          <RiArrowLeftSLine aria-hidden="true" className="size-4" />
-        ),
-        IconRight: () => (
-          <RiArrowRightSLine aria-hidden="true" className="size-4" />
-        ),
+        IconLeft: () => <ChevronLeft aria-hidden="true" className="size-4" />,
+        IconRight: () => <ChevronRight aria-hidden="true" className="size-4" />,
         Caption: ({ ...props }) => {
           const {
             goToMonth,
@@ -204,7 +200,7 @@ const Calendar = ({
                     }
                     aria-label="Go to previous year"
                     onClick={goToPreviousYear}
-                    icon={RiArrowLeftDoubleLine}
+                    icon={ChevronsLeft}
                   />
                 )}
                 {!hidePreviousButton && (
@@ -212,7 +208,7 @@ const Calendar = ({
                     disabled={disableNavigation || !previousMonth}
                     aria-label="Go to previous month"
                     onClick={() => previousMonth && goToMonth(previousMonth)}
-                    icon={RiArrowLeftSLine}
+                    icon={ChevronLeft}
                   />
                 )}
               </div>
@@ -231,7 +227,7 @@ const Calendar = ({
                     disabled={disableNavigation || !nextMonth}
                     aria-label="Go to next month"
                     onClick={() => nextMonth && goToMonth(nextMonth)}
-                    icon={RiArrowRightSLine}
+                    icon={ChevronRight}
                   />
                 )}
                 {enableYearNavigation && !hideNextButton && (
@@ -244,7 +240,7 @@ const Calendar = ({
                     }
                     aria-label="Go to next year"
                     onClick={goToNextYear}
-                    icon={RiArrowRightDoubleLine}
+                    icon={ChevronsRight}
                   />
                 )}
               </div>

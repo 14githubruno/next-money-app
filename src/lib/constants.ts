@@ -6,6 +6,7 @@ import {
   Moon,
   MonitorCog,
 } from "lucide-react";
+import type { CategoryFormState, ExpenseFormState } from "./types";
 
 /**
  * Pages titles
@@ -66,6 +67,31 @@ export const THEMES = [
     icon: MonitorCog,
   },
 ];
+
+/**
+ * Initial/default state of category form fields.
+ */
+export const CATEGORY_FORM_INITIAL_STATE: CategoryFormState = {
+  success: false,
+  message: "",
+  fieldValues: { name: "" },
+};
+
+/**
+ * Initial/default state of expense form fields.
+ */
+export const EXPENSE_FORM_INITIAL_STATE: ExpenseFormState = {
+  success: false,
+  message: "",
+  fieldValues: {
+    amount: 0.01,
+    expenseDate: new Date(),
+    isConfirmed: false,
+    payment: "CASH",
+    note: "",
+    categoryId: "",
+  },
+};
 
 /**
  * Months.
@@ -1566,3 +1592,13 @@ export const COUNTRIES_DATA: CountryData[] = [
     },
   },
 ];
+
+/**
+ * Expenses to query.
+ * - 5 per page `dashboard/expenses/page.tsx`
+ * - 3 per slice `expenses-slice.tsx`
+ */
+export const EXPENSES_PER = {
+  page: 5,
+  slice: 3,
+};

@@ -3,13 +3,12 @@
 import React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import {
-  RiCheckboxCircleFill,
-  RiCloseCircleFill,
-  RiErrorWarningFill,
-  RiInformationFill,
-  RiLoader2Fill,
-} from "@remixicon/react";
-
+  CircleCheck,
+  CircleX,
+  CircleAlert,
+  Info,
+  LoaderCircle,
+} from "lucide-react";
 import { cx } from "@/lib/utils/tremor-raw/utils";
 
 const ToastProvider = ToastPrimitives.Provider;
@@ -67,7 +66,7 @@ const Toast = React.forwardRef<
     switch (variant) {
       case "success":
         Icon = (
-          <RiCheckboxCircleFill
+          <CircleCheck
             className="size-5 shrink-0 text-emerald-600 dark:text-emerald-500"
             aria-hidden="true"
           />
@@ -75,7 +74,7 @@ const Toast = React.forwardRef<
         break;
       case "warning":
         Icon = (
-          <RiErrorWarningFill
+          <CircleAlert
             className="size-5 shrink-0 text-amber-500 dark:text-amber-500"
             aria-hidden="true"
           />
@@ -83,7 +82,7 @@ const Toast = React.forwardRef<
         break;
       case "error":
         Icon = (
-          <RiCloseCircleFill
+          <CircleX
             className="size-5 shrink-0 text-red-600 dark:text-red-500"
             aria-hidden="true"
           />
@@ -91,7 +90,7 @@ const Toast = React.forwardRef<
         break;
       case "loading":
         Icon = (
-          <RiLoader2Fill
+          <LoaderCircle
             className="size-5 shrink-0 animate-spin text-gray-600 dark:text-gray-500"
             aria-hidden="true"
           />
@@ -99,7 +98,7 @@ const Toast = React.forwardRef<
         break;
       default:
         Icon = (
-          <RiInformationFill
+          <Info
             className="size-5 shrink-0 text-blue-500 dark:text-blue-500"
             aria-hidden="true"
           />

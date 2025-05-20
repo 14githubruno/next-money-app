@@ -13,11 +13,7 @@ export async function login() {
   } catch (error) {
     if (error instanceof AuthError) {
       console.error("ERROR TYPE LOGIN", error.type);
-      console.error("ERROR LOGIN", error);
-
-      return {
-        message: "Sign in with Google has failed",
-      };
+      throw new Error("Google sign in failed");
     }
 
     throw error;
@@ -34,11 +30,7 @@ export async function logout() {
   } catch (error) {
     if (error instanceof AuthError) {
       console.error("ERROR TYPE LOGOUT", error.type);
-      console.error("ERROR LOGOUT", error);
-
-      return {
-        message: "Sign out has failed",
-      };
+      throw new Error("Sign out failed");
     }
 
     throw error;

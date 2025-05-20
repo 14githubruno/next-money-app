@@ -14,6 +14,7 @@ import ExpensesSliceLabel from "./expenses-slice-label";
 import ConfirmedExpensesTable from "./confirmed-expenses-table";
 import PendingExpensesTable from "./pending-expenses-table";
 import LinkToPendingOrConfirmed from "./link-to-pending-or-confirmed";
+import { EXPENSES_PER } from "@/lib/constants";
 
 type ExpensesSliceProps = {
   expensesAreConfirmed: boolean;
@@ -45,11 +46,10 @@ export default async function ExpensesSlice({
     isConfirmed: expensesAreConfirmed, // true or false
     expenseDate: getExpensesOfSelectedYear(dateRange),
   };
-  const expensesToTake = 3;
 
   // queries
   const [expenses, amount, count] = await Promise.all([
-    getExpenses(userId, { ...whereFilters }, expensesToTake),
+    getExpenses(userId, { ...whereFilters }, EXPENSES_PER.slice),
     getTotalAmountExpenses(userId, { ...whereFilters }),
     getTotalExpenseCount(userId, { ...whereFilters }),
   ]);
