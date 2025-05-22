@@ -9,6 +9,7 @@ import Heading from "@/components/ui/heading";
 import { CategoriesTable } from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
 import CategoriesBarList from "@/components/categories/categories-bar-list";
+import Paragraph from "@/components/ui/paragraph";
 import { PAGES_TITLES } from "@/lib/constants";
 
 export default async function CategoriesPage() {
@@ -47,9 +48,7 @@ export default async function CategoriesPage() {
       <div className="flex flex-col gap-2">
         <Heading level={1} text={PAGES_TITLES.h1.dashboardCategories} />
         <div className="flex justify-between">
-          <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
-            Overview of all your categories.
-          </p>
+          <Paragraph text="Overview of all your categories." />
           <CategoryForm />
         </div>
       </div>
@@ -59,9 +58,7 @@ export default async function CategoriesPage() {
       />
       <div className="flex flex-col gap-2">
         <Heading level={2} text={PAGES_TITLES.h2.dashboardCategories} />
-        <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
-          Impact of your categories.
-        </p>
+        <Paragraph text="Impact of your categories." />
       </div>
       <CategoriesBarList data={categoriesBarListData} />
     </div>

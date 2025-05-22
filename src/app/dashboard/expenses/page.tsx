@@ -9,6 +9,7 @@ import {
 import { getExpenses, getTotalExpenseCount } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
 import Heading from "@/components/ui/heading";
+import Paragraph from "@/components/ui/paragraph";
 import { ExpensesTable } from "@/components/expenses/expenses-table";
 import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";
@@ -60,9 +61,7 @@ export default async function ExpensesPage(props: {
       <div className="flex flex-col gap-2">
         <Heading level={1} text={PAGES_TITLES.h1.dashboardExpenses} />
         <div className="flex justify-between">
-          <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
-            Overview of all your expenses.
-          </p>
+          <Paragraph text="Overview of all your expenses." />
           <ExpenseForm categories={categories} />
         </div>
 
