@@ -57,6 +57,12 @@ export default async function CategoriesPage() {
         categoriesForTable={categoriesWithSelectedYearExpenses}
         categoriesWithAllExpenses={categoriesWithAllExpenses}
       />
+      <div className="flex flex-col gap-6">
+        <Heading level={2} text={PAGES_TITLES.h2.dashboardCategories} />
+        <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
+          Impact of your categories.
+        </p>
+      </div>
       <CategoriesBarList data={categoriesBarListData} />
     </div>
   );
