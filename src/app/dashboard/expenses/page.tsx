@@ -57,9 +57,9 @@ export default async function ExpensesPage(props: {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         <Heading level={1} text={PAGES_TITLES.h1.dashboardExpenses} />
-        <div className="flex items-center justify-between">
+        <div className="flex justify-between">
           <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
             Overview of all your expenses.
           </p>

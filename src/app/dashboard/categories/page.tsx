@@ -44,9 +44,9 @@ export default async function CategoriesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         <Heading level={1} text={PAGES_TITLES.h1.dashboardCategories} />
-        <div className="flex items-center justify-between">
+        <div className="flex justify-between">
           <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
             Overview of all your categories.
           </p>
@@ -57,7 +57,7 @@ export default async function CategoriesPage() {
         categoriesForTable={categoriesWithSelectedYearExpenses}
         categoriesWithAllExpenses={categoriesWithAllExpenses}
       />
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         <Heading level={2} text={PAGES_TITLES.h2.dashboardCategories} />
         <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
           Impact of your categories.
