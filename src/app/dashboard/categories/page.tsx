@@ -8,6 +8,7 @@ import { getCategories } from "@/lib/queries/category";
 import Heading from "@/components/ui/heading";
 import { CategoriesTable } from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
+import CategoriesBarList from "@/components/categories/categories-bar-list";
 import { PAGES_TITLES } from "@/lib/constants";
 
 export default async function CategoriesPage() {
@@ -33,6 +34,14 @@ export default async function CategoriesPage() {
     notFound();
   }
 
+  // build categories bar list data
+  const categoriesBarListData = categoriesWithSelectedYearExpenses.map(
+    (category) => ({
+      name: category.name,
+      value: category.expenses,
+    })
+  );
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-6">
@@ -48,6 +57,7 @@ export default async function CategoriesPage() {
         categoriesForTable={categoriesWithSelectedYearExpenses}
         categoriesWithAllExpenses={categoriesWithAllExpenses}
       />
+      <CategoriesBarList data={categoriesBarListData} />
     </div>
   );
 }

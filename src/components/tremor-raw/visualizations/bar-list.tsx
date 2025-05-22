@@ -1,4 +1,5 @@
 // Tremor BarList [v1.0.0]
+"use client";
 
 import React from "react";
 import { cx, focusRing } from "@/lib/utils/tremor-raw/utils";
@@ -82,10 +83,10 @@ function BarListInner<T>(
             <div
               className={cx(
                 // base
-                "flex items-center rounded-sm transition-all",
+                "flex items-center rounded-lg py-6 transition-all",
                 rowHeight,
                 // background color
-                "bg-blue-200 dark:bg-blue-900",
+                "bg-slate-300 dark:bg-neutral-800",
                 onValueChange
                   ? "group-hover:bg-blue-300 dark:group-hover:bg-blue-800"
                   : "",
@@ -121,7 +122,7 @@ function BarListInner<T>(
                   <p
                     className={cx(
                       // base
-                      "truncate text-sm whitespace-nowrap",
+                      "truncate pl-2 text-sm whitespace-nowrap",
                       // text color
                       "text-gray-900 dark:text-gray-50"
                     )}
@@ -139,7 +140,7 @@ function BarListInner<T>(
           <div
             key={item.key ?? item.name}
             className={cx(
-              "flex items-center justify-end",
+              "flex items-center justify-end py-6",
               rowHeight,
               index === sortedData.length - 1 ? "mb-0" : "mb-1.5"
             )}
