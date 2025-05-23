@@ -16,7 +16,7 @@ import { useQueryState, parseAsString } from "nuqs";
 import { useTableFiltering } from "@/hooks/use-table-filtering";
 import { CategoryTypes } from "@/lib/validations/schemas";
 
-type ExpenseFiltersProps = {
+type ExpensesFiltersProps = {
   numOfExpenses: number;
   categories: CategoryTypes[];
 };
@@ -25,10 +25,10 @@ type ExpenseFiltersProps = {
  *
  * @note this is the form to filter expenses through search params
  */
-export default function ExpenseFilters({
+export default function ExpensesFilters({
   numOfExpenses,
   categories,
-}: ExpenseFiltersProps) {
+}: ExpensesFiltersProps) {
   const searchParams = useSearchParams();
   const { isFiltering, startTransition } = useTableFiltering();
 

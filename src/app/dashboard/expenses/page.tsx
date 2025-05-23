@@ -12,7 +12,7 @@ import Heading from "@/components/ui/heading";
 import Paragraph from "@/components/ui/paragraph";
 import { ExpensesTable } from "@/components/expenses/expenses-table";
 import ExpenseForm from "@/components/expenses/expense-form";
-import ExpenseFilters from "@/components/expenses/expense-filters";
+import ExpensesFilters from "@/components/expenses/expenses-filters";
 import Pagination from "@/components/pagination";
 import { PAGES_TITLES, EXPENSES_PER } from "@/lib/constants";
 
@@ -73,7 +73,7 @@ export default async function ExpensesPage(props: {
             <ExpenseForm categories={categories} />
           </div>
         </div>
-        <ExpenseFilters
+        <ExpensesFilters
           numOfExpenses={expenses.length}
           categories={categories}
         />
