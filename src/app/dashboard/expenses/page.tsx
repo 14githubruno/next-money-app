@@ -32,6 +32,7 @@ export default async function ExpensesPage(props: {
   const currentPage = Number(searchParams?.page) || 1;
   const offset = (currentPage - 1) * EXPENSES_PER.page;
   const isConfirmedParam = searchParams?.isConfirmed;
+  const category = searchParams?.category;
 
   if (!userId) {
     redirect("/sign-in");
@@ -39,6 +40,12 @@ export default async function ExpensesPage(props: {
 
   const whereFilters = {
     note: { contains: query, mode: "insensitive" },
+    category: {
+      name: {
+        equals: category,
+        mode: "insensitive",
+      },
+    },
     isConfirmed: convertToBoolean(isConfirmedParam),
     expenseDate: getExpensesOfSelectedYear(dateRange),
   };
@@ -66,7 +73,7 @@ export default async function ExpensesPage(props: {
             <ExpenseForm categories={categories} />
           </div>
         </div>
-        <ExpenseFilters />
+        <ExpenseFilters categories={categories} />
         <ExpensesTable
           currentPage={currentPage}
           categories={categories}
