@@ -19,6 +19,7 @@ export const PAGES_TITLES = {
     dashboardExpenses: "Expenses",
   },
   h2: {
+    dashboard: "Expenses Chart",
     dashboardCategories: "Bar List",
   },
 };

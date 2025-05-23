@@ -14,7 +14,6 @@ import { ExpensesTable } from "@/components/expenses/expenses-table";
 import ExpenseForm from "@/components/expenses/expense-form";
 import ExpenseFilters from "@/components/expenses/expense-filters";
 import Pagination from "@/components/pagination";
-import { Suspense } from "react";
 import { PAGES_TITLES, EXPENSES_PER } from "@/lib/constants";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
@@ -57,26 +56,27 @@ export default async function ExpensesPage(props: {
   const totalPages = Math.ceil(totalCount / EXPENSES_PER.page);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <Heading level={1} text={PAGES_TITLES.h1.dashboardExpenses} />
-        <div className="flex justify-between">
-          <Paragraph text="Overview of all your expenses." />
-          <ExpenseForm categories={categories} />
+    <div className="flex flex-col gap-16">
+      {/* first block */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Heading level={1} text={PAGES_TITLES.h1.dashboardExpenses} />
+          <div className="flex justify-between">
+            <Paragraph text="Overview of all your expenses." />
+            <ExpenseForm categories={categories} />
+          </div>
         </div>
-
         <ExpenseFilters />
-      </div>
-      <Suspense fallback={null}>
         <ExpensesTable
           currentPage={currentPage}
           categories={categories}
           expenses={expenses}
           currency={currency}
         />
-      </Suspense>
-
-      {totalCount > EXPENSES_PER.page && <Pagination totalPages={totalPages} />}
+        {totalCount > EXPENSES_PER.page && (
+          <Pagination totalPages={totalPages} />
+        )}
+      </div>
     </div>
   );
 }
