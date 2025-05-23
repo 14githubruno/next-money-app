@@ -79,7 +79,7 @@ export default function ExpensesFilters({
           Search by note
         </Label>
         <Input
-          type="text"
+          type="search"
           id="search"
           placeholder="search by note"
           value={note ?? ""}
