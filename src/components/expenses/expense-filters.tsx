@@ -30,13 +30,17 @@ export default function ExpenseFilters({
   categories,
 }: ExpenseFiltersProps) {
   const searchParams = useSearchParams();
-  const noExpenses = numOfExpenses === 0 && searchParams.size === 0;
   const { isFiltering, startTransition } = useTableFiltering();
 
+  // if no expenses even without params, disable filters
+  const noExpenses = numOfExpenses === 0 && searchParams.size === 0;
+
+  // query params states
   const [page, setPage] = useQueryState("page", {
     defaultValue: "1",
     shallow: false,
   });
+
   const [note, setNote] = useQueryState(
     "note",
     parseAsString.withOptions({
@@ -45,6 +49,7 @@ export default function ExpenseFilters({
       throttleMs: 800,
     })
   );
+
   const [isConfirmed, setIsConfirmed] = useQueryState(
     "isConfirmed",
     parseAsString.withOptions({ startTransition, shallow: false })
@@ -57,6 +62,14 @@ export default function ExpenseFilters({
       shallow: false,
     })
   );
+
+  // clear filters
+  function clearFilters() {
+    setPage(null);
+    setNote(null);
+    setIsConfirmed(null);
+    setCategory(null);
+  }
 
   return (
     <div className={clsx("flex flex-col gap-1", "lg:flex-row")}>
@@ -138,14 +151,9 @@ export default function ExpenseFilters({
           searchParams.size === 0
         }
         variant="light"
-        onClick={() => {
-          setPage(null);
-          setNote(null);
-          setIsConfirmed(null);
-          setCategory(null);
-        }}
+        onClick={clearFilters}
       >
-        Reset
+        Clear filters
       </Button>
     </div>
   );
