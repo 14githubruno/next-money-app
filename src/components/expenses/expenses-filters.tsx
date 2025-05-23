@@ -147,7 +147,7 @@ export default function ExpensesFilters({
       <Button
         disabled={
           isFiltering ||
-          (searchParams.size === 1 && page !== null) ||
+          (searchParams.size === 1 && page !== "1") ||
           searchParams.size === 0
         }
         variant="light"
