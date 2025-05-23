@@ -17,6 +17,7 @@ import { useTableFiltering } from "@/hooks/use-table-filtering";
 import { CategoryTypes } from "@/lib/validations/schemas";
 
 type ExpenseFiltersProps = {
+  numOfExpenses: number;
   categories: CategoryTypes[];
 };
 
@@ -24,11 +25,18 @@ type ExpenseFiltersProps = {
  *
  * @note this is the form to filter expenses through search params
  */
-export default function ExpenseFilters({ categories }: ExpenseFiltersProps) {
+export default function ExpenseFilters({
+  numOfExpenses,
+  categories,
+}: ExpenseFiltersProps) {
   const searchParams = useSearchParams();
+  const noExpenses = numOfExpenses === 0 && searchParams.size === 0;
   const { isFiltering, startTransition } = useTableFiltering();
 
-  const [page, setPage] = useQueryState("page", { shallow: false });
+  const [page, setPage] = useQueryState("page", {
+    defaultValue: "1",
+    shallow: false,
+  });
   const [note, setNote] = useQueryState(
     "note",
     parseAsString.withOptions({
@@ -63,6 +71,7 @@ export default function ExpenseFilters({ categories }: ExpenseFiltersProps) {
           placeholder="search by note"
           value={note ?? ""}
           onChange={(e) => setNote(e.target.value)}
+          disabled={noExpenses}
         />
 
         {/* search by category */}
@@ -76,6 +85,7 @@ export default function ExpenseFilters({ categories }: ExpenseFiltersProps) {
           }}
           name="category"
           value={category ?? ""}
+          disabled={noExpenses}
         >
           <SelectTrigger id="category">
             <SelectValue placeholder="select by category" />
@@ -102,6 +112,7 @@ export default function ExpenseFilters({ categories }: ExpenseFiltersProps) {
           }}
           name="expenseIsConfirmed"
           value={isConfirmed ?? ""}
+          disabled={noExpenses}
         >
           <SelectTrigger id="expenseIsConfirmed">
             <SelectValue placeholder="expense confirmation" />

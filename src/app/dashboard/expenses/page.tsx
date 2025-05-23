@@ -73,7 +73,10 @@ export default async function ExpensesPage(props: {
             <ExpenseForm categories={categories} />
           </div>
         </div>
-        <ExpenseFilters categories={categories} />
+        <ExpenseFilters
+          numOfExpenses={expenses.length}
+          categories={categories}
+        />
         <ExpensesTable
           currentPage={currentPage}
           categories={categories}
