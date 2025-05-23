@@ -41,7 +41,7 @@ type ExpensesTableProps = {
   currency: string | undefined;
 };
 
-export function ExpensesTable({
+export default function ExpensesTable({
   currentPage,
   categories,
   expenses,
