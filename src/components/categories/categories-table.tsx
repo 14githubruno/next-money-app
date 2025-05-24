@@ -13,9 +13,11 @@ import DeleteDialog from "../delete-dialog";
 import { deleteCategory } from "@/lib/actions/category";
 import { Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
-import { useTransition } from "react";
+import { Fragment, useState, useTransition } from "react";
 import { useToast } from "@/hooks/toast/use-toast";
 import CategoryForm from "./category-form";
+import { Label } from "../tremor-raw/inputs/label";
+import { Input } from "../tremor-raw/inputs/input";
 
 const categoriesHeadings = [
   "Name",
@@ -33,8 +35,13 @@ export function CategoriesTable({
   categoriesForTable,
   categoriesWithAllExpenses,
 }: CategoriesTableProps) {
+  const [filter, setFilter] = useState("");
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+
+  const filteredCategories = categoriesForTable.filter((cat) =>
+    cat.name.includes(filter)
+  );
 
   const deleteCurrentCategory = (category: CategoryTypes) => {
     const { id, expenses, isDefault } = category;
@@ -67,43 +74,68 @@ export function CategoriesTable({
   };
 
   return (
-    <TableRoot>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {categoriesHeadings.map((heading) => {
-              return <TableHeaderCell key={heading}>{heading}</TableHeaderCell>;
-            })}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {categoriesForTable.map((category) => {
-            return (
-              <TableRow key={category.id}>
-                <TableCell>{category.name}</TableCell>
+    <Fragment>
+      <form>
+        {/* search by note */}
+        <Label className="sr-only" htmlFor="search">
+          Search by note
+        </Label>
+        <Input
+          type="search"
+          id="search"
+          placeholder="search category"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+      </form>
+      <TableRoot>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {categoriesHeadings.map((heading) => {
+                return (
+                  <TableHeaderCell key={heading}>{heading}</TableHeaderCell>
+                );
+              })}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredCategories.length === 0 ? (
+              <TableRow>
                 <TableCell>
-                  {`${category.expenses}/${categoriesWithAllExpenses.find((cat) => cat.name === category.name)?.expenses}`}
-                </TableCell>
-                <TableCell>
-                  {category.isDefault && <Lock className="h-4 w-4" />}
-                </TableCell>
-                <TableCell>
-                  <div className="flex space-x-4">
-                    <CategoryForm category={category} isEditing={true} />
-                    <DeleteDialog
-                      deleteAction={() => deleteCurrentCategory(category)}
-                      isPending={isPending}
-                      isDefaultCategory={category.isDefault}
-                      itemKind="category"
-                      itemData={category}
-                    />
-                  </div>
+                  <div>no result</div>
                 </TableCell>
               </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableRoot>
+            ) : (
+              filteredCategories.map((category) => {
+                return (
+                  <TableRow key={category.id}>
+                    <TableCell>{category.name}</TableCell>
+                    <TableCell>
+                      {`${category.expenses}/${categoriesWithAllExpenses.find((cat) => cat.name === category.name)?.expenses}`}
+                    </TableCell>
+                    <TableCell>
+                      {category.isDefault && <Lock className="h-4 w-4" />}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex space-x-4">
+                        <CategoryForm category={category} isEditing={true} />
+                        <DeleteDialog
+                          deleteAction={() => deleteCurrentCategory(category)}
+                          isPending={isPending}
+                          isDefaultCategory={category.isDefault}
+                          itemKind="category"
+                          itemData={category}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            )}
+          </TableBody>
+        </Table>
+      </TableRoot>
+    </Fragment>
   );
 }
