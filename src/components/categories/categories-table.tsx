@@ -15,6 +15,7 @@ import { Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { Fragment, useState, useMemo, useTransition } from "react";
 import { useToast } from "@/hooks/toast/use-toast";
+import useDebounceValue from "@/hooks/use-debounce-value";
 import CategoryForm from "./category-form";
 import { Label } from "../tremor-raw/inputs/label";
 import { Input } from "../tremor-raw/inputs/input";
@@ -35,15 +36,17 @@ export function CategoriesTable({
   categoriesForTable,
   categoriesWithAllExpenses,
 }: CategoriesTableProps) {
-  const [filter, setFilter] = useState("");
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
+  const [filter, setFilter] = useState("");
+  const debouncedFilter = useDebounceValue(filter, 300);
+
   const filteredCategories = useMemo(() => {
     return categoriesForTable.filter((cat) => {
-      return cat.name.toLowerCase().includes(filter.toLowerCase());
+      return cat.name.toLowerCase().includes(debouncedFilter.toLowerCase());
     });
-  }, [filter, categoriesForTable]);
+  }, [debouncedFilter, categoriesForTable]);
 
   const deleteCurrentCategory = (category: CategoryTypes) => {
     const { id, expenses, isDefault } = category;
