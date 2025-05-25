@@ -13,7 +13,7 @@ import DeleteDialog from "../delete-dialog";
 import { deleteCategory } from "@/lib/actions/category";
 import { Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
-import { Fragment, useState, useTransition } from "react";
+import { Fragment, useState, useMemo, useTransition } from "react";
 import { useToast } from "@/hooks/toast/use-toast";
 import CategoryForm from "./category-form";
 import { Label } from "../tremor-raw/inputs/label";
@@ -39,9 +39,11 @@ export function CategoriesTable({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const filteredCategories = categoriesForTable.filter((cat) =>
-    cat.name.includes(filter)
-  );
+  const filteredCategories = useMemo(() => {
+    return categoriesForTable.filter((cat) => {
+      return cat.name.toLowerCase().includes(filter.toLowerCase());
+    });
+  }, [filter, categoriesForTable]);
 
   const deleteCurrentCategory = (category: CategoryTypes) => {
     const { id, expenses, isDefault } = category;
