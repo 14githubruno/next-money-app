@@ -213,11 +213,6 @@ export async function deleteCategory(categoryId: string) {
       );
     }
 
-    // Check if it's a default category
-    if (category.isDefault) {
-      throw new PredictableError("Default categories cannot be deleted");
-    }
-
     const deletedCategory = await prisma.category.delete({
       where: { id: categoryId, userId },
     });
