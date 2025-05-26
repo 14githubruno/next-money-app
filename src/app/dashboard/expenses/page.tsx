@@ -8,6 +8,8 @@ import {
 } from "@/lib/utils/server-only-utils";
 import { getExpenses, getTotalExpenseCount } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
+import { Button } from "@/components/tremor-raw/ui/button";
+import Link from "next/link";
 import Heading from "@/components/ui/heading";
 import Paragraph from "@/components/ui/paragraph";
 import ExpenseForm from "@/components/expenses/expense-form";
@@ -70,7 +72,16 @@ export default async function ExpensesPage(props: {
           <Heading level={1} text={PAGES_TITLES.h1.dashboardExpenses} />
           <div className="flex justify-between">
             <Paragraph text="Overview of all your expenses." />
-            <ExpenseForm categories={categories} />
+            {categories.length > 0 ? (
+              <ExpenseForm categories={categories} />
+            ) : (
+              <div className="0 rounded-lg bg-red-200 pl-2 text-sm leading-6 text-gray-600">
+                No category detected.{" "}
+                <Button asChild variant="base">
+                  <Link href="/dashboard/categories">Go create one &rarr;</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         <ExpensesFilters
