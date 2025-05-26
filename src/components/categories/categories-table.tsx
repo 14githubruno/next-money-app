@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import {
   Table,
   TableBody,
@@ -10,6 +11,7 @@ import {
   TableRow,
 } from "../tremor-raw/ui/table";
 import DeleteDialog from "../delete-dialog";
+import { Button } from "../tremor-raw/ui/button";
 import { deleteCategory } from "@/lib/actions/category";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { Fragment, useState, useMemo, useTransition } from "react";
@@ -77,20 +79,31 @@ export default function CategoriesTable({
 
   return (
     <Fragment>
-      <form>
-        {/* search category */}
-        <Label className="sr-only" htmlFor="search">
-          Search category
-        </Label>
-        <Input
-          type="search"
-          id="search"
-          placeholder="search category"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          disabled={categoriesForTable.length === 0}
-        />
-      </form>
+      {/* category filter */}
+      <div className={clsx("flex flex-col gap-1", "lg:flex-row")}>
+        <form className="grow">
+          {/* search category */}
+          <Label className="sr-only" htmlFor="search">
+            Search category
+          </Label>
+          <Input
+            type="search"
+            id="search"
+            placeholder="search category"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            disabled={categoriesForTable.length === 0}
+          />
+        </form>
+        <Button
+          disabled={categoriesForTable.length === 0 || filter === ""}
+          variant="light"
+          onClick={() => setFilter("")}
+        >
+          Clear
+        </Button>
+      </div>
+
       <TableRoot>
         <Table>
           <TableHead>
