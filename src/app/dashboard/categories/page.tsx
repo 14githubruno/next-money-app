@@ -6,7 +6,7 @@ import {
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
 import Heading from "@/components/ui/heading";
-import { CategoriesTable } from "@/components/categories/categories-table";
+import CategoriesTable from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
 import CategoriesBarList from "@/components/categories/categories-bar-list";
 import Paragraph from "@/components/ui/paragraph";

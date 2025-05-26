@@ -32,7 +32,7 @@ type CategoriesTableProps = {
   categoriesWithAllExpenses: CategoryTypes[];
 };
 
-export function CategoriesTable({
+export default function CategoriesTable({
   categoriesForTable,
   categoriesWithAllExpenses,
 }: CategoriesTableProps) {
