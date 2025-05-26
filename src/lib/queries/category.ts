@@ -11,42 +11,6 @@ import { unstable_cache } from "next/cache";
  */
 
 /**
- * CREATE DEFAULT CATEGORIES WHEN USER SIGN IN
- * (FOR THE FIRST TIME)
- * ========================================================
- */
-export async function createDefaultCategories(userId: string) {
-  try {
-    const existingCategories = await prisma.category.findMany({
-      where: { userId },
-    });
-
-    if (existingCategories.length === 0) {
-      // Create default categories
-      await prisma.category.createMany({
-        data: [
-          {
-            name: "groceries",
-            userId,
-            isDefault: true,
-          },
-          {
-            name: "house",
-            userId,
-            isDefault: true,
-          },
-        ],
-      });
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("DEFAULT CATEGORIES: ", error);
-    throw new Error("Error initializing user default categories");
-  }
-}
-
-/**
  * GET ALL USER CATEGORIES
  * ========================================================
  */
