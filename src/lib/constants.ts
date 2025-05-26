@@ -1612,9 +1612,7 @@ export const EXPENSES_PER = {
  */
 
 export const MOCK_CATEGORIES_BAR_LIST = [
-  { name: "groceries", value: 40 },
-  { name: "house", value: 20 },
-  { name: "cigarettes", value: 10 },
-  { name: "books", value: 5 },
-  { name: "car", value: 0 },
+  { name: "groceries", value: 10 },
+  { name: "cigarettes", value: 5 },
+  { name: "books", value: 0 },
 ];
