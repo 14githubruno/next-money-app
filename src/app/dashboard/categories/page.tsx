@@ -10,7 +10,7 @@ import { CategoriesTable } from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
 import CategoriesBarList from "@/components/categories/categories-bar-list";
 import Paragraph from "@/components/ui/paragraph";
-import { PAGES_TITLES } from "@/lib/constants";
+import { PAGES_TITLES, MOCK_CATEGORIES_BAR_LIST } from "@/lib/constants";
 
 export default async function CategoriesPage() {
   const { userId } = await getUser();
@@ -64,9 +64,17 @@ export default async function CategoriesPage() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <Heading level={2} text={PAGES_TITLES.h2.dashboardCategories} />
-          <Paragraph text="Impact of your categories." />
+          {categoriesBarListData.length > 0 ? (
+            <Paragraph text="Impact of your categories." />
+          ) : (
+            <Paragraph text="Example with mock categories." />
+          )}
         </div>
-        <CategoriesBarList data={categoriesBarListData} />
+        {categoriesBarListData.length > 0 ? (
+          <CategoriesBarList data={categoriesBarListData} />
+        ) : (
+          <CategoriesBarList isMock={true} data={MOCK_CATEGORIES_BAR_LIST} />
+        )}
       </div>
     </div>
   );

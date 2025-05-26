@@ -1606,3 +1606,15 @@ export const EXPENSES_PER = {
   page: 5,
   slice: 3,
 };
+
+/**
+ * Mock data (i.e. mock categories bar list data)
+ */
+
+export const MOCK_CATEGORIES_BAR_LIST = [
+  { name: "groceries", value: 40 },
+  { name: "house", value: 20 },
+  { name: "cigarettes", value: 10 },
+  { name: "books", value: 5 },
+  { name: "car", value: 0 },
+];

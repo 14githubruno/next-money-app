@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { BarList } from "../tremor-raw/visualizations/bar-list";
 
 type CategoryBarProps = {
@@ -6,9 +7,13 @@ type CategoryBarProps = {
 };
 
 type CategoriesBarListProps = {
+  isMock?: boolean;
   data: CategoryBarProps[];
 };
 
-export default function CategoriesBarList({ data }: CategoriesBarListProps) {
-  return <BarList data={data} />;
+export default function CategoriesBarList({
+  isMock = false,
+  data,
+}: CategoriesBarListProps) {
+  return <BarList className={clsx(isMock && "opacity-50")} data={data} />;
 }
