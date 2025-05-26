@@ -88,6 +88,7 @@ export function CategoriesTable({
           placeholder="search category"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
+          disabled={categoriesForTable.length === 0}
         />
       </form>
       <TableRoot>
