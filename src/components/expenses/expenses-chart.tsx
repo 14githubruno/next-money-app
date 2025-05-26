@@ -10,21 +10,23 @@ type ExpensesChartProps = {
   currency: string | undefined;
 };
 
-export const ExpensesChart = ({
+export default function ExpensesChart({
   sum,
   chartData,
   chartCategories,
   currency,
-}: ExpensesChartProps) => (
-  <LineChart
-    className="h-[var(--height-expenses-chart)]"
-    data={chartData}
-    index="date"
-    categories={chartCategories}
-    colors={["emerald", "yellow"]}
-    valueFormatter={(number: number) =>
-      `${formatPriceWithCurrency(number, currency)}`
-    }
-    showGridLines={sum > 0}
-  />
-);
+}: ExpensesChartProps) {
+  return (
+    <LineChart
+      className="h-[var(--height-expenses-chart)]"
+      data={chartData}
+      index="date"
+      categories={chartCategories}
+      colors={["emerald", "yellow"]}
+      valueFormatter={(number: number) =>
+        `${formatPriceWithCurrency(number, currency)}`
+      }
+      showGridLines={sum > 0}
+    />
+  );
+}

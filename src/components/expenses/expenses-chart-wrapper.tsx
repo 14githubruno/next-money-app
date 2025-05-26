@@ -1,4 +1,4 @@
-import { ExpensesChart } from "./expenses-chart";
+import ExpensesChart from "./expenses-chart";
 import {
   getUser,
   getCurrency,
