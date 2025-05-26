@@ -78,9 +78,9 @@ export function CategoriesTable({
   return (
     <Fragment>
       <form>
-        {/* search by note */}
+        {/* search category */}
         <Label className="sr-only" htmlFor="search">
-          Search by note
+          Search category
         </Label>
         <Input
           type="search"
