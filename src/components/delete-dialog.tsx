@@ -24,7 +24,6 @@ type DialogDescriptionContentProps = {
 type DeleteDialogProps = {
   deleteAction: () => void;
   isPending: boolean;
-  isDefaultCategory?: boolean;
 } & DialogDescriptionContentProps;
 
 /**
@@ -82,7 +81,6 @@ function DialogDescriptionContent({
 export default function DeleteDialog({
   deleteAction,
   isPending,
-  isDefaultCategory = false,
   itemKind,
   itemData,
 }: DeleteDialogProps) {
@@ -90,14 +88,8 @@ export default function DeleteDialog({
     <div className="flex justify-center">
       <Dialog>
         <DialogTrigger asChild>
-          <button
-            className="cursor-pointer"
-            disabled={isDefaultCategory}
-            aria-label={`Delete ${itemKind}`}
-          >
-            <Trash
-              className={`h-4 w-4 ${isDefaultCategory ? "opacity-65" : ""}`}
-            />
+          <button className="cursor-pointer" aria-label={`Delete ${itemKind}`}>
+            <Trash className="h-4 w-4" />
           </button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-lg">

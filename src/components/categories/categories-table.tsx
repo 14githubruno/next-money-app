@@ -11,7 +11,6 @@ import {
 } from "../tremor-raw/ui/table";
 import DeleteDialog from "../delete-dialog";
 import { deleteCategory } from "@/lib/actions/category";
-import { Lock } from "lucide-react";
 import { CategoryTypes } from "@/lib/validations/schemas";
 import { Fragment, useState, useMemo, useTransition } from "react";
 import { useToast } from "@/hooks/toast/use-toast";
@@ -19,11 +18,12 @@ import useDebounceValue from "@/hooks/use-debounce-value";
 import CategoryForm from "./category-form";
 import { Label } from "../tremor-raw/inputs/label";
 import { Input } from "../tremor-raw/inputs/input";
+import { formatDate } from "@/lib/utils";
 
 const categoriesHeadings = [
+  "Created",
   "Name",
   "Expenses of the year",
-  "Default",
   "Actions",
 ];
 
@@ -49,13 +49,10 @@ export function CategoriesTable({
   }, [debouncedFilter, categoriesForTable]);
 
   const deleteCurrentCategory = (category: CategoryTypes) => {
-    const { id, expenses, isDefault } = category;
+    const { id, expenses } = category;
 
     if (expenses && expenses > 0) {
       alert("This category has expenses. It can't be deleted.");
-      return;
-    } else if (isDefault) {
-      alert("This category is a default one. It can't be deleted");
       return;
     }
 
@@ -115,12 +112,12 @@ export function CategoriesTable({
               filteredCategories.map((category) => {
                 return (
                   <TableRow key={category.id}>
+                    <TableCell>
+                      {formatDate(new Date(category.createdAt))}
+                    </TableCell>
                     <TableCell>{category.name}</TableCell>
                     <TableCell>
                       {`${category.expenses}/${categoriesWithAllExpenses.find((cat) => cat.name === category.name)?.expenses}`}
-                    </TableCell>
-                    <TableCell>
-                      {category.isDefault && <Lock className="h-4 w-4" />}
                     </TableCell>
                     <TableCell>
                       <div className="flex space-x-4">
@@ -128,7 +125,6 @@ export function CategoriesTable({
                         <DeleteDialog
                           deleteAction={() => deleteCurrentCategory(category)}
                           isPending={isPending}
-                          isDefaultCategory={category.isDefault}
                           itemKind="category"
                           itemData={category}
                         />
