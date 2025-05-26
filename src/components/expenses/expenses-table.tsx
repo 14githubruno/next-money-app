@@ -107,7 +107,7 @@ export default function ExpensesTable({
           <TableBody>
             <TableRow>
               <TableCell>
-                <div className="py-4">no result</div>
+                <div className="py-4">no expenses</div>
               </TableCell>
             </TableRow>
           </TableBody>

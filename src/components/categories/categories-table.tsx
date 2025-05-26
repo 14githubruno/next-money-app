@@ -119,7 +119,7 @@ export default function CategoriesTable({
             {filteredCategories.length === 0 ? (
               <TableRow>
                 <TableCell>
-                  <div className="py-4">no result</div>
+                  <div className="py-4">no categories</div>
                 </TableCell>
               </TableRow>
             ) : (
