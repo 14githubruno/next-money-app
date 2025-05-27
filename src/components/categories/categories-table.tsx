@@ -104,7 +104,7 @@ export default function CategoriesTable({
         </Button>
       </div>
 
-      <TableRoot>
+      <TableRoot className="h-[var(--height-categories-table)]">
         <Table>
           <TableHead>
             <TableRow>
