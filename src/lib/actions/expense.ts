@@ -127,16 +127,6 @@ export async function updateExpense(
   const expenseData = validation.data;
 
   try {
-    const existingExpense = await prisma.expense.findUnique({
-      where: { id: expenseId, userId },
-    });
-
-    if (!existingExpense || existingExpense.userId !== userId) {
-      throw new PredictableError(
-        "Expense not found or you do not have permission to update it"
-      );
-    }
-
     const updatedExpense = await prisma.expense.update({
       where: { id: expenseId, userId },
       data: expenseData,
@@ -147,6 +137,10 @@ export async function updateExpense(
 
     if (updatedExpense) {
       isSuccess = true;
+    } else {
+      throw new PredictableError(
+        "Expense not found or you do not have permission to update it"
+      );
     }
 
     return {
@@ -180,16 +174,6 @@ export async function deleteExpense(expenseId: string) {
   }
 
   try {
-    const expense = await prisma.expense.findUnique({
-      where: { id: expenseId, userId },
-    });
-
-    if (!expense || expense.userId !== userId) {
-      throw new PredictableError(
-        "Expense not found or you do not have permission to delete it"
-      );
-    }
-
     const deletedExpense = await prisma.expense.delete({
       where: { id: expenseId, userId },
     });
@@ -197,6 +181,10 @@ export async function deleteExpense(expenseId: string) {
     if (deletedExpense) {
       revalidateTag("categories");
       revalidateTag("expenses");
+    } else {
+      throw new PredictableError(
+        "Expense not found or you do not have permission to delete it"
+      );
     }
 
     return { success: true, message: "Expense deleted" };
@@ -221,16 +209,6 @@ export async function confirmExpense(expenseId: string) {
   }
 
   try {
-    const expense = await prisma.expense.findUnique({
-      where: { id: expenseId, userId },
-    });
-
-    if (!expense || expense.userId !== userId) {
-      throw new Error(
-        "Expense not found or you do not have permission to delete it"
-      );
-    }
-
     const confirmedExpense = await prisma.expense.update({
       where: { id: expenseId, userId },
       data: { isConfirmed: true },
@@ -240,6 +218,10 @@ export async function confirmExpense(expenseId: string) {
     if (confirmedExpense) {
       revalidateTag("categories");
       revalidateTag("expenses");
+    } else {
+      throw new Error(
+        "Expense not found or you do not have permission to delete it"
+      );
     }
 
     return { success: true, message: "Expense confirmed" };
