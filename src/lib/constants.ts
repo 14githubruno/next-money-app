@@ -98,6 +98,11 @@ export const EXPENSE_FORM_INITIAL_STATE: ExpenseFormState = {
 };
 
 /**
+ * First year of the app.
+ */
+export const APP_FIRST_YEAR = 2025;
+
+/**
  * Months.
  */
 export const MONTHS = [

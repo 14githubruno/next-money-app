@@ -3,7 +3,10 @@
 import { prisma } from "../../../prisma/prisma";
 import { expenseSchema } from "../validations/schemas";
 import { type ExpenseFormState } from "../types";
-import { EXPENSE_FORM_INITIAL_STATE as initState } from "../constants";
+import {
+  EXPENSE_FORM_INITIAL_STATE as initState,
+  APP_FIRST_YEAR,
+} from "../constants";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { getUser, PredictableError } from "../utils/server-only-utils";
@@ -28,6 +31,18 @@ export async function createExpense(
   const { userId } = await getUser();
 
   const formData = Object.fromEntries(data);
+
+  // check if expense year is valid
+  const expenseYear = new Date(formData.expenseDate as string).getFullYear();
+  const isValidExpenseYear = expenseYear >= APP_FIRST_YEAR;
+
+  if (!isValidExpenseYear) {
+    return {
+      success: false,
+      message: `Expense date can't be older than app first year (${APP_FIRST_YEAR})`,
+      fieldValues: initState.fieldValues,
+    };
+  }
 
   // avoid type conflicts with FormData
   const fieldValues = Object.assign(formData);
@@ -107,6 +122,18 @@ export async function updateExpense(
   let isSuccess: boolean = false;
 
   const formData = Object.fromEntries(data);
+
+  // check if expense year is valid
+  const expenseYear = new Date(formData.expenseDate as string).getFullYear();
+  const isValidExpenseYear = expenseYear >= APP_FIRST_YEAR;
+
+  if (!isValidExpenseYear) {
+    return {
+      success: false,
+      message: `Expense date can't be older than app first year (${APP_FIRST_YEAR})`,
+      fieldValues: initState.fieldValues,
+    };
+  }
 
   // avoid type conflicts with FormData
   const fieldValues = Object.assign(formData);
