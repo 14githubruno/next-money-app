@@ -191,39 +191,42 @@ export async function deleteCategory(categoryId: string) {
   let isDeleted: boolean = false;
 
   try {
-    const category = await prisma.category.findUnique({
-      where: { id: categoryId, userId },
-      include: {
-        expenses: {
-          take: 1, // We only need to know if there are any expenses
+    const result = await prisma.$transaction(async (tx) => {
+      const category = await tx.category.findUnique({
+        where: { id: categoryId, userId },
+        include: {
+          expenses: {
+            take: 1, // We only need to know if there are any expenses
+          },
         },
-      },
+      });
+
+      if (!category) {
+        throw new PredictableError(
+          "Category not found or you do not have permission to delete it"
+        );
+      }
+
+      if (category.expenses.length > 0) {
+        throw new PredictableError(
+          "This category cannot be deleted because it is used by one or more expenses"
+        );
+      }
+
+      const deletedCategory = await tx.category.delete({
+        where: { id: categoryId, userId },
+      });
+
+      return { deletedCategory };
     });
 
-    if (!category || category.userId !== userId) {
-      throw new PredictableError(
-        "Category not found or you do not have permission to delete it"
-      );
-    }
-
-    // Check if category is used by any expenses
-    if (category.expenses.length > 0) {
-      throw new PredictableError(
-        "This category cannot be deleted because it is used by one or more expenses"
-      );
-    }
-
-    const deletedCategory = await prisma.category.delete({
-      where: { id: categoryId, userId },
-    });
-
-    if (deletedCategory) {
+    if (result.deletedCategory) {
       isDeleted = true;
     }
 
     return {
       success: true,
-      message: `Category with name ${deletedCategory.name} deleted`,
+      message: `Category with name ${result.deletedCategory.name} deleted`,
     };
   } catch (error) {
     if (error instanceof PredictableError) {
