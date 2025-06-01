@@ -47,34 +47,38 @@ export async function createCategory(
   const categoryData = validation.data;
 
   try {
-    // Check if category with same name already exists
-    const existingCategory = await prisma.category.findFirst({
-      where: {
-        userId,
-        name: categoryData.name,
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      // Check if category with same name already exists
+      const existingCategory = await tx.category.findFirst({
+        where: {
+          userId,
+          name: categoryData.name,
+        },
+      });
+
+      if (existingCategory) {
+        throw new PredictableError(
+          `Category with name ${existingCategory.name} already exists`
+        );
+      }
+
+      const newCategory = await tx.category.create({
+        data: {
+          ...categoryData,
+          userId: userId!,
+        },
+      });
+
+      return { newCategory };
     });
 
-    if (existingCategory) {
-      throw new PredictableError(
-        `Category with name ${existingCategory.name} already exists`
-      );
-    }
-
-    const newCategory = await prisma.category.create({
-      data: {
-        ...categoryData,
-        userId: userId!,
-      },
-    });
-
-    if (newCategory) {
+    if (result.newCategory) {
       revalidateTag("categories");
     }
 
     return {
       success: true,
-      message: `Category with name ${newCategory.name} created`,
+      message: `Category with name ${result.newCategory.name} created`,
       fieldValues: initState.fieldValues,
     };
   } catch (error) {
