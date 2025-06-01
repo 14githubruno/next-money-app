@@ -5,6 +5,7 @@ import {
 } from "@/lib/utils/server-only-utils";
 import { redirect, notFound } from "next/navigation";
 import { getCategories } from "@/lib/queries/category";
+import DateRangeSelect from "@/components/date-range-select";
 import Heading from "@/components/ui/heading";
 import CategoriesTable from "@/components/categories/categories-table";
 import CategoryForm from "@/components/categories/category-form";
@@ -45,6 +46,7 @@ export default async function CategoriesPage() {
 
   return (
     <div className="flex flex-col gap-16">
+      <DateRangeSelect dateRange={dateRange} />
       {/* first block */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">

@@ -9,6 +9,7 @@ import {
 import { getExpenses, getTotalExpenseCount } from "@/lib/queries/expense";
 import { getCategories } from "@/lib/queries/category";
 import { Button } from "@/components/tremor-raw/ui/button";
+import DateRangeSelect from "@/components/date-range-select";
 import Link from "next/link";
 import Heading from "@/components/ui/heading";
 import Paragraph from "@/components/ui/paragraph";
@@ -66,6 +67,7 @@ export default async function ExpensesPage(props: {
 
   return (
     <div className="flex flex-col gap-16">
+      <DateRangeSelect dateRange={dateRange} />
       {/* first block */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">

@@ -6,10 +6,15 @@ import ExpensesChartWrapper from "@/components/expenses/expenses-chart-wrapper";
 import Heading from "@/components/ui/heading";
 import Paragraph from "@/components/ui/paragraph";
 import { PAGES_TITLES } from "@/lib/constants";
+import DateRangeSelect from "@/components/date-range-select";
+import { getDateRange } from "@/lib/utils/server-only-utils";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const dateRange = await getDateRange();
+
   return (
     <div className="flex flex-col gap-16">
+      <DateRangeSelect dateRange={dateRange} />
       {/* first block */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
