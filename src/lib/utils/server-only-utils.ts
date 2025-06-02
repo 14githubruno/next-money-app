@@ -7,6 +7,7 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import type { ExpenseTypes } from "@/lib/validations/schemas";
 import { MONTHS } from "../constants";
+import DOMPurify from "isomorphic-dompurify";
 
 /**
  * Get logged in user data
@@ -127,4 +128,14 @@ function calculateAmountPerMonth(expenses: ExpenseTypes[], monthIndex: number) {
   }, 0);
 
   return total;
+}
+
+/**
+ * Fn to sanitize inputs (used in zod schemas)
+ */
+export function sanitizeInput(input: string) {
+  return DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+  });
 }

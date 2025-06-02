@@ -1,18 +1,25 @@
 import { z } from "zod";
 import { Payment, Category, Expense } from "@prisma/client";
+import { sanitizeInput } from "../utils/server-only-utils";
 
 /**
  * CATEGORY VALIDATION SCHEMA
  * ========================================================
  */
-export const categorySchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .min(1, "Name is required")
-    .max(15, "Category name cannot exceed 15 characters"),
-});
+export const categorySchema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .min(1, "Name is required")
+      .max(15, "Category name cannot exceed 15 characters"),
+  })
+  .transform((data) => {
+    return {
+      name: sanitizeInput(data.name),
+    };
+  });
 
 /**
  * CATEGORY TYPES:
@@ -30,19 +37,26 @@ export type CategoryTypes = TCategory & {
  * EXPENSE VALIDATION SCHEMA
  * ========================================================
  */
-export const expenseSchema = z.object({
-  amount: z.coerce.number().positive("Amount must be greater than 0"),
-  categoryId: z.string().min(1, "Category is required"),
-  note: z
-    .string()
-    .trim()
-    .max(500, "Note cannot exceed 500 characters")
-    .optional()
-    .nullable(),
-  expenseDate: z.coerce.date(),
-  isConfirmed: z.coerce.boolean(),
-  payment: z.nativeEnum(Payment),
-});
+export const expenseSchema = z
+  .object({
+    amount: z.coerce.number().positive("Amount must be greater than 0"),
+    categoryId: z.string().min(1, "Category is required"),
+    note: z
+      .string()
+      .trim()
+      .max(500, "Note cannot exceed 500 characters")
+      .optional()
+      .nullable(),
+    expenseDate: z.coerce.date(),
+    isConfirmed: z.coerce.boolean(),
+    payment: z.nativeEnum(Payment),
+  })
+  .transform((data) => {
+    return {
+      ...data,
+      note: data.note ? sanitizeInput(data.note) : null,
+    };
+  });
 
 /**
  * EXPENSE TYPES:
