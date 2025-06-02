@@ -41,7 +41,7 @@ type ExpensesTableProps = {
   currency: string | undefined;
 };
 
-export function ExpensesTable({
+export default function ExpensesTable({
   currentPage,
   categories,
   expenses,
@@ -107,7 +107,7 @@ export function ExpensesTable({
           <TableBody>
             <TableRow>
               <TableCell>
-                <div className="py-4">no result</div>
+                <div className="py-4">no expenses</div>
               </TableCell>
             </TableRow>
           </TableBody>

@@ -36,6 +36,8 @@
     "@vercel/functions": "^2.0.3",
     "clsx": "^2.1.1",
     "date-fns": "3.6.0",
+    "isomorphic-dompurify": "^2.25.0",
+    "jsdom": "^26.1.0",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
     "next-auth": "5.0.0-beta.25",

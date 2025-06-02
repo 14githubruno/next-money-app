@@ -18,6 +18,10 @@ export const PAGES_TITLES = {
     dashboardCategories: "Categories",
     dashboardExpenses: "Expenses",
   },
+  h2: {
+    dashboard: "Expenses Chart",
+    dashboardCategories: "Bar List",
+  },
 };
 
 /**
@@ -92,6 +96,11 @@ export const EXPENSE_FORM_INITIAL_STATE: ExpenseFormState = {
     categoryId: "",
   },
 };
+
+/**
+ * First year of the app.
+ */
+export const APP_FIRST_YEAR = 2025;
 
 /**
  * Months.
@@ -1602,3 +1611,13 @@ export const EXPENSES_PER = {
   page: 5,
   slice: 3,
 };
+
+/**
+ * Mock data (i.e. mock categories bar list data)
+ */
+
+export const MOCK_CATEGORIES_BAR_LIST = [
+  { name: "groceries", value: 10 },
+  { name: "cigarettes", value: 5 },
+  { name: "books", value: 0 },
+];

@@ -47,34 +47,38 @@ export async function createCategory(
   const categoryData = validation.data;
 
   try {
-    // Check if category with same name already exists
-    const existingCategory = await prisma.category.findFirst({
-      where: {
-        userId,
-        name: categoryData.name,
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      // Check if category with same name already exists
+      const existingCategory = await tx.category.findFirst({
+        where: {
+          userId,
+          name: categoryData.name,
+        },
+      });
+
+      if (existingCategory) {
+        throw new PredictableError(
+          `Category with name ${existingCategory.name} already exists`
+        );
+      }
+
+      const newCategory = await tx.category.create({
+        data: {
+          ...categoryData,
+          userId: userId!,
+        },
+      });
+
+      return { newCategory };
     });
 
-    if (existingCategory) {
-      throw new PredictableError(
-        `Category with name ${existingCategory.name} already exists`
-      );
-    }
-
-    const newCategory = await prisma.category.create({
-      data: {
-        ...categoryData,
-        userId: userId!,
-      },
-    });
-
-    if (newCategory) {
+    if (result.newCategory) {
       revalidateTag("categories");
     }
 
     return {
       success: true,
-      message: `Category with name ${newCategory.name} created`,
+      message: `Category with name ${result.newCategory.name} created`,
       fieldValues: initState.fieldValues,
     };
   } catch (error) {
@@ -124,44 +128,49 @@ export async function updateCategory(
   const categoryData = validation.data;
 
   try {
-    const category = await prisma.category.findUnique({
-      where: { id: categoryId!, userId },
-    });
+    const result = await prisma.$transaction(async (tx) => {
+      // Check if the category exists and belongs to the user
+      const category = await tx.category.findUnique({
+        where: { id: categoryId, userId },
+      });
 
-    if (!category || category.userId !== userId) {
-      throw new PredictableError(
-        "Category not found or you do not have permission to update it"
-      );
-    }
+      if (!category) {
+        throw new PredictableError(
+          "Category not found or you do not have permission to update it"
+        );
+      }
 
-    // Check if another category with the new name already exists
-    if (categoryData.name !== category.name) {
-      const existingCategory = await prisma.category.findFirst({
+      // Check if another category with the new name already exists
+      const existingCategory = await tx.category.findFirst({
         where: {
           userId,
           name: categoryData.name,
-          id: { not: categoryId! },
+          id: { not: categoryId },
         },
       });
 
       if (existingCategory) {
-        throw new PredictableError("A category with this name already exists");
+        throw new PredictableError(
+          `Category with name ${existingCategory.name} already exists`
+        );
       }
-    }
 
-    const updatedCategory = await prisma.category.update({
-      where: { id: categoryId },
-      data: categoryData,
+      const updatedCategory = await tx.category.update({
+        where: { id: categoryId, userId },
+        data: categoryData,
+      });
+
+      return { updatedCategory };
     });
 
-    if (updatedCategory) {
+    if (result.updatedCategory) {
       isSuccess = true;
     }
 
     return {
       success: true,
-      message: `Category with name ${updatedCategory.name} updated`,
-      fieldValues: updatedCategory,
+      message: `Category with name ${result.updatedCategory.name} updated`,
+      fieldValues: result.updatedCategory,
     };
   } catch (error) {
     if (error instanceof PredictableError) {
@@ -191,44 +200,42 @@ export async function deleteCategory(categoryId: string) {
   let isDeleted: boolean = false;
 
   try {
-    const category = await prisma.category.findUnique({
-      where: { id: categoryId, userId },
-      include: {
-        expenses: {
-          take: 1, // We only need to know if there are any expenses
+    const result = await prisma.$transaction(async (tx) => {
+      const category = await tx.category.findUnique({
+        where: { id: categoryId, userId },
+        include: {
+          expenses: {
+            take: 1, // We only need to know if there are any expenses
+          },
         },
-      },
+      });
+
+      if (!category) {
+        throw new PredictableError(
+          "Category not found or you do not have permission to delete it"
+        );
+      }
+
+      if (category.expenses.length > 0) {
+        throw new PredictableError(
+          "This category cannot be deleted because it is used by one or more expenses"
+        );
+      }
+
+      const deletedCategory = await tx.category.delete({
+        where: { id: categoryId, userId },
+      });
+
+      return { deletedCategory };
     });
 
-    if (!category || category.userId !== userId) {
-      throw new PredictableError(
-        "Category not found or you do not have permission to delete it"
-      );
-    }
-
-    // Check if category is used by any expenses
-    if (category.expenses.length > 0) {
-      throw new PredictableError(
-        "This category cannot be deleted because it is used by one or more expenses"
-      );
-    }
-
-    // Check if it's a default category
-    if (category.isDefault) {
-      throw new PredictableError("Default categories cannot be deleted");
-    }
-
-    const deletedCategory = await prisma.category.delete({
-      where: { id: categoryId, userId },
-    });
-
-    if (deletedCategory) {
+    if (result.deletedCategory) {
       isDeleted = true;
     }
 
     return {
       success: true,
-      message: `Category with name ${deletedCategory.name} deleted`,
+      message: `Category with name ${result.deletedCategory.name} deleted`,
     };
   } catch (error) {
     if (error instanceof PredictableError) {

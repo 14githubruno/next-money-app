@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { useActionState, useRef } from "react";
 import { createExpense, updateExpense } from "@/lib/actions/expense";
 import {
@@ -29,7 +30,6 @@ import {
 import { Switch } from "../tremor-raw/inputs/switch";
 import { RadioGroup, RadioGroupItem } from "../tremor-raw/inputs/radio-group";
 import DatePickerYearNavigation from "../date-picker-year-navigation";
-import { Textarea } from "../tremor-raw/inputs/textarea";
 import { Input } from "../tremor-raw/inputs/input";
 import { Label } from "../tremor-raw/inputs/label";
 import { useFormToast } from "@/hooks/toast/use-form-toast";
@@ -90,7 +90,7 @@ export default function ExpenseForm({
               />
             </button>
           ) : (
-            <Button variant="base">
+            <Button variant="base" className={clsx("w-full", "lg:w-fit")}>
               <Plus className="mr-2 h-4 w-4" />
               Add expense
             </Button>
@@ -147,12 +147,11 @@ export default function ExpenseForm({
 
                 <div className="space-y-2">
                   <Label htmlFor="note">Note</Label>
-                  <Textarea
+                  <Input
+                    type="text"
                     id="note"
                     name="note"
-                    rows={3}
-                    maxLength={150}
-                    placeholder="Add details about this expense"
+                    placeholder="Expense details"
                     defaultValue={state.fieldValues?.note ?? ""}
                   />
                 </div>

@@ -2,8 +2,6 @@ import clsx from "clsx";
 import { type ReactNode } from "react";
 import { getUser } from "@/lib/utils/server-only-utils";
 import Sidenav from "@/components/navigation/sidenav";
-import { getDateRange } from "@/lib/utils/server-only-utils";
-import DateRangeSelect from "@/components/date-range-select";
 
 type Props = {
   children: ReactNode;
@@ -11,7 +9,6 @@ type Props = {
 
 export default async function Layout({ children }: Props) {
   const { user } = await getUser();
-  const dateRange = await getDateRange();
 
   return (
     <div
@@ -29,7 +26,6 @@ export default async function Layout({ children }: Props) {
           "lg:overflow-y-auto lg:px-12"
         )}
       >
-        <DateRangeSelect dateRange={dateRange} />
         {children}
       </div>
     </div>

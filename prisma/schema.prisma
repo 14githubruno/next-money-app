@@ -117,7 +117,7 @@ model Expense {
   id              String              @id @default(auto()) @map("_id") @db.ObjectId
   amount          Float
   categoryId      String              @db.ObjectId
-  note            String?           
+  note            String           
   payment         Payment                 
   isConfirmed     Boolean             @default(true)
   expenseDate     DateTime            
@@ -125,7 +125,7 @@ model Expense {
   userId          String              @db.ObjectId
   
   user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category        Category            @relation(fields: [categoryId], references: [id])
+  category        Category            @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt

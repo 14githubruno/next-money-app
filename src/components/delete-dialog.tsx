@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import type { CategoryTypes, ExpenseTypes } from "@/lib/validations/schemas";
 import { Fragment } from "react";
 import { Button } from "./tremor-raw/ui/button";
@@ -16,20 +17,22 @@ import {
 import { Trash } from "lucide-react";
 import { textInBrackets } from "@/lib/utils";
 
+/**
+ * Types
+ */
+
 type DialogDescriptionContentProps = {
-  itemKind: "category" | "expense";
-  itemData: CategoryTypes | ExpenseTypes;
+  itemKind: "category" | "expense" | "account";
+  itemData: CategoryTypes | ExpenseTypes | string;
 };
 
 type DeleteDialogProps = {
   deleteAction: () => void;
   isPending: boolean;
-  isDefaultCategory?: boolean;
 } & DialogDescriptionContentProps;
 
 /**
- *
- * @note Dynamically render description based on item and its data (category or expense)
+ * @note Dynamically render description based on item and its data (category, expense or account).
  */
 function DialogDescriptionContent({
   itemKind,
@@ -76,13 +79,31 @@ function DialogDescriptionContent({
           {descEnd}
         </Fragment>
       );
+    case "account":
+      return (
+        <Fragment>
+          {descStart}
+          <span className="font-bold">
+            {textInBrackets(itemData as string)}
+          </span>
+          .
+          <span className="block font-bold">
+            By deleting your account, you will also delete all your categories
+            and expenses, if any.
+          </span>
+          {descEnd}
+        </Fragment>
+      );
   }
 }
 
+/**
+ * DeleteDialog component.
+ * @note This component is used to delete an item (category, expense or account).
+ */
 export default function DeleteDialog({
   deleteAction,
   isPending,
-  isDefaultCategory = false,
   itemKind,
   itemData,
 }: DeleteDialogProps) {
@@ -90,15 +111,21 @@ export default function DeleteDialog({
     <div className="flex justify-center">
       <Dialog>
         <DialogTrigger asChild>
-          <button
-            className="cursor-pointer"
-            disabled={isDefaultCategory}
-            aria-label={`Delete ${itemKind}`}
-          >
-            <Trash
-              className={`h-4 w-4 ${isDefaultCategory ? "opacity-65" : ""}`}
-            />
-          </button>
+          {itemKind === "account" ? (
+            <Button
+              variant="destructive"
+              className={clsx("w-full", "lg:w-fit")}
+            >
+              Delete Account
+            </Button>
+          ) : (
+            <button
+              className="cursor-pointer"
+              aria-label={`Delete ${itemKind}`}
+            >
+              <Trash className="h-4 w-4" />
+            </button>
+          )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
