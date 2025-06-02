@@ -56,6 +56,18 @@ export async function getDateRange() {
 }
 
 /**
+ * Delete all cookies.
+ */
+export async function clearCookies() {
+  const cookiesStore = await cookies();
+  const allCookies = cookiesStore.getAll();
+
+  allCookies.forEach((cookie) => {
+    cookiesStore.delete(cookie.name);
+  });
+}
+
+/**
  * Return prisma date filters based on selected year.
  */
 export function getExpensesOfSelectedYear(dateRange: string) {
