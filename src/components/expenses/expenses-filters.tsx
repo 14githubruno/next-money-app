@@ -72,8 +72,10 @@ export default function ExpensesFilters({
   }
 
   return (
-    <div className={clsx("flex flex-col gap-1", "lg:flex-row")}>
-      <form className="flex grow items-center gap-1">
+    <div className={clsx("flex flex-col gap-2", "lg:flex-row")}>
+      <form
+        className={clsx("flex grow flex-col items-center gap-2", "lg:flex-row")}
+      >
         {/* search by note */}
         <Label className="sr-only" htmlFor="search">
           Search by note

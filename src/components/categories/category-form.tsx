@@ -1,7 +1,7 @@
 "use client";
 
+import clsx from "clsx";
 import { Button } from "../tremor-raw/ui/button";
-
 import {
   Drawer,
   DrawerBody,
@@ -75,7 +75,7 @@ export default function CategoryForm({
               />
             </button>
           ) : (
-            <Button variant="base">
+            <Button variant="base" className={clsx("w-full", "lg:w-fit")}>
               <Plus className="mr-2 h-4 w-4" />
               Add category
             </Button>

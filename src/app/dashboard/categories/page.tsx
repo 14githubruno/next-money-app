@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   getUser,
   getDateRange,
@@ -51,7 +52,12 @@ export default async function CategoriesPage() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <Heading level={1} text={PAGES_TITLES.h1.dashboardCategories} />
-          <div className="flex justify-between">
+          <div
+            className={clsx(
+              "flex flex-col gap-1",
+              "lg:flex-row lg:justify-between"
+            )}
+          >
             <Paragraph text="Overview of all your categories." />
             <CategoryForm />
           </div>

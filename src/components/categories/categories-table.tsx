@@ -80,7 +80,7 @@ export default function CategoriesTable({
   return (
     <Fragment>
       {/* category filter */}
-      <div className={clsx("flex flex-col gap-1", "lg:flex-row")}>
+      <div className={clsx("flex flex-col gap-2", "lg:flex-row")}>
         <form className="grow">
           {/* search category */}
           <Label className="sr-only" htmlFor="search">

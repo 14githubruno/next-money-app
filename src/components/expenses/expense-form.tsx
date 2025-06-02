@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { useActionState, useRef } from "react";
 import { createExpense, updateExpense } from "@/lib/actions/expense";
 import {
@@ -89,7 +90,7 @@ export default function ExpenseForm({
               />
             </button>
           ) : (
-            <Button variant="base">
+            <Button variant="base" className={clsx("w-full", "lg:w-fit")}>
               <Plus className="mr-2 h-4 w-4" />
               Add expense
             </Button>

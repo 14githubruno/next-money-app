@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { redirect, notFound } from "next/navigation";
 import {
   getUser,
@@ -72,12 +73,17 @@ export default async function ExpensesPage(props: {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <Heading level={1} text={PAGES_TITLES.h1.dashboardExpenses} />
-          <div className="flex justify-between">
+          <div
+            className={clsx(
+              "flex flex-col gap-1",
+              "lg:flex-row lg:justify-between"
+            )}
+          >
             <Paragraph text="Overview of all your expenses." />
             {categories.length > 0 ? (
               <ExpenseForm categories={categories} />
             ) : (
-              <div className="0 rounded-lg bg-red-200 pl-2 text-sm leading-6 text-gray-600">
+              <div className="rounded-lg bg-red-200 pl-2 text-sm leading-6 text-gray-600">
                 No category detected.{" "}
                 <Button asChild variant="base">
                   <Link href="/dashboard/categories">Go create one &rarr;</Link>
