@@ -32,7 +32,7 @@ export default async function ExpensesPage(props: {
   ]);
 
   const searchParams = await props.searchParams;
-  const query = searchParams?.note || "";
+  const note = searchParams?.note || "";
   const currentPage = Number(searchParams?.page) || 1;
   const offset = (currentPage - 1) * EXPENSES_PER.page;
   const isConfirmedParam = searchParams?.isConfirmed;
@@ -43,7 +43,7 @@ export default async function ExpensesPage(props: {
   }
 
   const whereFilters = {
-    note: { contains: query, mode: "insensitive" },
+    note: { contains: note, mode: "insensitive" },
     category: {
       name: {
         equals: category,
