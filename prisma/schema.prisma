@@ -117,7 +117,7 @@ model Expense {
   id              String              @id @default(auto()) @map("_id") @db.ObjectId
   amount          Float
   categoryId      String              @db.ObjectId
-  note            String?           
+  note            String           
   payment         Payment                 
   isConfirmed     Boolean             @default(true)
   expenseDate     DateTime            

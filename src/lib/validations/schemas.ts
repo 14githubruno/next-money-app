@@ -44,9 +44,9 @@ export const expenseSchema = z
     note: z
       .string()
       .trim()
-      .max(500, "Note cannot exceed 500 characters")
-      .optional()
-      .nullable(),
+      .toLowerCase()
+      .min(1, "Note is required")
+      .max(50, "Note cannot exceed 50 characters"),
     expenseDate: z.coerce.date(),
     isConfirmed: z.coerce.boolean(),
     payment: z.nativeEnum(Payment),
@@ -54,7 +54,7 @@ export const expenseSchema = z
   .transform((data) => {
     return {
       ...data,
-      note: data.note ? sanitizeInput(data.note) : null,
+      note: sanitizeInput(data.note),
     };
   });
 
