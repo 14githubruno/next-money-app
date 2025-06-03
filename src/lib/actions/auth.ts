@@ -72,6 +72,8 @@ export async function deleteAccount() {
       return { success: false, error: error.message };
     }
 
+    console.error("ERROR DELETING ACCOUNT:", error);
+
     throw new Error("Error deleting account");
   } finally {
     if (isDeleted) {
