@@ -9,7 +9,7 @@ import {
   clearCookies,
 } from "../utils/server-only-utils";
 import { redirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 
 /**
  * SIGN IN
@@ -81,6 +81,8 @@ export async function deleteAccount() {
       revalidateTag("userDB");
       revalidateTag("expenses");
       revalidateTag("categories");
+      revalidatePath("/", "layout");
+      revalidatePath("/dashboard", "layout");
       redirect("/");
     }
   }
