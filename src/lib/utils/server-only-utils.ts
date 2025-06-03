@@ -134,8 +134,13 @@ function calculateAmountPerMonth(expenses: ExpenseTypes[], monthIndex: number) {
  * Fn to sanitize inputs (used in zod schemas)
  */
 export function sanitizeInput(input: string) {
-  return DOMPurify.sanitize(input, {
+  const cleanString = DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
   });
+
+  // if sanitation results in empty string, return a message
+  if (cleanString.length === 0) return "[invalid string]";
+
+  return cleanString;
 }
