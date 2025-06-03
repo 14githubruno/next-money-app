@@ -9,6 +9,7 @@ import {
   clearCookies,
 } from "../utils/server-only-utils";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 /**
  * SIGN IN
@@ -77,6 +78,9 @@ export async function deleteAccount() {
     throw new Error("Error deleting account");
   } finally {
     if (isDeleted) {
+      revalidateTag("userDB");
+      revalidateTag("expenses");
+      revalidateTag("categories");
       redirect("/");
     }
   }
