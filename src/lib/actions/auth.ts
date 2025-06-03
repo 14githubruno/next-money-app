@@ -9,6 +9,7 @@ import {
   clearCookies,
 } from "../utils/server-only-utils";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 /**
  * SIGN IN
@@ -64,6 +65,7 @@ export async function deleteAccount() {
     } else {
       isDeleted = true;
       await clearCookies();
+      await signOut();
     }
 
     return { success: true, message: "Account deleted" };
@@ -72,9 +74,13 @@ export async function deleteAccount() {
       return { success: false, error: error.message };
     }
 
-    throw new Error("Error deleting account");
+    console.error("ERROR DELETING ACCOUNT:", error);
+    throw error;
   } finally {
     if (isDeleted) {
+      revalidateTag("userDB");
+      revalidateTag("expenses");
+      revalidateTag("categories");
       redirect("/");
     }
   }
